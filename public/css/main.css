@@ -1,0 +1,11 @@
+body {
+    font-family: 'Helvetica Neue','Segoe UI',Arial,sans-serif;
+    color: #333;
+    margin: 0;
+    -webkit-font-smoothing: antialiased; }
+main {
+    max-width: 1200px;
+    padding: 24px;
+    margin: 0 auto; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
