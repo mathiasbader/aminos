@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div style="display: flex; flex-wrap: wrap">
+    <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
         {% for amino in aminos %}
 
             <div style="border: 1px solid #ddd; width: 140px; background-color: #eee; margin: 0 6px 6px 0;
@@ -15,5 +15,7 @@
 
         {% endfor %}
     </div>
+
+    <a href="{{ url('about') }}">About</a>
 
 {% endblock %}

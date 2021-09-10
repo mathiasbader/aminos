@@ -11,14 +11,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /** @Route("")
+    /** @Route("", name="index")
      *  @Template */
-    public function index()
+    public function indexAction()
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         return [
-            'pageTitle' => 'The ' . count($aminos) . ' proteinogenic amino acids',
+            'pageTitle' => 'The 20 proteinogenic amino acids',
             'aminos'    => $aminos,
+        ];
+    }
+
+    /** @Route("/about", name="about") @Template */
+    public function aboutAction()
+    {
+        return [
+            'pageTitle' => 'The 20 proteinogenic amino acids',
         ];
     }
 }

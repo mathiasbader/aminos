@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="about">
+        <div>
+            <a href="{{ url('index') }}">Back</a>
+        </div>
+        <div>
+            This project is open source - you can participate on
+            <a href="https://github.com/mathiasbader/aminos" target="_blank">github.com/mathiasbader/aminos</a>.
+        </div>
+        <div>
+            All amino acid models where created using <a href="https://ball-project.org/ballview/"
+            target="_blank">BALLView</a>, the standalone molecular modelling and visualization application of <a
+            href="https://ball-project.org" target="_blank">BALL</a>.
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block css %}
+    <style>
+        .about div { margin-bottom: 22px; }
+    </style>
+{% endblock %}
