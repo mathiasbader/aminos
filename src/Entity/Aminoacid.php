@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\AminoacidRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity(repositoryClass=AminoacidRepository::class) */
+/** @ORM\Entity(repositoryClass=AminoacidRepository::class) @ORM\Table(name="aminoacids") */
 class Aminoacid
 {
     /** @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue */ private int $id;
@@ -17,6 +17,7 @@ class Aminoacid
     /** @ORM\Column(type="string", length=  3)                  */ private string $code3    ;
 
     public function getId       (): ?int    { return $this->id       ; }
+    public function getName     (): ?string { return $this->nameEn   ; }
     public function getNameEn   (): ?string { return $this->nameEn   ; }
     public function getNameDe   (): ?string { return $this->nameDe   ; }
     public function getFormula  (): ?string { return $this->formula  ; }

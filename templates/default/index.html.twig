@@ -1,4 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <div style="display: flex; flex-wrap: wrap">
+        {% for amino in aminos %}
+
+            <div style="border: 1px solid #ddd; width: 140px; background-color: #eee; margin: 0 6px 6px 0;
+            padding: 8px; text-align: center;">
+                <div style="font-weight: bold">{{ amino.name }}</div>
+                <div style="font-size: 0.8em; margin-bottom: 8px;">{{ amino.code1 }}, {{ amino.code3 }}</div>
+                <div style="color: #888;; margin-bottom: 8px">{{ amino.formula|lower_digits|raw }}</div>
+                <img src="img/aminos/120/{{ amino.code1}}1.png"/>
+            </div>
+
+        {% endfor %}
+    </div>
+
 {% endblock %}
