@@ -15,6 +15,14 @@ class DefaultController extends AbstractController
      *  @Template */
     public function indexAction()
     {
+        return [
+            'pageTitle' => 'The 20 proteinogenic amino acids',
+        ];
+    }
+
+    /** @Route("/overview", name="overview") @Template */
+    public function overviewAction()
+    {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         return [
             'pageTitle' => 'The 20 proteinogenic amino acids',
