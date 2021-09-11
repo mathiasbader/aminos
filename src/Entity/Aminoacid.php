@@ -24,7 +24,7 @@ class Aminoacid
     public function getEssential(): int     { return $this->essential; }
     public function getCode1    (): ?string { return $this->code1    ; }
     public function getCode3    (): ?string { return $this->code3    ; }
-    public function getImage($bigger): string
+    public function getImage($bigger = false): string
     {
         return '/img/aminos/' . ($bigger ? '300' : '120') . '/' . $this->code1 . '1.png';
     }

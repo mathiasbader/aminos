@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('index') }}">Back</a>
+    </div>
+
+    <div style="display: flex;">
+        {% if selectedAmino is not null %}
+            <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px;
+            {% if answerCorrect %} background-color: #d0f6d0; border: 3px solid #5aa05a;
+            {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}">
+                {% if answerCorrect %}
+                    <div style="margin-bottom: 12px;">
+                        Your selection is correct:
+                    </div>
+                    <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
+                        <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
+                    </div>
+                    <div style="font-weight: bold">{{ selectedAmino.name }}</div>
+                    <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
+                    <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
+                    <div>
+                        <img src="{{ selectedAmino.image(true) }}"/>
+                    </div>
+                {% else %}
+                    <div style="margin-bottom: 12px;">
+                        Your selection for <span style="font-weight: bold;">{{ answerAmino.name }}</span> is not correct<br>
+                    </div>
+                    <div style="display: flex">
+                        <div style="width: 50%">
+                            <div style="text-align: left; margin-bottom: 24px;">
+                                You selected:
+                            </div>
+                            <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
+                                <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
+                            </div>
+                            <div style="font-weight: bold">{{ selectedAmino.name }}</div>
+                            <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
+                            <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
+                            <div>
+                                <img src="{{ selectedAmino.image }}"/>
+                            </div>
+                        </div>
+                        <div style="width: 50%">
+                            <div style="text-align: left; margin-bottom: 24px;">
+                                The correct answer is:
+                            </div>
+                            <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
+                                <div style="width: 22px; text-align: center">{{ answerAmino.code1 }}</div>
+                            </div>
+                            <div style="font-weight: bold">{{ answerAmino.name }}</div>
+                            <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
+                            <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
+                            <div>
+                                <img src="{{ answerAmino.image }}"/>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center">
+            <div style="margin-top: 12px;">
+                <form method="post">
+                    <label for="answer" style="display: inline-block; margin-bottom: 6px;">
+                        Which amino acid is <span style="font-weight: bold">{{ amino.name }}</span>?
+                    </label>
+                </form>
+
+                <div style="display: flex; flex-wrap: wrap; margin-top: 24px;">
+                    {% for a in answerAminos %}
+                        <div style="width: 33%;">
+                            <a href="#" onclick="choose({{ a.id }}); return false;">
+                                <img src="{{ a.image }}" style="padding: 8px;"/>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <form method="post" id="form">
+                    <input type="hidden" name="amino" value="{{ amino.id }}"/>
+                    <input type="hidden" name="answer" id="answer" value=""/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        function choose(aminoId) {
+            document.getElementById('answer').value = aminoId;
+            document.getElementById('form').submit();
+        }
+    </script>
+{% endblock %}

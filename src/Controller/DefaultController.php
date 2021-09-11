@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Constant\Common;
 use App\Entity\Aminoacid;
+use App\Service\AminoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +61,45 @@ class DefaultController extends AbstractController
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,
             'answerCorrect' => $answerCorrect,
+        ];
+    }
+
+    /** @Route("/n2i", name="nameToImage") @Template */
+    public function nameToImageAction(Request $request, AminoService $aminoService)
+    {
+        $selectedAminoId = $request->get('answer');
+        $answerAminoId   = $request->get('amino');
+
+        $selectedAmino = null;
+        $answerAmino   = null;
+        $answerCorrect = null;
+        if ($answerAminoId !== null && is_numeric($answerAminoId)) {
+            /* @var $answerAmino Aminoacid */
+            $selectedAmino = $this->getDoctrine()->getRepository(Aminoacid::class)->find($selectedAminoId);
+            $answerAmino   = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
+            $answerCorrect = $selectedAmino->getId() === $answerAmino->getId();
+        }
+
+        $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
+        $otherAminoIds = $aminoService->getOtherAminoIds($amino->getId());
+        $answerAminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findBy(['id' => $otherAminoIds]);
+        array_splice($answerAminos, mt_rand(0, 4), 0, [$amino]);
+
+        return [
+            'pageTitle'     => 'Name to image - The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'amino'         => $amino,
+            'answerAminos'  => $answerAminos,
+            'selectedAmino' => $selectedAmino,
+            'answerAmino'   => $answerAmino,
+            'answerCorrect' => $answerCorrect,
+        ];
+    }
+
+    /** @Route("/c2i", name="codeToImage") @Template */
+    public function codeToImageAction()
+    {
+        return [
+            'pageTitle' => 'Code to image - The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
         ];
     }
 
