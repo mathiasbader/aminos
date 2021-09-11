@@ -2,8 +2,9 @@
 
 {% block body %}
 
-    <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
-        <a href="{{ url('overview', { 'param' : ''}) }}">Overview</a>
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('overview', { 'param' : ''}) }}">Overview</a><br>
+        <a href="{{ url('imgToName') }}">Image to name</a><br>
     </div>
 
     <a href="{{ url('about') }}">About</a>

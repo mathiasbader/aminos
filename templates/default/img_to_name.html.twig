@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block bodyParam %} onLoad="document.getElementById('answer').focus();"{% endblock %}
+
+{% block body %}
+
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('index') }}">Back</a>
+    </div>
+
+    <div style="display: flex;">
+        {% if answerText is not null and answerAmino is not null %}
+            <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px;
+            {% if answerCorrect %} background-color: #d0f6d0; border: 3px solid #5aa05a;
+            {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}
+            ">
+                <div style="margin-bottom: 12px;">
+                    Your answer <span style="display: inline-block; background-color: white; padding: 0 4px;
+                    border-radius: 3px;">{{ answerText }}</span>
+                    {% if answerCorrect %}
+                         is correct
+                    {% else %}
+                        is not correct.<br>
+                        Correct answer would have been:
+                    {% endif %}
+                </div>
+
+                <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
+                    <div style="width: 22px; text-align: center">{{ answerAmino.code1 }}</div>
+                </div>
+                <div style="font-weight: bold">{{ answerAmino.name }}</div>
+                <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
+                <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
+                <div>
+                    <img src="{{ answerAmino.image(true) }}"/>
+                </div>
+            </div>
+        {% endif %}
+
+        <div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center">
+            <div>
+                <img src="{{ amino.image(true) }}"/>
+            </div>
+            <div style="color: #888; margin-bottom: 8px; text-align: center">{{ amino.formula|lower_digits|raw }}</div>
+            <div style="margin-top: 12px;">
+                <form method="post">
+                    <label for="answer" style="display: inline-block; margin-bottom: 6px;">
+                        What's then name of this amino acid?
+                    </label>
+                    <input type="text" name="answer" id="answer" autocomplete="false" style="width: 100%;
+                    font-size: 1.2em; padding: 6px;" />
+                    <input type="hidden" name="amino" value="{{ amino.id }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

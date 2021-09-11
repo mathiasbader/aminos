@@ -9,7 +9,7 @@
 
     {% block javascripts %}{% endblock %}
 </head>
-<body>
+<body{% block bodyParam %}{% endblock %}>
 <main>
 <h2>{{ pageTitle }}</h2>
 {% block body %}{% endblock %}
