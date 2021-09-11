@@ -10,7 +10,7 @@ main {
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 .dashboard { margin: 24px 0 }
-.dashboard a { width: 120px; }
+.dashboard a { width: 160px; }
 .btn {
     display: inline-block;
     text-decoration: none;
