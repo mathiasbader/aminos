@@ -20,13 +20,14 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/overview", name="overview") @Template */
-    public function overviewAction()
+    /** @Route("/overview/{param}", name="overview") @Template */
+    public function overviewAction(string $param = '')
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         return [
             'pageTitle' => 'The 20 proteinogenic amino acids',
             'aminos'    => $aminos,
+            'bigger'     => $param === 'b',
         ];
     }
 
