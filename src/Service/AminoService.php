@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Constant\Common;
+use App\Entity\Aminoacid;
 
 class AminoService
 {
@@ -14,5 +15,17 @@ class AminoService
             if ($newId !== $aminoId && !in_array($newId, $ids, true)) $ids[] = $newId;
         }
         return $ids;
+    }
+
+    function isCorrectAnswer(string $answer, Aminoacid $amino, bool $codeAlsoOk = true): bool {
+        $answer = mb_strtolower($answer);
+        $correct = $answer === mb_strtolower($amino->getNameEn()) ||
+                   $answer === mb_strtolower($amino->getNameDe());
+        if ($codeAlsoOk) {
+            $correct = $correct ||
+                       $answer === mb_strtolower($amino->getCode1 ()) ||
+                       $answer === mb_strtolower($amino->getCode3 ());
+        }
+        return $correct;
     }
 }

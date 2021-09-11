@@ -35,7 +35,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/i2n", name="imgToName") @Template */
-    public function imgToNameAction(Request $request)
+    public function imgToNameAction(Request $request, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
@@ -45,18 +45,12 @@ class DefaultController extends AbstractController
         if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
             /* @var $answerAmino Aminoacid */
             $answerAmino = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-
-            $answerLower = mb_strtolower($answerText);
-            $answerCorrect =
-                $answerLower === mb_strtolower($answerAmino->getCode1 ()) ||
-                $answerLower === mb_strtolower($answerAmino->getCode3 ()) ||
-                $answerLower === mb_strtolower($answerAmino->getNameEn()) ||
-                $answerLower === mb_strtolower($answerAmino->getNameDe());
+            $answerCorrect = $aminoService->isCorrectAnswer($answerText, $answerAmino);
         }
 
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
         return [
-            'pageTitle'     => 'Image to name - The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
             'amino'         => $amino,
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,
@@ -64,8 +58,8 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/n2i", name="nameToImage") @Template */
-    public function nameToImageAction(Request $request, AminoService $aminoService)
+    /** @Route("/n2i", name="nameToImg") @Template */
+    public function nameToImgAction(Request $request, AminoService $aminoService)
     {
         $selectedAminoId = $request->get('answer');
         $answerAminoId   = $request->get('amino');
@@ -86,7 +80,7 @@ class DefaultController extends AbstractController
         array_splice($answerAminos, mt_rand(0, 4), 0, [$amino]);
 
         return [
-            'pageTitle'     => 'Name to image - The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
             'amino'         => $amino,
             'answerAminos'  => $answerAminos,
             'selectedAmino' => $selectedAmino,
@@ -95,19 +89,37 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/c2i", name="codeToImage") @Template */
-    public function codeToImageAction()
+    /** @Route("/c2i", name="codeToName") @Template */
+    public function codeToNameAction(Request $request, AminoService $aminoService)
     {
+        $answerText    = $request->get('answer');
+        $answerAminoId = $request->get('amino');
+
+        $answerAmino   = null;
+        $answerCorrect = null;
+        if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
+            /* @var $answerAmino Aminoacid */
+            $answerAmino   = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
+            $answerCorrect = $aminoService->isCorrectAnswer($answerText, $answerAmino, false);
+        }
+
+        $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
+
         return [
-            'pageTitle' => 'Code to image - The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'amino'         => $amino,
+            'answerText'    => $answerText,
+            'answerAmino'   => $answerAmino,
+            'answerCorrect' => $answerCorrect,
         ];
+
     }
 
     /** @Route("/about", name="about") @Template */
     public function aboutAction()
     {
         return [
-            'pageTitle' => 'The 20 proteinogenic amino acids',
+            'pageTitle' => 'About',
         ];
     }
 }

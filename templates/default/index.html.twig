@@ -2,10 +2,11 @@
 
 {% block body %}
 
-    <div style="margin-bottom: 12px;">
-        <a href="{{ url('overview', { 'param' : ''}) }}">Overview</a><br>
-        <a href="{{ url('imgToName') }}">Image to name</a><br>
-        <a href="{{ url('nameToImage') }}">Name to image</a><br>
+    <div class="dashboard">
+        <a href="{{ url('overview', { 'param' : ''}) }}" class="btn">Overview</a><br>
+        <a href="{{ url('imgToName') }}" class="btn">Image to name</a><br>
+        <a href="{{ url('nameToImg') }}" class="btn">Name to image</a><br>
+        <a href="{{ url('codeToName') }}" class="btn">Code to name</a><br>
     </div>
 
     <a href="{{ url('about') }}">About</a>

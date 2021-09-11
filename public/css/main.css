@@ -9,3 +9,16 @@ main {
     margin: 0 auto; }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
+.dashboard { margin: 24px 0 }
+.dashboard a { width: 120px; }
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 8px 12px;
+    background-color: #eee;
+    color: #333;
+    border-radius: 4px;
+    margin-bottom: 16px; }
+.btn:hover {
+    text-decoration: none;
+    background-color: #ddd; }
