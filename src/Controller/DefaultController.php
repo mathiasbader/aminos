@@ -34,8 +34,8 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/i2n", name="imgToName") @Template */
-    public function imgToNameAction(Request $request, AminoService $aminoService)
+    /** @Route("/i2n", name="testImgToName") @Template */
+    public function testImgToNameAction(Request $request, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
@@ -58,8 +58,8 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/n2i", name="nameToImg") @Template */
-    public function nameToImgAction(Request $request, AminoService $aminoService)
+    /** @Route("/n2i", name="testNameToImg") @Template */
+    public function testNameToImgAction(Request $request, AminoService $aminoService)
     {
         $selectedAminoId = $request->get('answer');
         $answerAminoId   = $request->get('amino');
@@ -89,8 +89,8 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/c2i", name="codeToName") @Template */
-    public function codeToNameAction(Request $request, AminoService $aminoService)
+    /** @Route("/c2i", name="testCodeToName") @Template */
+    public function testCodeToNameAction(Request $request, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
