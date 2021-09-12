@@ -9,4 +9,4 @@ This project is hosted on www.study-aminoacids.org.
 The project is licensed under the MIT License.
 
 ## Contact
-For questions concerning the project, please contact [Mathias Bader](mail@mathiasbader.de)
+For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de)
