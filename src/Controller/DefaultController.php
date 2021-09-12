@@ -30,7 +30,7 @@ class DefaultController extends AbstractController
         return [
             'pageTitle' => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
             'aminos'    => $aminos,
-            'bigger'     => $param === 'b',
+            'bigger'    => $param === 'b',
         ];
     }
 
