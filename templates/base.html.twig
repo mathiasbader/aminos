@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ pageTitle }}{% endblock %}</title>
+    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }}{% else %}Aminos{% endif %}{% endblock %}</title>
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     {% block css %}{% endblock %}
@@ -11,7 +11,7 @@
 </head>
 <body{% block bodyParam %}{% endblock %}>
 <main>
-<h2>{{ pageTitle }}</h2>
+<h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}Aminos{% endif %}</h2>
 {% block body %}{% endblock %}
 
 </main>
