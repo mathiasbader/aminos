@@ -89,7 +89,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/c2i", name="testCodeToName") @Template */
+    /** @Route("/c2n", name="testCodeToName") @Template */
     public function testCodeToNameAction(Request $request, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
