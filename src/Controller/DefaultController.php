@@ -19,7 +19,7 @@ class DefaultController extends AbstractController
     public function indexAction()
     {
         return [
-            'pageTitle' => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle' => Common::PAGE_TITLE,
         ];
     }
 
@@ -28,7 +28,7 @@ class DefaultController extends AbstractController
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         return [
-            'pageTitle' => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle' => Common::PAGE_TITLE,
             'aminos'    => $aminos,
             'bigger'    => $param === 'b',
         ];
@@ -50,7 +50,7 @@ class DefaultController extends AbstractController
 
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
         return [
-            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => Common::PAGE_TITLE,
             'amino'         => $amino,
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,
@@ -80,7 +80,7 @@ class DefaultController extends AbstractController
         array_splice($answerAminos, mt_rand(0, 4), 0, [$amino]);
 
         return [
-            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => Common::PAGE_TITLE,
             'amino'         => $amino,
             'answerAminos'  => $answerAminos,
             'selectedAmino' => $selectedAmino,
@@ -89,7 +89,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/c2i", name="testCodeToName") @Template */
+    /** @Route("/c2n", name="testCodeToName") @Template */
     public function testCodeToNameAction(Request $request, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
@@ -106,7 +106,7 @@ class DefaultController extends AbstractController
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
 
         return [
-            'pageTitle'     => 'The ' . Common::AMINOS_COUNT . ' proteinogenic amino acids',
+            'pageTitle'     => Common::PAGE_TITLE,
             'amino'         => $amino,
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,

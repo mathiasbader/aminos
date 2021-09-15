@@ -22,14 +22,14 @@
                     <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                     <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                     <div>
-                        <img src="{{ selectedAmino.image(true) }}"/>
+                        <img src="{{ selectedAmino.image(true) }}" style="max-width: 100%"/>
                     </div>
                 {% else %}
                     <div style="margin-bottom: 12px;">
                         Your selection for <span style="font-weight: bold;">{{ answerAmino.name }}</span> is not correct<br>
                     </div>
-                    <div style="display: flex">
-                        <div style="width: 50%">
+                    <div style="display: flex; flex-wrap: wrap">
+                        <div style="width: 50%; min-width: 150px;">
                             <div style="text-align: left; margin-bottom: 24px;">
                                 You selected:
                             </div>
@@ -43,7 +43,7 @@
                                 <img src="{{ selectedAmino.image }}"/>
                             </div>
                         </div>
-                        <div style="width: 50%">
+                        <div style="width: 50%; min-width: 150px;">
                             <div style="text-align: left; margin-bottom: 24px;">
                                 The correct answer is:
                             </div>
@@ -72,7 +72,7 @@
 
                 <div style="display: flex; flex-wrap: wrap; margin-top: 24px;">
                     {% for a in answerAminos %}
-                        <div style="width: 33%;">
+                        <div style="width: 33%; min-width: 150px;">
                             <a href="#" onclick="choose({{ a.id }}); return false;">
                                 <img src="{{ a.image }}" style="padding: 8px;"/>
                             </a>

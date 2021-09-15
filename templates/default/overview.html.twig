@@ -14,7 +14,7 @@
     <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
         {% for amino in aminos %}
 
-            <div style="border: 1px solid #ddd; width: {% if bigger %}340{% else %}140{% endif %}px; background-color: #eee; margin: 0 6px 6px 0;
+            <div style="border: 1px solid #ddd; width: {% if bigger %}340{% else %}136{% endif %}px; background-color: #eee; margin: 0 6px 6px 0;
             padding: 8px;">
                 <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                     <div style="width: 22px; text-align: center">{{ amino.code1 }}</div>
@@ -28,7 +28,7 @@
                     </div>
                 {% endif %}
                 <div style="text-align: center">
-                    <img src="{{ amino.image(bigger) }}"/>
+                    <img src="{{ amino.image(bigger) }}" style="max-width: 100%"/>
                 </div>
             </div>
 
