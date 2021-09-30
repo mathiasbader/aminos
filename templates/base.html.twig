@@ -6,15 +6,25 @@
 
     <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }}{% else %}Aminos{% endif %}{% endblock %}</title>
 
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     {% block css %}{% endblock %}
 
     {% block javascripts %}{% endblock %}
 </head>
 <body{% block bodyParam %}{% endblock %}>
 <main>
-<h2>{{ pageTitle }}</h2>
-{% block body %}{% endblock %}
+    <h2>{{ pageTitle }}</h2>
+
+    <div style="text-align: right;">
+        {% if app.user %}
+            {{ app.user.username }}
+            <a href="{{ url('app_logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url('app_login') }}">Login</a>
+        {% endif %}
+    </div>
+
+    {% block body %}{% endblock %}
 
 </main>
 </body>
