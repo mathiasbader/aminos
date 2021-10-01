@@ -21,4 +21,5 @@ a:hover { text-decoration: underline; }
     margin-bottom: 16px; }
 .btn:hover {
     text-decoration: none;
+    transition: background 0.3s;
     background-color: #ddd; }
