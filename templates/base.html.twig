@@ -9,8 +9,10 @@
 | ▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓ ▓▓ ▓▓  | ▓▓ ▓▓__/ ▓▓  ▓▓▓▓▓▓▓ ▓▓_____| ▓▓ ▓▓__| ▓▓_\▓▓▓▓▓▓\
 | ▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓ ▓▓ ▓▓  | ▓▓\▓▓    ▓▓\▓▓    ▓▓\▓▓     \ ▓▓\▓▓    ▓▓       ▓▓
  \▓▓   \▓▓\▓▓  \▓▓  \▓▓\▓▓\▓▓   \▓▓ \▓▓▓▓▓▓  \▓▓▓▓▓▓▓ \▓▓▓▓▓▓▓\▓▓ \▓▓▓▓▓▓▓\▓▓▓▓▓▓▓
+
   This project ist open source
-  Get the complete source at https://github.com/mathiasbader/aminos
+  Get the source at https://github.com/mathiasbader/aminos
+
 -->
 <html lang="de">
 <head>
@@ -31,7 +33,7 @@
     <div style="text-align: right;">
         {% if app.request.get('_route') != 'app_login' %}
             {% if app.user %}
-                {{ app.user.username }}
+                {{ app.user.userIdentifier }}
                 <a href="{{ url('app_logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url('app_login') }}">Login</a>

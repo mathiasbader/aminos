@@ -23,3 +23,8 @@ a:hover { text-decoration: underline; }
     text-decoration: none;
     transition: background 0.3s;
     background-color: #ddd; }
+.alert {
+    border: 1px solid red;
+    padding: 16px 32px;
+    border-radius: 6px;
+    background-color: #ffeeee; }
