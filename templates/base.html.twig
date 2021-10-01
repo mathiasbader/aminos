@@ -16,11 +16,15 @@
     <h2>{{ pageTitle }}</h2>
 
     <div style="text-align: right;">
-        {% if app.user %}
-            {{ app.user.username }}
-            <a href="{{ url('app_logout') }}">Logout</a>
+        {% if app.request.get('_route') != 'app_login' %}
+            {% if app.user %}
+                {{ app.user.username }}
+                <a href="{{ url('app_logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url('app_login') }}">Login</a>
+            {% endif %}
         {% else %}
-            <a href="{{ url('app_login') }}">Login</a>
+            <a href="{{ url('index') }}">Home</a>
         {% endif %}
     </div>
 
