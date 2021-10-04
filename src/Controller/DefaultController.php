@@ -11,31 +11,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
     /** @Route("", name="index")
      *  @Template */
-    public function indexAction()
+    public function indexAction(TranslatorInterface $translator)
     {
         return [
-            'pageTitle' => Common::PAGE_TITLE,
+            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
         ];
     }
 
     /** @Route("/overview/{param}", name="overview") @Template */
-    public function overviewAction(string $param = '')
+    public function overviewAction(TranslatorInterface $translator, string $param = '')
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         return [
-            'pageTitle' => Common::PAGE_TITLE,
+            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'aminos'    => $aminos,
             'bigger'    => $param === 'b',
         ];
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */
-    public function testImgToNameAction(Request $request, AminoService $aminoService)
+    public function testImgToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
@@ -50,7 +51,7 @@ class DefaultController extends AbstractController
 
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
         return [
-            'pageTitle'     => Common::PAGE_TITLE,
+            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'amino'         => $amino,
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,
@@ -59,7 +60,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/n2i", name="testNameToImg") @Template */
-    public function testNameToImgAction(Request $request, AminoService $aminoService)
+    public function testNameToImgAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $selectedAminoId = $request->get('answer');
         $answerAminoId   = $request->get('amino');
@@ -80,7 +81,7 @@ class DefaultController extends AbstractController
         array_splice($answerAminos, mt_rand(0, 4), 0, [$amino]);
 
         return [
-            'pageTitle'     => Common::PAGE_TITLE,
+            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'amino'         => $amino,
             'answerAminos'  => $answerAminos,
             'selectedAmino' => $selectedAmino,
@@ -90,7 +91,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/c2n", name="testCodeToName") @Template */
-    public function testCodeToNameAction(Request $request, AminoService $aminoService)
+    public function testCodeToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
@@ -106,7 +107,7 @@ class DefaultController extends AbstractController
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
 
         return [
-            'pageTitle'     => Common::PAGE_TITLE,
+            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'amino'         => $amino,
             'answerText'    => $answerText,
             'answerAmino'   => $answerAmino,

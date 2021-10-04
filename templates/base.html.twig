@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }} - Amino acids{% else %}Amino acids{% endif %}{% endblock %}</title>
+    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }} - {% endif %}{{ 'aminoacids'|trans }}{% endblock %}</title>
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     {% block css %}{% endblock %}
@@ -28,12 +28,12 @@
 </head>
 <body{% block bodyParam %}{% endblock %}>
 <main>
-    <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}Amino acids{% endif %}</h2>
+    <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}{{ 'aminoacids'|trans }}{% endif %}</h2>
 
     <div style="text-align: right;">
         {% if app.request.get('_route') != 'app_login' %}
             {% if app.user %}
-                {{ app.user.userIdentifier }}
+                {{ app.user.name }} &nbsp;&nbsp;
                 <a href="{{ url('app_logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url('app_login') }}">Login</a>

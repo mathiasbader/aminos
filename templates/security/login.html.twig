@@ -33,29 +33,6 @@
                     <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 12px;">Sign in</button>
                 </form>
             </div>
-            <div class="c2">
-                <h3>Registrierung</h3>
-                <form method="post">
-                    <div style="margin-bottom: 12px;">
-                        <label for="inputEmail">Email:</label><br>
-                        <input type="email" name="email" id="inputEmail" class="form-control"
-                               autocomplete="email" required autofocus>
-                    </div>
-
-                    <div style="margin-bottom: 12px;">
-                        <label for="inputPassword">Password:</label><br>
-                        <input type="password" name="password" id="inputPassword" class="form-control"
-                               autocomplete="current-password" required>
-                    </div>
-
-                    {% if error %}
-                        <div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 12px;">Sign in</button>
-                </form>
-            </div>
         </div>
     {% endif %}
 
