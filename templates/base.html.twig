@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }}{% else %}Aminos{% endif %}{% endblock %}</title>
+    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }} - Aminos{% else %}Aminos{% endif %}{% endblock %}</title>
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     {% block css %}{% endblock %}
@@ -28,7 +28,7 @@
 </head>
 <body{% block bodyParam %}{% endblock %}>
 <main>
-    <h2>{{ pageTitle }}</h2>
+    <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}Aminos{% endif %}</h2>
 
     <div style="text-align: right;">
         {% if app.request.get('_route') != 'app_login' %}
