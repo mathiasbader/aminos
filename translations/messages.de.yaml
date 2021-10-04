@@ -12,3 +12,6 @@ about.allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit
 
 essential: essenziell
 semiessential: semiessenziell
+
+sourceCode.thisProjectIsOpenSource: Dieses Projekt ist Open Source
+sourceCode.getTheSourceAt: Sie bekommen den Sourcecode unter {url}

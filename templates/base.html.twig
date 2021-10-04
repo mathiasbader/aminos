@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <!--
-  ______               __                                     __       __
- /      \             |  \                                   |  \     |  \
-|  ▓▓▓▓▓▓\______ ____  \▓▓_______   ______   ______   _______ \▓▓ ____| ▓▓ _______
-| ▓▓__| ▓▓      \    \|  \       \ /      \ |      \ /       \  \/      ▓▓/       \
-| ▓▓    ▓▓ ▓▓▓▓▓▓\▓▓▓▓\ ▓▓ ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\ \▓▓▓▓▓▓\  ▓▓▓▓▓▓▓ ▓▓  ▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓
-| ▓▓▓▓▓▓▓▓ ▓▓ | ▓▓ | ▓▓ ▓▓ ▓▓  | ▓▓ ▓▓  | ▓▓/      ▓▓ ▓▓     | ▓▓ ▓▓  | ▓▓\▓▓    \
-| ▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓ ▓▓ ▓▓  | ▓▓ ▓▓__/ ▓▓  ▓▓▓▓▓▓▓ ▓▓_____| ▓▓ ▓▓__| ▓▓_\▓▓▓▓▓▓\
-| ▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓ ▓▓ ▓▓  | ▓▓\▓▓    ▓▓\▓▓    ▓▓\▓▓     \ ▓▓\▓▓    ▓▓       ▓▓
- \▓▓   \▓▓\▓▓  \▓▓  \▓▓\▓▓\▓▓   \▓▓ \▓▓▓▓▓▓  \▓▓▓▓▓▓▓ \▓▓▓▓▓▓▓\▓▓ \▓▓▓▓▓▓▓\▓▓▓▓▓▓▓
-
-  This project ist open source
-  Get the source at https://github.com/mathiasbader/aminos
+    {{ include('_lib/ascii.html.twig') }}
+    {{ 'sourceCode.thisProjectIsOpenSource'|trans }}
+    {{ 'sourceCode.getTheSourceAt'|trans( { '{url}' : 'https://github.com/mathiasbader/aminos' } )|trans }}
 
 -->
 <html lang="de">

@@ -12,3 +12,6 @@ about.allAminoAcidImagesWhereCreatedUsing: All amino acid images where created u
 
 essential: essential
 semiessential: semiessential
+
+sourceCode.thisProjectIsOpenSource: This project is open source
+sourceCode.getTheSourceAt: Get the source at {url}
