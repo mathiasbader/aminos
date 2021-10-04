@@ -2,3 +2,6 @@ aminoacids: Aminosäuren
 studyThe20ProteinogenicAminoAcids: Lerne die 20 proteinogenen Aminosäuren
 about: Über
 back: Zurück
+test.imageToName: 'Test: Bild nach Name'
+test.nameToImage: 'Test: Name nach Bild'
+test.CodeToName: 'Test: Code nach Name'

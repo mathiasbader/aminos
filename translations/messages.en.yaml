@@ -2,3 +2,6 @@ aminoacids: Amino acids
 studyThe20ProteinogenicAminoAcids: Study the 20 proteinogenic amino acids
 about: About
 back: Back
+test.imageToName: 'Test: Image to name'
+test.nameToImage: 'Test: Name to image'
+test.CodeToName: 'Test: Code to name'
