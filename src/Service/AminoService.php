@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Constant\Common;
+use App\Constant\Language;
 use App\Entity\Aminoacid;
 
 class AminoService
@@ -27,5 +28,9 @@ class AminoService
                        $answer === mb_strtolower($amino->getCode3 ());
         }
         return $correct;
+    }
+
+    function isValidLanguage(string $lang) {
+        return in_array($lang, Language::$all);
     }
 }

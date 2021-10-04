@@ -32,7 +32,12 @@
 
     <div style="text-align: right;">
         {% if app.request.get('_route') != 'app_login' %}
+
             {% if app.user %}
+                [<a href="{{ url('lang', { 'lang' : 'en' }) }}">en</a>
+                <a href="{{ url('lang', { 'lang' : 'es' }) }}">es</a>
+                <a href="{{ url('lang', { 'lang' : 'de' }) }}">de</a>] &nbsp;&nbsp;
+
                 {{ app.user.name }} &nbsp;&nbsp;
                 <a href="{{ url('app_logout') }}">Logout</a>
             {% else %}

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Constant\Common;
 use App\Entity\Aminoacid;
+use App\Entity\User;
 use App\Service\AminoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -22,6 +23,21 @@ class DefaultController extends AbstractController
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
         ];
+    }
+
+    /** @Route("/lang/{lang}", name="lang") */
+    public function langAction(Request $request, AminoService $aminoService, string $lang)
+    {
+        if ($aminoService->isValidLanguage($lang)) {
+            /* @var $user User */
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $user->setLang($lang);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $request->getSession()->set('_lang', $user->getLang());
+        }
+        return $this->redirectToRoute('index');
     }
 
     /** @Route("/overview/{param}", name="overview") @Template */
