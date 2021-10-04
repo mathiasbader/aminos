@@ -9,3 +9,6 @@
 
 ### User entity
 `php bin/console security:hash-password` Manually hash a password
+
+### Cache
+`php bin/console cache:pool:clear cache.global_clearer`
