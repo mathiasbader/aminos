@@ -7,14 +7,13 @@
             <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
         </div>
         <div>
-            This project is open source and uses the
-            <a href="https://mit-license.org/" target="_blank">MIT-License</a>. You
-            can get the code on <a href="https://github.com/mathiasbader/aminos" target="_blank">GitHub</a>.
+            {{ 'about.thisProjectIsOpenSourceAndUsesTheMitLicense'|trans( { '{license}': '<a href="https://mit-license.org/" target="_blank">MIT-License</a>' } )|raw }}
+            {{ 'about.youCanGetTheCodeOnGitHub'|trans( { '{github}' : '<a href="https://github.com/mathiasbader/aminos" target="_blank">GitHub</a>' } )|raw }}
         </div>
         <div>
-            All amino acid images where created using <a href="https://ball-project.org/ballview/"
-            target="_blank">BALLView</a>, the standalone molecular modelling and visualization application of <a
-            href="https://ball-project.org" target="_blank">BALL</a>.
+            {{ 'about.allAminoAcidImagesWhereCreatedUsing'|trans( {
+                '{ballview}' : '<a href="https://ball-project.org/ballview/" target="_blank">BALLView</a>',
+                '{ball}' : '<a href="https://ball-project.org" target="_blank">BALL</a>' } )|raw }}
         </div>
     </div>
 {% endblock %}

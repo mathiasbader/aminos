@@ -5,3 +5,10 @@ back: Back
 test.imageToName: 'Test: Image to name'
 test.nameToImage: 'Test: Name to image'
 test.CodeToName: 'Test: Code to name'
+
+about.thisProjectIsOpenSourceAndUsesTheMitLicense: This project is open source and uses the {license}.
+about.youCanGetTheCodeOnGitHub: You can get the code on {github}.
+about.allAminoAcidImagesWhereCreatedUsing: All amino acid images where created using {ballview}, the standalone molecular modelling and visualization application of {ball}.
+
+essential: essential
+semiessential: semiessential

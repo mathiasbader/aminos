@@ -5,3 +5,10 @@ back: Zurück
 test.imageToName: 'Test: Bild nach Name'
 test.nameToImage: 'Test: Name nach Bild'
 test.CodeToName: 'Test: Code nach Name'
+
+about.thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
+about.youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
+about.allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
+
+essential: essenziell
+semiessential: semiessenziell
