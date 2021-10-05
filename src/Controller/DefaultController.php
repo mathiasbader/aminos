@@ -8,20 +8,25 @@ use App\Constant\Common;
 use App\Entity\Aminoacid;
 use App\Entity\User;
 use App\Service\AminoService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
     /** @Route("", name="index")
      *  @Template */
-    public function indexAction(TranslatorInterface $translator)
+    public function indexAction(TranslatorInterface $translator, UserService $userService)
     {
+        $user = $this->getTheUser($userService);
+
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+            'user'      => $user,
         ];
     }
 
@@ -138,5 +143,37 @@ class DefaultController extends AbstractController
         return [
             'pageTitle' => 'About',
         ];
+    }
+
+    public function getTheUser(UserService $userService): User {
+        $user = $this->getLoggedInUser();
+        if ($user instanceof User) return $user;
+
+        return $this->generateNewUser($userService);
+    }
+
+    private function getLoggedInUser(): ?User {
+        $token = $this->get('security.token_storage')->getToken();
+        return $token === null ? null : $token->getUser();
+    }
+
+    private function generateNewUser(UserService $userService): User {
+        // create new user
+        $user = new User();
+        $user->setName($userService->generateName());
+        $user->setCode($userService->generateCode(22));
+        $user->setRoles(['ROLE_USER']);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        // log in new user
+        $firewallName = 'main';
+        $token = new UsernamePasswordToken($user, null, $firewallName, $user->getRoles());
+        $this->get('security.token_storage')->setToken($token);
+        $session = $this->get('session');
+        $session->set('_security_' . $firewallName, serialize($token));
+
+        return $user;
     }
 }

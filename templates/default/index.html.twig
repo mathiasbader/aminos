@@ -2,6 +2,12 @@
 
 {% block body %}
 
+    {% if user is null %}
+        user is null
+    {% else %}
+        user is {{ app.user.userIdentifier }}
+    {% endif %}
+
     <div class="dashboard">
         <a href="{{ url('overview', { 'param' : ''}) }}" class="btn">{{ 'aminoacids'|trans }}</a><br>
         <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'test.imageToName'|trans }}</a><br>
