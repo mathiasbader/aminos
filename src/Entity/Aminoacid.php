@@ -26,7 +26,7 @@ class Aminoacid
     public function getCode3    (): ?string { return $this->code3    ; }
     public function getImage($bigger = false): string
     {
-        return '/img/aminos/' . ($bigger ? '300' : '120') . '/' . strtolower($this->code1) . '1.png';
+        return '/img/aminos/svg/' . strtolower($this->code1) . '.svg';
     }
 
     public function setNameEn   (string $nameEn   ): self { $this->nameEn    = $nameEn;    return $this; }

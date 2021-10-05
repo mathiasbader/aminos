@@ -27,9 +27,14 @@ class DefaultController extends AbstractController
     public function overviewAction(string $param = '')
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
+        $aminoMap = [];
+        foreach($aminos as $amino) {
+            /* @var $amino Aminoacid  */
+            $aminoMap[$amino->getId()] = $amino;
+        }
         return [
             'pageTitle' => Common::PAGE_TITLE,
-            'aminos'    => $aminos,
+            'aminos'    => $aminoMap,
             'bigger'    => $param === 'b',
         ];
     }
