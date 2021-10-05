@@ -15,3 +15,10 @@ semiessential: semiesencial
 
 sourceCode.thisProjectIsOpenSource: Este proyecto es de código abierto
 sourceCode.getTheSourceAt: Obtenga el código en {url}
+
+profile: Perfil
+language: Idioma
+yourAccount: Su cuenta
+name: Nombre
+email: Correo
+save: Guardar

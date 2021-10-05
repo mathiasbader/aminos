@@ -2,11 +2,9 @@
 
 {% block body %}
 
-    {% if user is null %}
-        user is null
-    {% else %}
-        user is {{ app.user.userIdentifier }}
-    {% endif %}
+    <div style="text-align: right;">
+        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }} {{ app.user.id }}{% else %}{{ app.user.name }}{% endif %}</a>
+    </div>
 
     <div class="dashboard">
         <a href="{{ url('overview', { 'param' : ''}) }}" class="btn">{{ 'aminoacids'|trans }}</a><br>

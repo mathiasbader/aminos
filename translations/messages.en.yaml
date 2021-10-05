@@ -15,3 +15,10 @@ semiessential: semiessential
 
 sourceCode.thisProjectIsOpenSource: This project is open source
 sourceCode.getTheSourceAt: Get the source at {url}
+
+profile: Profile
+language: Language
+yourAccount: Your account
+name: Name
+email: E-Mail
+save: Save

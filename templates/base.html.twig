@@ -21,26 +21,6 @@
 <main>
     <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}{{ 'aminoacids'|trans }}{% endif %}</h2>
 
-    <div style="text-align: right;">
-        {% if app.request.get('_route') != 'app_login' %}
-
-            {% if app.user %}
-                {% if app.request.get('_route') == 'index' %}
-                    [<a href="{{ url('lang', { 'lang' : 'en' }) }}">en</a>
-                    <a href="{{ url('lang', { 'lang' : 'es' }) }}">es</a>
-                    <a href="{{ url('lang', { 'lang' : 'de' }) }}">de</a>] &nbsp;&nbsp;
-                {% endif %}
-
-                {{ app.user.name }} &nbsp;&nbsp;
-                <a href="{{ url('app_logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url('app_login') }}">Login</a>
-            {% endif %}
-        {% else %}
-            <a href="{{ url('index') }}">Home</a>
-        {% endif %}
-    </div>
-
     {% block body %}{% endblock %}
 
 </main>

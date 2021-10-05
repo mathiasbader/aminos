@@ -30,6 +30,17 @@ class DefaultController extends AbstractController
         ];
     }
 
+    /** @Route("profile", name="profile") @Template */
+    public function profileAction(TranslatorInterface $translator, UserService $userService)
+    {
+        $user = $this->getTheUser($userService);
+
+        return [
+            'pageTitle' => $translator->trans('profile'),
+            'user'      => $user,
+        ];
+    }
+
     /** @Route("/lang/{lang}", name="lang") */
     public function langAction(Request $request, AminoService $aminoService, string $lang)
     {
@@ -42,7 +53,7 @@ class DefaultController extends AbstractController
             $em->flush();
             $request->getSession()->set('_lang', $user->getLang());
         }
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('profile');
     }
 
     /** @Route("/overview/{param}", name="overview") @Template */

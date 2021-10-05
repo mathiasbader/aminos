@@ -29,12 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword      (): ?string { return $this->password; }
     public function getSalt          (): ?string { return null           ; }
     public function getRoles         (): array   { return $this->roles   ; }
-    public function getUserIdentifier(): string
-    {
-        if ($this->email !== null) return $this->email;
-        else                       return $this->code;
-
-    }
+    public function getUserIdentifier(): string  { return $this->id      ; }
 
     public function setName    (string $name    ): self { $this->name     = $name    ; return $this; }
     public function setEmail   (string $email   ): self { $this->email    = $email   ; return $this; }

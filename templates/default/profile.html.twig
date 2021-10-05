@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
+    </div>
+
+    <h4>{{ 'language'|trans }}</h4>
+    <div>
+        <a href="{{ url('lang', { 'lang' : 'en' }) }}" class="btn{% if app.request.locale == 'en' %} active{% endif %}">English</a>
+        <a href="{{ url('lang', { 'lang' : 'es' }) }}" class="btn{% if app.request.locale == 'es' %} active{% endif %}">Español</a>
+        <a href="{{ url('lang', { 'lang' : 'de' }) }}" class="btn{% if app.request.locale == 'de' %} active{% endif %}">Deutsch</a><br><br>
+    </div>
+
+    <h4>{{ 'yourAccount'|trans }}</h4>
+    <div style="width: 50%;">
+        <form action="{{ url('profile') }}" method="post">
+            <label for="email">{{ 'email'|trans }}:</label><br>
+            <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br><br>
+            <label for="name">{{ 'name'|trans }}:</label><br>
+            <input type="text" name="name" id="name" value="{{ app.user.name }}"/><br><br>
+            <input type="submit" class="btn" style="width: auto;" value="{{ 'save'|trans }}"/>
+        </form>
+    </div>
+
+{% endblock %}
