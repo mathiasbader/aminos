@@ -21,4 +21,12 @@ language: Idioma
 yourAccount: Su cuenta
 name: Nombre
 email: Correo
+password: Contraseña
 save: Guardar
+claimAccount: Reclamar la cuenta
+registration: Registro
+login: Inicio de sesión
+
+profile.accountNotYetClaimed: Esta cuenta aún no ha sido reclamada.
+profile.toSafeProgressClaimWithEmail: Para asegurar su progreso, puede reclamar esta cuenta con su correo electrónico.
+profile.ifYouAlreadyHaveAnAccountYouCanLoginHere: Si ya tiene una cuenta, puede conectarse aquí.

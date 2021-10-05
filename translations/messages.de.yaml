@@ -21,4 +21,12 @@ language: Sprache
 yourAccount: Ihr Account
 name: Name
 email: E-Mail
+password: Passwort
 save: Speichern
+claimAccount: Account registrieren
+registration: Registrierung
+login: Login
+
+profile.accountNotYetClaimed: Dieses Konto ist noch nicht verbunden worden.
+profile.toSafeProgressClaimWithEmail: Um Ihren Fortschritt zu sichern, können Sie dieses Konto mit Ihrer E-Mail verknüpfen.
+profile.ifYouAlreadyHaveAnAccountYouCanLoginHere: Wenn Sie bereits ein Konto haben, können Sie sich hier einloggen.

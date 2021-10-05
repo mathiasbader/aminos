@@ -27,7 +27,7 @@ security:
                 target: index
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
+                lifetime: 2419200 # 4 week in seconds
                 path:     /
                 always_remember_me: true
 
