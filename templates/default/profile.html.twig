@@ -16,6 +16,7 @@
     {% if app.user.email is not null %}
         <h4>{{ 'yourAccount'|trans }}</h4>
         <div>
+            <span style="font-weight: bold">{{ app.user.name }}</span><br>
             {{ app.user.email }}<br><br>
 
             <a href="{{ url('app_logout') }}">Logout</a>
