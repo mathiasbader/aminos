@@ -26,6 +26,8 @@ save: Speichern
 claimAccount: Account registrieren
 registration: Registrierung
 login: Login
+toTheLogin: Zum Login
+toTheRegistration: Zur Registrierung
 
 profile.accountNotYetClaimed: Dieses Konto ist noch nicht verbunden worden.
 profile.toSafeProgressClaimWithEmail: Um Ihren Fortschritt zu sichern, können Sie dieses Konto mit Ihrer E-Mail verknüpfen.

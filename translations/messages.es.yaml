@@ -26,6 +26,8 @@ save: Guardar
 claimAccount: Reclamar la cuenta
 registration: Registro
 login: Inicio de sesión
+toTheLogin: Al inicio de sesión
+toTheRegistration: Al registro
 
 profile.accountNotYetClaimed: Esta cuenta aún no ha sido reclamada.
 profile.toSafeProgressClaimWithEmail: Para asegurar su progreso, puede reclamar esta cuenta con su correo electrónico.

@@ -26,6 +26,8 @@ save: Save
 claimAccount: Claim account
 registration: Registration
 login: Login
+toTheLogin: To the Login
+toTheRegistration: To the registration
 
 profile.accountNotYetClaimed: This account has not yet been claimed.
 profile.toSafeProgressClaimWithEmail: To safe your progress, you can claim this account with your e-mail.

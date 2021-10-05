@@ -22,7 +22,7 @@
         </div>
     {% else %}
         <div style="display: flex">
-            <div style="width: 50%; padding-right: 12px;">
+            <div style="width: 50%; padding-right: 12px;" id="registration">
                 <h4>{{ 'registration'|trans }}</h4>
                 <div>
                     {{ 'profile.accountNotYetClaimed'|trans }}
@@ -33,11 +33,15 @@
                     <label for="email">{{ 'email'|trans }}:</label><br>
                     <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br>
                     <div style="text-align: right;">
+                        <a href="#" onclick="
+                            document.getElementById('registration').style.display = 'none';
+                            document.getElementById('login'       ).style.display = 'block';
+                        " style="margin-right: 24px;">{{ 'toTheLogin'|trans }}</a>
                         <input type="submit" class="btn" style="width: auto;" value="{{ 'claimAccount'|trans }}"/>
                     </div>
                 </form>
             </div>
-            <div style="width: 50%; padding-right: 12px;">
+            <div style="width: 50%; padding-right: 12px; display: none;" id="login">
                 <h4>{{ 'login'|trans }}</h4>
                 <div>
                     {{ 'profile.ifYouAlreadyHaveAnAccountYouCanLoginHere'|trans }}
@@ -49,6 +53,10 @@
                     <label for="password">{{ 'password'|trans }}:</label><br>
                     <input type="password" name="password" id="password"/><br>
                     <div style="text-align: right;">
+                        <a href="#" onclick="
+                            document.getElementById('login'       ).style.display = 'none';
+                            document.getElementById('registration').style.display = 'block';
+                        " style="margin-right: 24px;">{{ 'toTheRegistration'|trans }}</a>
                         <input type="submit" class="btn" style="width: auto;" value="Login"/>
                     </div>
                 </form>
