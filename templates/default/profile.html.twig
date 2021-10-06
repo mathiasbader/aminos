@@ -43,7 +43,7 @@
 
                     {% if error is defined and error is not empty %}
                         <div class="alert">
-                            {% if     error == 'passwordTooShort'    %} {{ 'error.passwordTooShort'|trans }}
+                            {% if     error == 'passwordTooShort'    %} {{ 'error.passwordTooShort'|trans( { '{min}' : constant('App\\Constant\\Common::MIN_PASSWORD_LENGTH') } ) }}
                             {% elseif error == 'passwordsDoNotMatch' %} {{ 'error.passwordsDoNotMatch'|trans }}
                             {% elseif error == 'emailIsAlreadyInDb'  %} {{ 'error.emailAlreadyRegistered'|trans }} {% endif %}
                         </div>
