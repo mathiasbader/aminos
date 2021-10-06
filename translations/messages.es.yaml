@@ -41,3 +41,7 @@ test:
     isCorrect: Su respuesta {answer} es correcta
     isNotCorrect: Tu respuesta {answer} para {amino} no es correcta
     correctAnswerWouldHaveBeen: La respuesta correcta es
+    yourAnswerIsCorrect: Su respuesta es correcta
+    yourAnswerForAminoIsNotCorrect: Su respuesta para {amino} no es correcta
+    youSelected: Su selección
+    whichAminoAcidIs: ¿Qué aminoácido es {amino}?
