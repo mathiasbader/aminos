@@ -37,3 +37,7 @@ error:
 
 test:
   whatsTheNameOfThisAminoacid: Wie heißt diese Aminosäure?
+  answer:
+    isCorrect: Ihre Antwort {answer} ist richtig
+    isNotCorrect: Ihre Antwort {answer} für {amino} ist nicht richtig
+    correctAnswerWouldHaveBeen: Die richtige Antwort lautet

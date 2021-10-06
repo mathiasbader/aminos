@@ -43,3 +43,8 @@ input {
 .icon-close {
     width: 16px;
     height: 16px; }
+.answer {
+    display: inline-block;
+    background-color: white;
+    padding: 0 4px;
+    border-radius: 3px; }

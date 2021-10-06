@@ -159,6 +159,7 @@ class DefaultController extends AbstractController
     public function testCodeToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
+        $answerText = htmlentities($answerText);
         $answerAminoId = $request->get('amino');
 
         $answerAmino   = null;
