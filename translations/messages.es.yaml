@@ -5,10 +5,11 @@ test.imageToName: 'Test: Imagen a nombre'
 test.nameToImage: 'Test: Nombre a imagen'
 test.CodeToName: 'Test: Código a nombre'
 
-about: Sobre
-about.thisProjectIsOpenSourceAndUsesTheMitLicense: Este proyecto es de código abierto y utiliza la {license}.
-about.youCanGetTheCodeOnGitHub: Puedes obtener el código en {github}.
-about.allAminoAcidImagesWhereCreatedUsing: Todas las imágenes de amino ácidos fueron creadas usando {ballview}, la aplicación independiente de modelado y visualización molecular de {ball}.
+about:
+  link: Sobre
+  thisProjectIsOpenSourceAndUsesTheMitLicense: Este proyecto es de código abierto y utiliza la {license}.
+  youCanGetTheCodeOnGitHub: Puedes obtener el código en {github}.
+  allAminoAcidImagesWhereCreatedUsing: Todas las imágenes de amino ácidos fueron creadas usando {ballview}, la aplicación independiente de modelado y visualización molecular de {ball}.
 
 essential: esencial
 semiessential: semiesencial
@@ -28,12 +29,17 @@ save: Guardar
 register: Registrar
 registration: Registro
 login: Inicio de sesión
+edit: Editar
+cancel: Cancelar
 
 error:
   passwordTooShort: La contraseña es demasiado corta - debe constar de al menos {min} caracteres
   passwordsDoNotMatch: Las dos contraseñas no coinciden
   emailAlreadyRegistered: Este correo electrónico ya está registrado - por favor, inicie sesión o utilice otro correo electrónico
   login: Ha ocurrido un error
+  providedEmailInvalid: El correo electrónico proporcionado no es válido
+  anErrorOccurred: Ha ocurrido un error
+  noNameProvided: No ha introducido un nombre
 
 test:
   whatsTheNameOfThisAminoacid: ¿Cómo se llama este aminoácido?

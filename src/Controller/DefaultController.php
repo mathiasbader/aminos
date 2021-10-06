@@ -36,7 +36,6 @@ class DefaultController extends AbstractController
         $this->initUser($userService);
 
         $error = '';
-        $message = '';
         $email = '';
         $name = '';
         if ($request->get('action') === 'registration') {
@@ -46,6 +45,7 @@ class DefaultController extends AbstractController
             $password2 = $request->get('password2');
             if (mb_strlen($password) < Common::MIN_PASSWORD_LENGTH) $error = 'passwordTooShort';
             elseif ($password !== $password2) $error = 'passwordsDoNotMatch';
+            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $error = 'invalidEmail';
             else {
 
                 /* @var $userDb User */
@@ -55,20 +55,34 @@ class DefaultController extends AbstractController
                     /* @var $user User */
                     $user = $this->get('security.token_storage')->getToken()->getUser();
                     $user->setEmail($email);
+                    $name = trim(preg_replace("/[^a-zA-Z]/", "", $name));
                     $user->setName($name);
                     $user->setPassword($passwordHasher->hashPassword($user, $password));
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($user);
                     $em->flush();
-                    $message = 'registrationSuccessful';
                 }
+            }
+        }
+        elseif ($request->get('action') === 'edit') {
+            $email = trim($request->get('email'));
+            $name = $request->get('name');
+            $name = trim(preg_replace("/[^a-zA-Z]/", "", $name));
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $error = 'invalidEmail';
+            if (strlen($name) === 0)                             $error = 'noNameProvided';
+            else {
+                $user = $this->get('security.token_storage')->getToken()->getUser();
+                $user->setEmail($email);
+                $user->setName($name);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
             }
         }
 
         return [
             'pageTitle'  => $translator->trans('profile'),
             'error'      => $error,
-            'message'    => $message,
             'email'      => $email,
             'name'       => $name,
         ];

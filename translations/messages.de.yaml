@@ -5,10 +5,11 @@ test.imageToName: 'Test: Bild nach Name'
 test.nameToImage: 'Test: Name nach Bild'
 test.CodeToName: 'Test: Code nach Name'
 
-about: Über
-about.thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
-about.youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
-about.allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
+about:
+  link: Über
+  thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
+  youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
+  allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
 
 essential: essenziell
 semiessential: semiessenziell
@@ -28,12 +29,17 @@ save: Speichern
 register: Registrieren
 registration: Registrierung
 login: Login
+edit: Bearbeiten
+cancel: Abbrechen
 
 error:
   passwordTooShort: Das Passwort ist zu kurz - es muss aus mindestens {min} Zeichen bestehen
   passwordsDoNotMatch: Die beiden Passwörter stimmen nicht überein
   emailAlreadyRegistered: Diese E-Mail ist bereits registriert - bitte loggen Sie sich ein oder nutzen Sie eine andere E-Mail
   login: Es ist ein Fehler aufgetreten
+  providedEmailInvalid: Die E-Mail-Adresse ist nicht gültig
+  anErrorOccurred: Es ist ein Fehler aufgetreten
+  noNameProvided: Sie haben keinen Namen angegeben
 
 test:
   whatsTheNameOfThisAminoacid: Wie heißt diese Aminosäure?

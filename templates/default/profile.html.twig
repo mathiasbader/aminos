@@ -16,10 +16,41 @@
     {% if app.user.email is not null %}
         <h4>{{ 'yourAccount'|trans }}</h4>
         <div>
-            {{ app.user.name }}<br>
-            {{ app.user.email }}<br><br>
+            <div id="editLink">
 
-            <a href="{{ url('app_logout') }}">Logout</a>
+                {% if error is defined and error is not empty %}
+                    <div class="alert">
+                        {% if     error == 'invalidEmail'   %} {{ 'error.providedEmailInvalid'|trans }}
+                        {% elseif error == 'noNameProvided' %} {{ 'error.noNameProvided'|trans }}
+                        {% else %}                             {{ 'error.anErrorOccurred'|trans }}{% endif %}
+                    </div>
+                {% endif %}
+
+                {{ app.user.name }}<br>
+                {{ app.user.email }}<br><br>
+
+                <a href="#" onclick="showEdit(); return false;" class="btn">{{ 'edit'|trans }}</a><br><br>
+
+                <a href="{{ url('app_logout') }}">Logout</a>
+            </div>
+            <div style="width: 50%; padding-right: 12px; display: none;" id="edit">
+                <form action="{{ url('profile') }}" method="post">
+
+                    <input type="hidden" name="action" value="edit"/>
+
+                    <label for="email">{{ 'email'|trans }}:</label><br>
+                    <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br>
+
+                    <label for="name">{{ 'name'|trans }}:</label><br>
+                    <input type="text" name="name" id="name" value="{{ app.user.name }}"/><br>
+
+                    <div style="text-align: right;">
+                        <a href="" onclick="hideEdit(); return false;" style="margin-right: 24px;">{{ 'cancel'|trans }}</a>
+                        <input type="submit" class="btn" style="width: auto;" value="{{ 'save'|trans }}"/>
+                    </div>
+                </form>
+            </div>
+
         </div>
     {% else %}
         <div style="display: flex">
@@ -45,7 +76,9 @@
                         <div class="alert">
                             {% if     error == 'passwordTooShort'    %} {{ 'error.passwordTooShort'|trans( { '{min}' : constant('App\\Constant\\Common::MIN_PASSWORD_LENGTH') } ) }}
                             {% elseif error == 'passwordsDoNotMatch' %} {{ 'error.passwordsDoNotMatch'|trans }}
-                            {% elseif error == 'emailIsAlreadyInDb'  %} {{ 'error.emailAlreadyRegistered'|trans }} {% endif %}
+                            {% elseif error == 'invalidEmail'        %} {{ 'error.providedEmailInvalid'|trans }}
+                            {% elseif error == 'emailIsAlreadyInDb'  %} {{ 'error.emailAlreadyRegistered'|trans }}
+                            {% else %}                                  {{ 'error.anErrorOccurred'|trans }}{% endif %}
                         </div>
                     {% endif %}
 
@@ -81,4 +114,18 @@
             </div>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        function showEdit() {
+            document.getElementById('editLink').style.display = 'none';
+            document.getElementById('edit'    ).style.display = 'block';
+        }
+
+        function hideEdit() {
+            document.getElementById('edit'    ).style.display = 'none';
+            document.getElementById('editLink').style.display = 'block';
+        }
+    </script>
 {% endblock %}
