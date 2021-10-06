@@ -3,7 +3,7 @@
 {% block body %}
 
     <div style="text-align: right;">
-        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }} {{ app.user.id }}{% else %}{{ app.user.name }}{% endif %}</a>
+        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
     </div>
 
     <div class="dashboard">
