@@ -34,3 +34,6 @@ error:
   passwordsDoNotMatch: The two passwords do not match
   emailAlreadyRegistered: This e-mail is already registered - please login or register with a different e-mail
   login: An error occurred
+
+test:
+  whatsTheNameOfThisAminoacid: What's the name of this amino acid?

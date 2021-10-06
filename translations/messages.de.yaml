@@ -34,3 +34,6 @@ error:
   passwordsDoNotMatch: Die beiden Passwörter stimmen nicht überein
   emailAlreadyRegistered: Diese E-Mail ist bereits registriert - bitte loggen Sie sich ein oder nutzen Sie eine andere E-Mail
   login: Es ist ein Fehler aufgetreten
+
+test:
+  whatsTheNameOfThisAminoacid: Wie heißt diese Aminosäure?
