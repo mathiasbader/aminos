@@ -219,7 +219,10 @@ class DefaultController extends AbstractController
     private function generateNewUser(UserService $userService): User {
         // create new user
         $user = new User();
+
+        // Todo: Remove user name generation
         $user->setName($userService->generateName());
+
         $user->setRoles(['ROLE_USER']);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
