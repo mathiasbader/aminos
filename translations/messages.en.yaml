@@ -22,13 +22,8 @@ yourAccount: Your account
 name: Name
 email: E-Mail
 password: Password
+repeatPassword: Repeat password
 save: Save
-claimAccount: Claim account
+register: Register
 registration: Registration
 login: Login
-toTheLogin: To the Login
-toTheRegistration: To the registration
-
-profile.accountNotYetClaimed: This account has not yet been claimed.
-profile.toSafeProgressClaimWithEmail: To safe your progress, you can claim this account with your e-mail.
-profile.ifYouAlreadyHaveAnAccountYouCanLoginHere: If you already have an account, you can login here.

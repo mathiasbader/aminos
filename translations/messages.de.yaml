@@ -22,13 +22,8 @@ yourAccount: Ihr Account
 name: Name
 email: E-Mail
 password: Passwort
+repeatPassword: Passwort wiederholen
 save: Speichern
-claimAccount: Account registrieren
+register: Registrieren
 registration: Registrierung
 login: Login
-toTheLogin: Zum Login
-toTheRegistration: Zur Registrierung
-
-profile.accountNotYetClaimed: Dieses Konto ist noch nicht verbunden worden.
-profile.toSafeProgressClaimWithEmail: Um Ihren Fortschritt zu sichern, können Sie dieses Konto mit Ihrer E-Mail verknüpfen.
-profile.ifYouAlreadyHaveAnAccountYouCanLoginHere: Wenn Sie bereits ein Konto haben, können Sie sich hier einloggen.

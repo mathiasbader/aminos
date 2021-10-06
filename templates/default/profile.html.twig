@@ -23,45 +23,82 @@
         </div>
     {% else %}
         <div style="display: flex">
-            <div style="width: 50%; padding-right: 12px;" id="registration">
+            <div id="registrationLink">
+                <h4>Benutzeraccount</h4>
+                <a href="#" class="btn" onclick="showRegistration(); return false;">Registrierung</a>
+                <a href="#" class="btn" onclick="showLogin(); return false;">Login</a>
+            </div>
+            <div style="width: 50%; padding-right: 12px; display: none;" id="registration">
                 <h4>{{ 'registration'|trans }}</h4>
-                <div>
-                    {{ 'profile.accountNotYetClaimed'|trans }}
-                    {{ 'profile.toSafeProgressClaimWithEmail'|trans }}
-                </div><br>
-
+                <div style="text-align: right;">
+                    <a href="#" onclick="hideRegistrationAndLogin(); return false;"><img
+                    src="{{ asset('img/icons/close.svg') }}" class="icon-close"></a>
+                </div>
                 <form action="{{ url('profile') }}" method="post">
+
                     <label for="email">{{ 'email'|trans }}:</label><br>
                     <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br>
+
+                    <label for="password">{{ 'password'|trans }}:</label><br>
+                    <input type="password" name="password" id="password"/><br>
+
+                    <label for="password2">{{ 'repeatPassword'|trans }}:</label><br>
+                    <input type="password" name="password2" id="password2"/><br>
+
                     <div style="text-align: right;">
                         <a href="#" onclick="
                             document.getElementById('registration').style.display = 'none';
                             document.getElementById('login'       ).style.display = 'block';
-                        " style="margin-right: 24px;">{{ 'toTheLogin'|trans }}</a>
-                        <input type="submit" class="btn" style="width: auto;" value="{{ 'claimAccount'|trans }}"/>
+                            return false;
+                        " style="margin-right: 24px;">{{ 'login'|trans }}</a>
+                        <input type="submit" class="btn" style="width: auto;" value="{{ 'register'|trans }}"/>
                     </div>
                 </form>
             </div>
             <div style="width: 50%; padding-right: 12px; display: none;" id="login">
                 <h4>{{ 'login'|trans }}</h4>
-                <div>
-                    {{ 'profile.ifYouAlreadyHaveAnAccountYouCanLoginHere'|trans }}
-                </div><br>
-
+                <div style="text-align: right;">
+                    <a href="#" onclick="hideRegistrationAndLogin(); return false;"><img
+                    src="{{ asset('img/icons/close.svg') }}" class="icon-close"></a>
+                </div>
                 <form action="{{ url('profile') }}" method="post">
                     <label for="email">{{ 'email'|trans }}:</label><br>
-                    <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br><br>
+                    <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br>
                     <label for="password">{{ 'password'|trans }}:</label><br>
                     <input type="password" name="password" id="password"/><br>
                     <div style="text-align: right;">
                         <a href="#" onclick="
                             document.getElementById('login'       ).style.display = 'none';
                             document.getElementById('registration').style.display = 'block';
-                        " style="margin-right: 24px;">{{ 'toTheRegistration'|trans }}</a>
+                            return false;
+                        " style="margin-right: 24px;">{{ 'registration'|trans }}</a>
                         <input type="submit" class="btn" style="width: auto;" value="Login"/>
                     </div>
                 </form>
             </div>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        function showRegistration() {
+            document.getElementById('registrationLink').style.display = 'none';
+            document.getElementById('login'           ).style.display = 'none';
+            document.getElementById('registration'    ).style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('registrationLink').style.display = 'none';
+            document.getElementById('login'           ).style.display = 'none';
+            document.getElementById('registration'    ).style.display = 'block';
+        }
+
+        function hideRegistrationAndLogin() {
+            document.getElementById('login'           ).style.display = 'none';
+            document.getElementById('registration'    ).style.display = 'none';
+            document.getElementById('registrationLink').style.display = 'block';
+        }
+    </script>
+
 {% endblock %}

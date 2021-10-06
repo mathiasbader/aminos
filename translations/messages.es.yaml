@@ -22,13 +22,8 @@ yourAccount: Su cuenta
 name: Nombre
 email: Correo
 password: Contraseña
+repeatPassword: Repite contraseña
 save: Guardar
-claimAccount: Reclamar la cuenta
+register: Registrar
 registration: Registro
 login: Inicio de sesión
-toTheLogin: Al inicio de sesión
-toTheRegistration: Al registro
-
-profile.accountNotYetClaimed: Esta cuenta aún no ha sido reclamada.
-profile.toSafeProgressClaimWithEmail: Para asegurar su progreso, puede reclamar esta cuenta con su correo electrónico.
-profile.ifYouAlreadyHaveAnAccountYouCanLoginHere: Si ya tiene una cuenta, puede conectarse aquí.

@@ -33,8 +33,13 @@ a:hover { text-decoration: underline; }
 .cols { display: flex; }
 .cols .c2 { width: 50%; }
 input {
+    background-color: #f8f8f8;
     box-sizing: border-box;
     padding: 8px;
+    border-radius: 4px;
     font-size: 20px;
     margin: 4px 0;
     width: 100%; }
+.icon-close {
+    width: 16px;
+    height: 16px; }
