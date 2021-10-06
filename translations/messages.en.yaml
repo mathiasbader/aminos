@@ -51,3 +51,25 @@ test:
     xIsNotCorrect: Your answer {answer} is not correct for {amino}
     forXIsNotCorrect: Your answer for {amino} is not correct
     correctAnswerWouldHaveBeen: Correct answer would have been
+
+aminos:
+  alanine: Alanine
+  arginine: Arginine
+  asparagine: Asparagine
+  asparticAcid: Aspartic acid
+  cysteine: Cysteine
+  glutamicAcid: Glutamic acid
+  glutamine: Glutamine
+  glycine: Glycine
+  histidine: Histidine
+  isoleucine: Isoleucine
+  leucine: Leucine
+  lysine: Lysine
+  methionine: Methionine
+  phenylalanine: Phenylalanine
+  proline: Proline
+  serine: Serine
+  threonine: Threonine
+  tryptophan: Tryptophan
+  tyrosine: Tyrosine
+  valine: Valine

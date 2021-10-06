@@ -125,7 +125,7 @@ class DefaultController extends AbstractController
         if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
             /* @var $answerAmino Aminoacid */
             $answerAmino = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-            $answerCorrect = $aminoService->isCorrectAnswer($answerText, $answerAmino);
+            $answerCorrect = $aminoService->isCorrectAnswer($translator, $answerText, $answerAmino);
         }
 
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
@@ -181,7 +181,7 @@ class DefaultController extends AbstractController
         if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
             /* @var $answerAmino Aminoacid */
             $answerAmino   = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-            $answerCorrect = $aminoService->isCorrectAnswer($answerText, $answerAmino, false);
+            $answerCorrect = $aminoService->isCorrectAnswer($translator, $answerText, $answerAmino, false);
         }
 
         $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));

@@ -19,7 +19,7 @@
                 <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                     <div style="width: 22px; text-align: center">{{ amino.code1 }}</div>
                 </div>
-                <div style="font-weight: bold">{{ amino.name }}</div>
+                <div style="font-weight: bold">{{ ('aminos.' ~ amino.name)|trans }}</div>
                 <div style="font-size: 0.8em; margin-bottom: 8px;">{{ amino.code3 }}</div>
                 <div style="color: #888; margin-bottom: 8px; text-align: center">{{ amino.formula|lower_digits|raw }}</div>
                 {% if amino.essential != '0' %}

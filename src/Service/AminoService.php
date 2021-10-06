@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Constant\Common;
 use App\Constant\Language;
 use App\Entity\Aminoacid;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AminoService
 {
@@ -18,10 +19,9 @@ class AminoService
         return $ids;
     }
 
-    function isCorrectAnswer(string $answer, Aminoacid $amino, bool $codeAlsoOk = true): bool {
+    function isCorrectAnswer(TranslatorInterface $translator, string $answer, Aminoacid $amino, bool $codeAlsoOk = true): bool {
         $answer = mb_strtolower($answer);
-        $correct = $answer === mb_strtolower($amino->getNameEn()) ||
-                   $answer === mb_strtolower($amino->getNameDe());
+         $correct = $answer === mb_strtolower($translator->trans('aminos.' . $amino->getName()));
         if ($codeAlsoOk) {
             $correct = $correct ||
                        $answer === mb_strtolower($amino->getCode1 ()) ||
