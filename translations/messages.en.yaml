@@ -36,7 +36,7 @@ error:
   passwordTooShort: The passwort is too short - it must contain at least {min} characters
   passwordsDoNotMatch: The two passwords do not match
   emailAlreadyRegistered: This e-mail is already registered - please login or register with a different e-mail
-  login: An error occurred
+  login: Login was not successful
   providedEmailInvalid: The provided e-mail is invalid
   anErrorOccurred: An error occurred
   noNameProvided: You did not provide a name
