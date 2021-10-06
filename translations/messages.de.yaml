@@ -1,11 +1,11 @@
 aminoacids: Aminosäuren
 studyThe20ProteinogenicAminoAcids: Lerne die 20 proteinogenen Aminosäuren
-about: Über
 back: Zurück
 test.imageToName: 'Test: Bild nach Name'
 test.nameToImage: 'Test: Name nach Bild'
 test.CodeToName: 'Test: Code nach Name'
 
+about: Über
 about.thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
 about.youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
 about.allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
@@ -13,8 +13,9 @@ about.allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit
 essential: essenziell
 semiessential: semiessenziell
 
-sourceCode.thisProjectIsOpenSource: Dieses Projekt ist Open Source
-sourceCode.getTheSourceAt: Sie bekommen den Sourcecode unter {url}
+sourceCode:
+  thisProjectIsOpenSource: Dieses Projekt ist Open Source
+  getTheSourceAt: Sie bekommen den Sourcecode unter {url}
 
 profile: Profil
 language: Sprache
@@ -27,3 +28,9 @@ save: Speichern
 register: Registrieren
 registration: Registrierung
 login: Login
+
+error:
+  passwordTooShort: Das Passwort ist zu kurz - es muss aus mindestens {min} Zeichen bestehen
+  passwordsDoNotMatch: Die beiden Passwörter stimmen nicht überein
+  emailAlreadyRegistered: Diese E-Mail ist bereits registriert - bitte loggen Sie sich ein oder nutzen Sie eine andere E-Mail
+  login: Es ist ein Fehler aufgetreten

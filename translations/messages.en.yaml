@@ -1,11 +1,11 @@
 aminoacids: Amino acids
 studyThe20ProteinogenicAminoAcids: Study the 20 proteinogenic amino acids
-about: About
 back: Back
 test.imageToName: 'Test: Image to name'
 test.nameToImage: 'Test: Name to image'
 test.CodeToName: 'Test: Code to name'
 
+about: About
 about.thisProjectIsOpenSourceAndUsesTheMitLicense: This project is open source and uses the {license}.
 about.youCanGetTheCodeOnGitHub: You can get the code on {github}.
 about.allAminoAcidImagesWhereCreatedUsing: All amino acid images where created using {ballview}, the standalone molecular modelling and visualization application of {ball}.
@@ -13,8 +13,9 @@ about.allAminoAcidImagesWhereCreatedUsing: All amino acid images where created u
 essential: essential
 semiessential: semiessential
 
-sourceCode.thisProjectIsOpenSource: This project is open source
-sourceCode.getTheSourceAt: Get the source at {url}
+sourceCode:
+  thisProjectIsOpenSource: This project is open source
+  getTheSourceAt: Get the source at {url}
 
 profile: Profile
 language: Language
@@ -27,3 +28,9 @@ save: Save
 register: Register
 registration: Registration
 login: Login
+
+error:
+  passwordTooShort: The passwort is too short - it must contain at least {min} characters
+  passwordsDoNotMatch: The two passwords do not match
+  emailAlreadyRegistered: This e-mail is already registered - please login or register with a different e-mail
+  login: An error occurred

@@ -12,6 +12,7 @@ use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,22 +23,54 @@ class DefaultController extends AbstractController
      *  @Template */
     public function indexAction(TranslatorInterface $translator, UserService $userService)
     {
-        $user = $this->getTheUser($userService);
+        $this->initUser($userService);
 
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'user'      => $user,
         ];
     }
 
     /** @Route("profile", name="profile") @Template */
-    public function profileAction(TranslatorInterface $translator, UserService $userService)
+    public function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher, UserService $userService)
     {
-        $user = $this->getTheUser($userService);
+        $this->initUser($userService);
+
+        $error = '';
+        $message = '';
+        $email = '';
+        $name = '';
+        if ($request->get('action') === 'registration') {
+            $email     = $request->get('email');
+            $name      = $request->get('name');
+            $password  = $request->get('password');
+            $password2 = $request->get('password2');
+            if (mb_strlen($password) < Common::MIN_PASSWORD_LENGTH) $error = 'passwordTooShort';
+            elseif ($password !== $password2) $error = 'passwordsDoNotMatch';
+            else {
+
+                /* @var $userDb User */
+                $userDb = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
+                if ($userDb instanceof User) $error = 'emailIsAlreadyInDb';
+                else {
+                    /* @var $user User */
+                    $user = $this->get('security.token_storage')->getToken()->getUser();
+                    $user->setEmail($email);
+                    $user->setName($name);
+                    $user->setPassword($passwordHasher->hashPassword($user, $password));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+                    $message = 'registrationSuccessful';
+                }
+            }
+        }
 
         return [
-            'pageTitle' => $translator->trans('profile'),
-            'user'      => $user,
+            'pageTitle'  => $translator->trans('profile'),
+            'error'      => $error,
+            'message'    => $message,
+            'email'      => $email,
+            'name'       => $name,
         ];
     }
 
@@ -156,7 +189,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    public function getTheUser(UserService $userService): User {
+    public function initUser(UserService $userService): User {
         $user = $this->getLoggedInUser();
         if ($user instanceof User) return $user;
 
@@ -172,7 +205,6 @@ class DefaultController extends AbstractController
         // create new user
         $user = new User();
         $user->setName($userService->generateName());
-        $user->setCode($userService->generateCode(22));
         $user->setRoles(['ROLE_USER']);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
