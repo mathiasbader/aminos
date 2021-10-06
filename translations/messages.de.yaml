@@ -37,11 +37,11 @@ error:
 
 test:
   whatsTheNameOfThisAminoacid: Wie heißt diese Aminosäure?
+  youSelected: Ihre Auswahl
+  whichAminoAcidIs: Welche Aminosäure ist {amino}?
   answer:
-    isCorrect: Ihre Antwort {answer} ist richtig
-    isNotCorrect: Ihre Antwort {answer} für {amino} ist nicht richtig
+    isCorrect: Ihre Antwort ist korrekt
+    xIsCorrect: Ihre Antwort {answer} ist richtig
+    xIsNotCorrect: Ihre Antwort {answer} für {amino} ist nicht richtig
+    forXIsNotCorrect: Ihre Antwort für {amino} ist nicht korrekt
     correctAnswerWouldHaveBeen: Die richtige Antwort lautet
-    yourAnswerIsCorrect: Ihre Antwort ist korrekt
-    yourAnswerForAminoIsNotCorrect: Ihre Antwort für {amino} ist nicht korrekt
-    youSelected: Ihre Auswahl
-    whichAminoAcidIs: Welche Aminosäure ist {amino}?

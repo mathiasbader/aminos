@@ -15,13 +15,11 @@
             {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}
             ">
                 <div style="margin-bottom: 12px;">
-                    Your answer <span style="display: inline-block; background-color: white; padding: 0 4px;
-                    border-radius: 3px;">{{ answerText }}</span>
                     {% if answerCorrect %}
-                         is correct
+                        {{ 'test.answer.xIsCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>' } )|raw }}
                     {% else %}
-                        is not correct.<br>
-                        Correct answer would have been:
+                        {{ 'test.answer.xIsNotCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>', '{amino}' : answerAmino.code1 } )|raw }}<br>
+                        {{ 'test.answer.correctAnswerWouldHaveBeen'|trans }}:
                     {% endif %}
                 </div>
 
@@ -45,7 +43,7 @@
             <div style="margin-top: 12px;">
                 <form method="post">
                     <label for="answer" style="display: inline-block; margin-bottom: 6px;">
-                        What's the name of this amino acid?
+                        {{ 'test.whatsTheNameOfThisAminoacid'|trans }}
                     </label>
                     <input type="text" name="answer" id="answer" autocomplete="false" style="width: 100%;
                     font-size: 1.2em; padding: 6px;" />

@@ -16,9 +16,9 @@
                     ">
                 <div style="margin-bottom: 12px;">
                     {% if answerCorrect %}
-                        {{ 'test.answer.isCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>' } )|raw }}
+                        {{ 'test.answer.xIsCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>' } )|raw }}
                     {% else %}
-                        {{ 'test.answer.isNotCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>', '{amino}' : answerAmino.code1 } )|raw }}<br>
+                        {{ 'test.answer.xIsNotCorrect'|trans( { '{answer}' : '<span class="answer">' ~ answerText ~ '</span>', '{amino}' : answerAmino.code1 } )|raw }}<br>
                         {{ 'test.answer.correctAnswerWouldHaveBeen'|trans }}:
                     {% endif %}
                 </div>

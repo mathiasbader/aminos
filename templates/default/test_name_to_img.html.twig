@@ -13,7 +13,7 @@
             {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}">
                 {% if answerCorrect %}
                     <div style="margin-bottom: 12px;">
-                        {{ 'test.answer.yourAnswerIsCorrect'|trans }}:
+                        {{ 'test.answer.isCorrect'|trans }}:
                     </div>
                     <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                         <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
@@ -26,12 +26,12 @@
                     </div>
                 {% else %}
                     <div style="margin-bottom: 12px;">
-                        {{ 'test.answer.yourAnswerForAminoIsNotCorrect'|trans( { '{amino}' : '<span style="font-weight: bold;">' ~ answerAmino.name ~ '</span>' } )|raw }}<br>
+                        {{ 'test.answer.forXIsNotCorrect'|trans( { '{amino}' : '<span style="font-weight: bold;">' ~ answerAmino.name ~ '</span>' } )|raw }}<br>
                     </div>
                     <div style="display: flex; flex-wrap: wrap">
                         <div style="width: 50%; min-width: 150px;">
                             <div style="text-align: left; margin-bottom: 24px;">
-                                {{ 'test.answer.youSelected'|trans }}:
+                                {{ 'test.youSelected'|trans }}:
                             </div>
                             <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                                 <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
@@ -66,7 +66,7 @@
             <div style="margin-top: 12px;">
                 <form method="post">
                     <label for="answer" style="display: inline-block; margin-bottom: 6px;">
-                        {{ 'test.answer.whichAminoAcidIs'|trans( { '{amino}' : '<span style="font-weight: bold">' ~ amino.name ~ '</span>' } )|raw }}
+                        {{ 'test.whichAminoAcidIs'|trans( { '{amino}' : '<span style="font-weight: bold">' ~ amino.name ~ '</span>' } )|raw }}
                     </label>
                 </form>
 
