@@ -10,7 +10,7 @@ main {
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 .dashboard { margin: 24px 0 }
-.dashboard a { width: 160px; }
+.dashboard a { width: 180px; }
 .btn {
     display: inline-block;
     text-decoration: none;
@@ -21,4 +21,30 @@ a:hover { text-decoration: underline; }
     margin-bottom: 16px; }
 .btn:hover {
     text-decoration: none;
+    transition: background 0.3s;
     background-color: #ddd; }
+.btn.active { border: 1px solid #888; }
+.alert {
+    margin: 8px 0;
+    border: 1px solid red;
+    padding: 16px 32px;
+    border-radius: 6px;
+    background-color: #ffeeee; }
+.cols { display: flex; }
+.cols .c2 { width: 50%; }
+input {
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 20px;
+    margin: 4px 0;
+    width: 100%; }
+.icon-close {
+    width: 16px;
+    height: 16px; }
+.answer {
+    display: inline-block;
+    background-color: white;
+    padding: 0 4px;
+    border-radius: 3px; }

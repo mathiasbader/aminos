@@ -1,20 +1,27 @@
 <!DOCTYPE html>
+<!--
+    {{ include('_lib/ascii.html.twig') }}
+    {{ 'sourceCode.thisProjectIsOpenSource'|trans }}
+    {{ 'sourceCode.getTheSourceAt'|trans( { '{url}' : 'https://github.com/mathiasbader/aminos' } )|trans }}
+
+-->
 <html lang="de">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <title>{% block title %}{{ pageTitle }}{% endblock %}</title>
+    <title>{% block title %}{% if pageTitle is defined %}{{ pageTitle }} - {% endif %}{{ 'aminoacids'|trans }}{% endblock %}</title>
 
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     {% block css %}{% endblock %}
 
     {% block javascripts %}{% endblock %}
 </head>
 <body{% block bodyParam %}{% endblock %}>
 <main>
-<h2>{{ pageTitle }}</h2>
-{% block body %}{% endblock %}
+    <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}{{ 'aminoacids'|trans }}{% endif %}</h2>
+
+    {% block body %}{% endblock %}
 
 </main>
 </body>

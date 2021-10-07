@@ -1,0 +1,75 @@
+aminoacids: Aminosäuren
+studyThe20ProteinogenicAminoAcids: Lerne die 20 proteinogenen Aminosäuren
+back: Zurück
+test.imageToName: 'Test: Bild nach Name'
+test.nameToImage: 'Test: Name nach Bild'
+test.CodeToName: 'Test: Code nach Name'
+
+about:
+  link: Über
+  thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
+  youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
+  allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
+
+essential: essenziell
+semiessential: semiessenziell
+
+sourceCode:
+  thisProjectIsOpenSource: Dieses Projekt ist Open Source
+  getTheSourceAt: Sie bekommen den Sourcecode unter {url}
+
+profile: Profil
+language: Sprache
+yourAccount: Ihr Account
+name: Name
+email: E-Mail
+password: Passwort
+repeatPassword: Passwort wiederholen
+save: Speichern
+register: Registrieren
+registration: Registrierung
+login: Login
+edit: Bearbeiten
+cancel: Abbrechen
+
+error:
+  passwordTooShort: Das Passwort ist zu kurz - es muss aus mindestens {min} Zeichen bestehen
+  passwordsDoNotMatch: Die beiden Passwörter stimmen nicht überein
+  emailAlreadyRegistered: Diese E-Mail ist bereits registriert - bitte loggen Sie sich ein oder nutzen Sie eine andere E-Mail
+  login: Das Login war nicht erfolgreich
+  providedEmailInvalid: Die E-Mail-Adresse ist nicht gültig
+  anErrorOccurred: Es ist ein Fehler aufgetreten
+  noNameProvided: Sie haben keinen Namen angegeben
+
+test:
+  whatsTheNameOfThisAminoacid: Wie heißt diese Aminosäure?
+  youSelected: Ihre Auswahl
+  whichAminoAcidIs: Welche Aminosäure ist {amino}?
+  answer:
+    isCorrect: Ihre Antwort ist korrekt
+    xIsCorrect: Ihre Antwort {answer} ist richtig
+    xIsNotCorrect: Ihre Antwort {answer} für {amino} ist nicht richtig
+    forXIsNotCorrect: Ihre Antwort für {amino} ist nicht korrekt
+    correctAnswerWouldHaveBeen: Die richtige Antwort lautet
+
+aminos:
+  alanine: Alanin
+  arginine: Arginin
+  asparagine: Asparagin
+  asparticAcid: Asparaginsäure
+  cysteine: Cystein
+  glutamicAcid: Glutaminsäure
+  glutamine: Glutamin
+  glycine: Glycin
+  histidine: Histidin
+  isoleucine: Isoleucin
+  leucine: Leucin
+  lysine: Lysin
+  methionine: Methionin
+  phenylalanine: Phenylalanin
+  proline: Prolin
+  serine: Serin
+  threonine: Threonin
+  tryptophan: Tryptophan
+  tyrosine: Tyrosin
+  valine: Valin

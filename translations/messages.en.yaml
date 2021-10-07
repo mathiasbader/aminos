@@ -1,0 +1,75 @@
+aminoacids: Amino acids
+studyThe20ProteinogenicAminoAcids: Study the 20 proteinogenic amino acids
+back: Back
+test.imageToName: 'Test: Image to name'
+test.nameToImage: 'Test: Name to image'
+test.CodeToName: 'Test: Code to name'
+
+about:
+  link: About
+  thisProjectIsOpenSourceAndUsesTheMitLicense: This project is open source and uses the {license}.
+  youCanGetTheCodeOnGitHub: You can get the code on {github}.
+  allAminoAcidImagesWhereCreatedUsing: All amino acid images where created using {ballview}, the standalone molecular modelling and visualization application of {ball}.
+
+essential: essential
+semiessential: semiessential
+
+sourceCode:
+  thisProjectIsOpenSource: This project is open source
+  getTheSourceAt: Get the source at {url}
+
+profile: Profile
+language: Language
+yourAccount: Your account
+name: Name
+email: E-Mail
+password: Password
+repeatPassword: Repeat password
+save: Save
+register: Register
+registration: Registration
+login: Login
+edit: Edit
+cancel: Cancel
+
+error:
+  passwordTooShort: The passwort is too short - it must contain at least {min} characters
+  passwordsDoNotMatch: The two passwords do not match
+  emailAlreadyRegistered: This e-mail is already registered - please login or register with a different e-mail
+  login: Login was not successful
+  providedEmailInvalid: The provided e-mail is invalid
+  anErrorOccurred: An error occurred
+  noNameProvided: You did not provide a name
+
+test:
+  whatsTheNameOfThisAminoacid: What's the name of this amino acid?
+  youSelected: You selected
+  whichAminoAcidIs: Which amino acid is {amino}?
+  answer:
+    isCorrect: Your answer is correct
+    xIsCorrect: Your answer {answer} is correct
+    xIsNotCorrect: Your answer {answer} is not correct for {amino}
+    forXIsNotCorrect: Your answer for {amino} is not correct
+    correctAnswerWouldHaveBeen: Correct answer would have been
+
+aminos:
+  alanine: Alanine
+  arginine: Arginine
+  asparagine: Asparagine
+  asparticAcid: Aspartic acid
+  cysteine: Cysteine
+  glutamicAcid: Glutamic acid
+  glutamine: Glutamine
+  glycine: Glycine
+  histidine: Histidine
+  isoleucine: Isoleucine
+  leucine: Leucine
+  lysine: Lysine
+  methionine: Methionine
+  phenylalanine: Phenylalanine
+  proline: Proline
+  serine: Serine
+  threonine: Threonine
+  tryptophan: Tryptophan
+  tyrosine: Tyrosine
+  valine: Valine

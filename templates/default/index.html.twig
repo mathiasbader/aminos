@@ -2,13 +2,17 @@
 
 {% block body %}
 
-    <div class="dashboard">
-        <a href="{{ url('overview', { 'param' : ''}) }}" class="btn">The amino acids</a><br>
-        <a href="{{ url('testImgToName' ) }}" class="btn">Test: Image to name</a><br>
-        <a href="{{ url('testNameToImg' ) }}" class="btn">Test: Name to image</a><br>
-        <a href="{{ url('testCodeToName') }}" class="btn">Test: Code to name</a><br>
+    <div style="text-align: right;">
+        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
     </div>
 
-    <a href="{{ url('about') }}">About</a>
+    <div class="dashboard">
+        <a href="{{ url('overview', { 'param' : ''}) }}" class="btn">{{ 'aminoacids'|trans }}</a><br>
+        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'test.imageToName'|trans }}</a><br>
+        <a href="{{ url('testNameToImg' ) }}" class="btn">{{ 'test.nameToImage'|trans }}</a><br>
+        <a href="{{ url('testCodeToName') }}" class="btn">{{ 'test.CodeToName'|trans }}</a><br>
+    </div>
+
+    <a href="{{ url('about') }}">{{ 'about.link'|trans }}</a>
 
 {% endblock %}

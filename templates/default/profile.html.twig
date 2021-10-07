@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
+    </div>
+
+    <h4>{{ 'language'|trans }}</h4>
+    <div>
+        <a href="{{ url('lang', { 'lang' : 'en' }) }}" class="btn{% if app.request.locale == 'en' %} active{% endif %}">English</a>
+        <a href="{{ url('lang', { 'lang' : 'es' }) }}" class="btn{% if app.request.locale == 'es' %} active{% endif %}">Español</a>
+        <a href="{{ url('lang', { 'lang' : 'de' }) }}" class="btn{% if app.request.locale == 'de' %} active{% endif %}">Deutsch</a><br><br>
+    </div>
+
+    {% if app.user.email is not null %}
+        <h4>{{ 'yourAccount'|trans }}</h4>
+        <div>
+            <div id="editLink" style="width: 50%;">
+
+                {% if error is defined and error is not empty %}
+                    <div class="alert">
+                        {% if     error == 'invalidEmail'   %} {{ 'error.providedEmailInvalid'|trans }}
+                        {% elseif error == 'noNameProvided' %} {{ 'error.noNameProvided'|trans }}
+                        {% else %}                             {{ 'error.anErrorOccurred'|trans }}{% endif %}
+                    </div>
+                {% endif %}
+
+                {{ app.user.name }}<br>
+                {{ app.user.email }}<br><br>
+
+                <a href="#" onclick="showEdit(); return false;" class="btn">{{ 'edit'|trans }}</a><br><br>
+
+                <a href="{{ url('app_logout') }}">Logout</a>
+            </div>
+            <div style="width: 50%; padding-right: 12px; display: none;" id="edit">
+                <form action="{{ url('profile') }}" method="post">
+
+                    <input type="hidden" name="action" value="edit"/>
+
+                    <label for="email">{{ 'email'|trans }}:</label><br>
+                    <input type="email" name="email" id="email" value="{{ app.user.email }}"/><br>
+
+                    <label for="name">{{ 'name'|trans }}:</label><br>
+                    <input type="text" name="name" id="name" value="{{ app.user.name }}"/><br>
+
+                    <div style="text-align: right;">
+                        <a href="" onclick="hideEdit(); return false;" style="margin-right: 24px;">{{ 'cancel'|trans }}</a>
+                        <input type="submit" class="btn" style="width: auto;" value="{{ 'save'|trans }}"/>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    {% else %}
+        <div style="display: flex">
+            <div style="width: 50%; padding-right: 12px" id="registration">
+                <h4>{{ 'registration'|trans }}</h4>
+                <form action="{{ url('profile') }}" method="post">
+
+                    <input type="hidden" name="action" value="registration"/>
+
+                    <label for="email">{{ 'email'|trans }}:</label><br>
+                    <input type="email" name="email" id="email" value="{% if email is defined %}{{ email }}{% endif %}"/><br>
+
+                    <label for="name">{{ 'name'|trans }}:</label><br>
+                    <input type="text" name="name" id="name" value="{% if name is defined %}{{ name }}{% endif %}"/><br>
+
+                    <label for="password">{{ 'password'|trans }}:</label><br>
+                    <input type="password" name="password" id="password"/><br>
+
+                    <label for="password2">{{ 'repeatPassword'|trans }}:</label><br>
+                    <input type="password" name="password2" id="password2"/><br>
+
+                    {% if error is defined and error is not empty %}
+                        <div class="alert">
+                            {% if     error == 'passwordTooShort'    %} {{ 'error.passwordTooShort'|trans( { '{min}' : constant('App\\Constant\\Common::MIN_PASSWORD_LENGTH') } ) }}
+                            {% elseif error == 'passwordsDoNotMatch' %} {{ 'error.passwordsDoNotMatch'|trans }}
+                            {% elseif error == 'invalidEmail'        %} {{ 'error.providedEmailInvalid'|trans }}
+                            {% elseif error == 'emailIsAlreadyInDb'  %} {{ 'error.emailAlreadyRegistered'|trans }}
+                            {% else %}                                  {{ 'error.anErrorOccurred'|trans }}{% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div style="text-align: right;">
+                        <input type="submit" class="btn" style="width: auto;" value="{{ 'register'|trans }}"/>
+                    </div>
+                </form>
+            </div>
+            <div style="width: 50%; padding-right: 12px" id="login">
+                <h4>{{ 'login'|trans }}</h4>
+                <form action="{{ url('app_login') }}" method="post">
+
+                    <input type="hidden" name="action" value="login"/>
+
+                    <label for="email">{{ 'email'|trans }}:</label><br>
+                    <input type="email" name="email" id="email"/><br>
+
+                    <label for="password">{{ 'password'|trans }}:</label><br>
+                    <input type="password" name="password" id="password"/><br>
+
+                    {% if loginError is defined and loginError is not empty %}
+                        <div class="alert">
+                            {{ 'error.login'|trans }}
+                        </div>
+                    {% endif %}
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div style="text-align: right;">
+                        <input type="submit" class="btn" style="width: auto;" value="Login"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        function showEdit() {
+            document.getElementById('editLink').style.display = 'none';
+            document.getElementById('edit'    ).style.display = 'block';
+        }
+
+        function hideEdit() {
+            document.getElementById('edit'    ).style.display = 'none';
+            document.getElementById('editLink').style.display = 'block';
+        }
+    </script>
+{% endblock %}

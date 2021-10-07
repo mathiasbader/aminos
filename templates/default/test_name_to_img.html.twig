@@ -3,7 +3,7 @@
 {% block body %}
 
     <div style="margin-bottom: 12px;">
-        <a href="{{ url('index') }}">Back</a>
+        <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
     <div style="display: flex;">
@@ -13,12 +13,12 @@
             {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}">
                 {% if answerCorrect %}
                     <div style="margin-bottom: 12px;">
-                        Your selection is correct:
+                        {{ 'test.answer.isCorrect'|trans }}:
                     </div>
                     <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                         <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
                     </div>
-                    <div style="font-weight: bold">{{ selectedAmino.name }}</div>
+                    <div style="font-weight: bold">{{ ('aminos.' ~ selectedAmino.name)|trans }}</div>
                     <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                     <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                     <div>
@@ -26,17 +26,17 @@
                     </div>
                 {% else %}
                     <div style="margin-bottom: 12px;">
-                        Your selection for <span style="font-weight: bold;">{{ answerAmino.name }}</span> is not correct<br>
+                        {{ 'test.answer.forXIsNotCorrect'|trans( { '{amino}' : '<span style="font-weight: bold;">' ~ ('aminos.' ~ answerAmino.name)|trans ~ '</span>' } )|raw }}<br>
                     </div>
                     <div style="display: flex; flex-wrap: wrap">
                         <div style="width: 50%; min-width: 150px;">
                             <div style="text-align: left; margin-bottom: 24px;">
-                                You selected:
+                                {{ 'test.youSelected'|trans }}:
                             </div>
                             <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                                 <div style="width: 22px; text-align: center">{{ selectedAmino.code1 }}</div>
                             </div>
-                            <div style="font-weight: bold">{{ selectedAmino.name }}</div>
+                            <div style="font-weight: bold">{{ ('aminos.' ~ selectedAmino.name)|trans }}</div>
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                             <div>
@@ -45,12 +45,12 @@
                         </div>
                         <div style="width: 50%; min-width: 150px;">
                             <div style="text-align: left; margin-bottom: 24px;">
-                                The correct answer is:
+                                {{ 'test.answer.correctAnswerWouldHaveBeen'|trans }}:
                             </div>
                             <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
                                 <div style="width: 22px; text-align: center">{{ answerAmino.code1 }}</div>
                             </div>
-                            <div style="font-weight: bold">{{ answerAmino.name }}</div>
+                            <div style="font-weight: bold">{{ ('aminos.' ~ answerAmino.name)|trans }}</div>
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
                             <div>
@@ -66,7 +66,7 @@
             <div style="margin-top: 12px;">
                 <form method="post">
                     <label for="answer" style="display: inline-block; margin-bottom: 6px;">
-                        Which amino acid is <span style="font-weight: bold">{{ amino.name }}</span>?
+                        {{ 'test.whichAminoAcidIs'|trans( { '{amino}' : '<span style="font-weight: bold">' ~ ('aminos.' ~ amino.name)|trans ~ '</span>' } )|raw }}
                     </label>
                 </form>
 
