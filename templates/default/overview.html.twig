@@ -6,33 +6,16 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
-    <div style="text-align: center; margin-bottom: 8px;">
-        {% if bigger %} <a href="{{ url('overview', { 'param' : ''  }) }}">Smaller</a>
-        {% else %}      <a href="{{ url('overview', { 'param' : 'b' }) }}">Bigger</a> {% endif %}
-    </div>
 
-    <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
-        {% for amino in aminos %}
+    {% for row in matrix %}
+        <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
+            {% for key in row|keys %}
 
-            <div style="border: 1px solid #eee; width: {% if bigger %}340{% else %}136{% endif %}px; background-color: #f8f8f8; margin: 0 6px 6px 0;
-            border-radius: 4px; padding: 8px;">
-                <div style="background-color: #a32b2b; color: white; border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
-                    <div style="width: 22px; text-align: center">{{ amino.code1 }}</div>
-                </div>
-                <div style="font-weight: bold">{{ ('aminos.' ~ amino.name)|trans }}</div>
-                <div style="font-size: 0.8em; margin-bottom: 8px;">{{ amino.code3 }}</div>
-                <div style="color: #888; margin-bottom: 8px; text-align: center">{{ amino.formula|lower_digits|raw }}</div>
-                {% if amino.essential != '0' %}
-                    <div style="color: #888; font-size: 0.85rem; margin-bottom: 8px; text-align: center">
-                        {% if amino.essential == '1' %}{{ 'essential'|trans }}{% elseif amino.essential == '2' %}{{ 'semiessential'|trans }}{% endif %}
-                    </div>
-                {% endif %}
-                <div style="text-align: center">
-                    <img src="{{ amino.image(bigger) }}" style="max-width: 100%"/>
-                </div>
-            </div>
+                {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[row[key]] } %}
 
-        {% endfor %}
-    </div>
+            {% endfor %}
+            <br>
+        </div>
+    {% endfor %}
 
 {% endblock %}

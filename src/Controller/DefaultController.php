@@ -103,19 +103,27 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('profile');
     }
 
-    /** @Route("/overview/{param}", name="overview") @Template */
-    public function overviewAction(TranslatorInterface $translator, string $param = '')
+    /** @Route("/overview", name="overview") @Template */
+    public function overviewAction(TranslatorInterface $translator)
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         $aminoMap = [];
         foreach($aminos as $amino) {
             /* @var $amino Aminoacid  */
-            $aminoMap[$amino->getId()] = $amino;
+            $aminoMap[$amino->getCode1()] = $amino;
         }
+
+        $matrix = [
+            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
+            'nonPolar2'    => ['M', 'F', 'W', 'P'],
+            'polar'        => ['S', 'T', 'C', 'Y', 'N', 'Q'],
+            'electrically' => ['D', 'E', 'K', 'R', 'H'],
+        ];
+
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'aminos'    => $aminoMap,
-            'bigger'    => $param === 'b',
+            'aminoMap'  => $aminoMap,
+            'matrix'    => $matrix,
         ];
     }
 
