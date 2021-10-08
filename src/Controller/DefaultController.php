@@ -104,7 +104,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/overview", name="overview") @Template */
-    public function overviewAction(TranslatorInterface $translator)
+    public function overviewAction(Request $request, TranslatorInterface $translator)
     {
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         $aminoMap = [];
@@ -124,6 +124,7 @@ class DefaultController extends AbstractController
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'aminoMap'  => $aminoMap,
             'matrix'    => $matrix,
+            'action'    => $request->get('a'),
         ];
     }
 

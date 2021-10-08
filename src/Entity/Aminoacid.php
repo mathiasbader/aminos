@@ -21,7 +21,11 @@ class Aminoacid
     public function getEssential(): int     { return $this->essential; }
     public function getCode1    (): ?string { return $this->code1    ; }
     public function getCode3    (): ?string { return $this->code3    ; }
-    public function getImage    (): string  { return '/img/aminos/120/' . strtolower($this->code1) . '1.png'; }
+    public function getImage($action = 'svg'): string
+    {
+        if ($action === 'svg') return '/img/aminos/svg/' . strtolower($this->code1) . '.svg';
+        else                   return '/img/aminos/120/' . strtolower($this->code1) . '1.png';
+    }
 
     public function setName     (string $name     ): self { $this->name      = $name     ; return $this; }
     public function setFormula  (string $formula  ): self { $this->formula   = $formula  ; return $this; }
