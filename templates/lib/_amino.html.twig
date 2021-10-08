@@ -1,4 +1,4 @@
-<div style="border: 1px solid #eee; width: 160px; background-color: #f8f8f8; margin: 0 6px 6px 0;
+<div style="border: 1px solid {% if action == 'svg' %}#eee{% else %}#ddd{% endif %}; width: 160px; background-color: {% if action == 'svg' %}#f8f8f8{% else %}#eee{% endif %}; margin: 0 6px 6px 0;
             border-radius: 4px; padding: 8px;">
     <div style="height: 48px;">
         <div style="border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
