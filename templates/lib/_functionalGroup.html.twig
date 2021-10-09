@@ -1,0 +1,18 @@
+<div style="display: flex">
+    <div class="outer" style="
+        {% if bgColor2 is defined %}
+            background: linear-gradient({{ bgColor }}, {{ bgColor2 }});
+        {% else %}
+            background-color: {{ bgColor }};
+        {% endif %}
+    "><div class="inner">{{ name }}</div></div>
+    <div>
+        {% for row in rows %}
+            <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
+                {% for aminoCode in matrix[row]['aminos'] %}
+                    {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[aminoCode], 'height' : matrix[row]['height'] } %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

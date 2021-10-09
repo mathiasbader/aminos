@@ -6,16 +6,21 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
-
-    {% for functionalGroup in matrix|keys %}
-        <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
-            {% for aminoCode in matrix[functionalGroup]['aminos'] %}
-
-                {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[aminoCode], 'height' : matrix[functionalGroup]['height'] } %}
-
-            {% endfor %}
-            <br>
-        </div>
-    {% endfor %}
+    {% include 'lib/_functionalGroup.html.twig' with {
+        'rows'    : ['nonPolar1', 'nonPolar2'],
+        'name'    : 'Nonpolar side chains',
+        'bgColor' : '#dcecdf',
+    } %}
+    {% include 'lib/_functionalGroup.html.twig' with {
+        'rows'    : ['polar'],
+        'name'    : 'Polar side chains',
+        'bgColor' : '#f6ecd9',
+    } %}
+    {% include 'lib/_functionalGroup.html.twig' with {
+        'rows'     : ['electrically'],
+        'name'     : 'Electrically charged side chains',
+        'bgColor'  : '#e4f1f8',
+        'bgColor2' : '#f7e6e5',
+    } %}
 
 {% endblock %}

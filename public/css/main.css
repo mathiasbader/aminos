@@ -48,3 +48,16 @@ input {
     background-color: white;
     padding: 0 4px;
     border-radius: 3px; }
+.outer {
+    writing-mode: tb-rl;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+    margin-right: 6px;
+    padding-bottom: 16px;
+}
+.inner {
+    transform: rotate(180deg);
+    padding: 8px;
+}
