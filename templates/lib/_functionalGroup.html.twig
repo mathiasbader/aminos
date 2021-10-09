@@ -5,7 +5,7 @@
         {% else %}
             background-color: {{ bgColor }};
         {% endif %}
-    "><div class="inner">{{ name }}</div></div>
+    "><div class="inner">{{ name|trans }}</div></div>
     <div>
         {% for row in rows %}
             <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">

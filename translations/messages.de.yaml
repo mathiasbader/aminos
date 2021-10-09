@@ -73,3 +73,7 @@ aminos:
   tryptophan: Tryptophan
   tyrosine: Tyrosin
   valine: Valin
+sideChains:
+  polar: Polare Seitenketten
+  nonPolar: Nicht polare Seitenketten
+  electricallyCharged: Elektrisch geladene Seitenketten

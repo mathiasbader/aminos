@@ -73,3 +73,7 @@ aminos:
   tryptophan: Tryptophan
   tyrosine: Tyrosine
   valine: Valine
+sideChains:
+  polar: Polar side chains
+  nonPolar: Nonpolar side chains
+  electricallyCharged: Electrically charged side chains
