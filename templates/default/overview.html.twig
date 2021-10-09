@@ -7,11 +7,11 @@
     </div>
 
 
-    {% for row in matrix %}
+    {% for functionalGroup in matrix|keys %}
         <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
-            {% for key in row|keys %}
+            {% for aminoCode in matrix[functionalGroup]['aminos'] %}
 
-                {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[row[key]] } %}
+                {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[aminoCode], 'height' : matrix[functionalGroup]['height'] } %}
 
             {% endfor %}
             <br>

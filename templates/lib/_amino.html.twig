@@ -1,21 +1,17 @@
-<div style="border: 1px solid {% if action == 'svg' %}#eee{% else %}#ddd{% endif %}; width: 160px; background-color: {% if action == 'svg' %}#f8f8f8{% else %}#eee{% endif %}; margin: 0 6px 6px 0;
-            border-radius: 4px; padding: 8px;">
-    <div style="height: 48px;">
-        <div style="border-radius: 16px; width: 24px; height: 24px; float: right; display: inline-block">
-            <div style="width: 25px; text-align: center">{{ amino.code1 }}</div>
-        </div>
-        <div>
-            <span style="font-weight: bold">{{ ('aminos.' ~ amino.name)|trans }}</span>,
-            {{ amino.code3 }}
-        </div>
+<div style="border: 1px solid {% if action == 'svg' %}#eee{% else %}#ddd{% endif %};
+        width: 170px;{% if height is defined %} height: {{ height }}px;{% endif %} background-color: {% if action == 'svg' %}#f8f8f8{% else %}#eee{% endif %}; margin: 0 6px 6px 0;
+        border-radius: 4px; padding: 8px; overflow: hidden">
+    <div style="margin-bottom: 8px;">
+        <div style="float: right; display: inline-block">{{ amino.code3 }}, {{ amino.code1 }}</div>
+        <div style="font-weight: bold">{{ ('aminos.' ~ amino.name)|trans }}</div>
         {# <div style="color: #888; margin-bottom: 8px; text-align: center">{{ amino.formula|lower_digits|raw }}</div>  #}
         {% if amino.essential != '0' %}
-            <div style="color: #888; font-size: 0.85rem; margin: 8px 0; text-align: center">
-                {% if amino.essential == '1' %}{{ 'essential'|trans }}{% elseif amino.essential == '2' %}{{ 'semiessential'|trans }}{% endif %}
-            </div>
         {% endif %}
     </div>
     <div style="text-align: center">
         <img src="{{ amino.image(action) }}" style="max-width: 100%"/>
     </div>
+    {# <div style="color: #888; font-size: 0.85rem; margin: 8px 0; text-align: center">
+        {% if amino.essential == '1' %}{{ 'essential'|trans }}{% elseif amino.essential == '2' %}{{ 'semiessential'|trans }}{% endif %}
+    </div> #}
 </div>
