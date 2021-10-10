@@ -124,7 +124,7 @@ class DefaultController extends AbstractController
             ],
             'polar' => [
                 'height' => 230,
-                'aminos' => ['S', 'T', 'C', 'Y', 'N', 'Q'],
+                'aminos' => ['N', 'Q', 'S', 'T', 'C', 'Y'],
             ],
             'electrically' => [
                 'height' => 285,
