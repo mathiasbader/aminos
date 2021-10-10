@@ -1,11 +1,14 @@
 <div style="display: flex">
-    <div class="outer" style="
-        {% if bgColor2 is defined %}
-            background: linear-gradient({{ bgColor }}, {{ bgColor2 }});
-        {% else %}
+    <div style="height: 24px;
+    {% if bgColor2 is defined %}
+            background: linear-gradient(.25turn, {{ bgColor }}, {{ bgColor2 }});
+    {% else %}
             background-color: {{ bgColor }};
-        {% endif %}
-    "><div class="inner">{{ name|trans }}</div></div>
+    {% endif %}
+    width: 100%"></div>
+</div>
+<div style="display: flex">
+    <div class="outer" style="background-color: {{ bgColor }}"><div class="inner">{{ name|trans }}</div></div>
     <div>
         {% for row in rows %}
             <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
