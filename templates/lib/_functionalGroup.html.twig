@@ -12,8 +12,8 @@
     <div>
         {% for row in rows %}
             <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">
-                {% for aminoCode in matrix[row]['aminos'] %}
-                    {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[aminoCode], 'height' : matrix[row]['height'] } %}
+                {% for aminoCode in matrix[row] %}
+                    {% include 'lib/_amino.html.twig' with { 'amino' : aminoMap[aminoCode] } %}
                 {% endfor %}
             </div>
         {% endfor %}

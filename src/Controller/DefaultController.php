@@ -114,22 +114,10 @@ class DefaultController extends AbstractController
         }
 
         $matrix = [
-            'nonPolar1' => [
-                'height' => 200,
-                'aminos' => ['G', 'A', 'V', 'L', 'I'],
-            ],
-            'nonPolar2' => [
-                'height' => 235,
-                'aminos' => ['M', 'F', 'W', 'P'],
-            ],
-            'polar' => [
-                'height' => 230,
-                'aminos' => ['N', 'Q', 'S', 'T', 'C', 'Y'],
-            ],
-            'electrically' => [
-                'height' => 285,
-                'aminos' => ['D', 'E', 'K', 'R', 'H'],
-            ]
+            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
+            'nonPolar2'    => ['M', 'F', 'W', 'P'],
+            'polar'        => ['N', 'Q', 'S', 'T', 'C', 'Y'],
+            'electrically' => ['D', 'E', 'K', 'R', 'H'],
         ];
 
         return [
