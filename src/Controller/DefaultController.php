@@ -25,8 +25,24 @@ class DefaultController extends AbstractController
     {
         $this->initUser($userService);
 
+        $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
+        $aminoMap = [];
+        foreach($aminos as $amino) {
+            /* @var $amino Aminoacid  */
+            $aminoMap[$amino->getCode1()] = $amino;
+        }
+
+        $matrix = [
+            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
+            'nonPolar2'    => ['M', 'F', 'W', 'P'],
+            'polar'        => ['N', 'Q', 'S', 'T', 'C', 'Y'],
+            'electrically' => ['D', 'E', 'K', 'R', 'H'],
+        ];
+
         return [
-            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+            'pageTitle' => $translator->trans('the20ProteinogenicAminoAcids'),
+            'aminoMap'  => $aminoMap,
+            'matrix'    => $matrix,
         ];
     }
 
@@ -101,31 +117,6 @@ class DefaultController extends AbstractController
             $request->getSession()->set('_lang', $user->getLang());
         }
         return $this->redirectToRoute('profile');
-    }
-
-    /** @Route("/overview", name="overview") @Template */
-    public function overviewAction(Request $request, TranslatorInterface $translator)
-    {
-        $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
-        $aminoMap = [];
-        foreach($aminos as $amino) {
-            /* @var $amino Aminoacid  */
-            $aminoMap[$amino->getCode1()] = $amino;
-        }
-
-        $matrix = [
-            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
-            'nonPolar2'    => ['M', 'F', 'W', 'P'],
-            'polar'        => ['N', 'Q', 'S', 'T', 'C', 'Y'],
-            'electrically' => ['D', 'E', 'K', 'R', 'H'],
-        ];
-
-        return [
-            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'aminoMap'  => $aminoMap,
-            'matrix'    => $matrix,
-            'action'    => $request->get('a'),
-        ];
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */

@@ -2,15 +2,30 @@
 
 {% block body %}
 
-    <div style="text-align: right;">
-        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
+    <div class="menu">
+        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'test.imageToName'|trans }}</a>
+        <a href="{{ url('testNameToImg' ) }}" class="btn">{{ 'test.nameToImage'|trans }}</a>
+        <a href="{{ url('testCodeToName') }}" class="btn">{{ 'test.CodeToName'|trans }}</a>
+        <a href="{{ url('profile') }}" style="float: right;">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
     </div>
 
-    <div class="dashboard">
-        <a href="{{ url('overview') }}" class="btn">{{ 'aminoacids'|trans }}</a><br>
-        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'test.imageToName'|trans }}</a><br>
-        <a href="{{ url('testNameToImg' ) }}" class="btn">{{ 'test.nameToImage'|trans }}</a><br>
-        <a href="{{ url('testCodeToName') }}" class="btn">{{ 'test.CodeToName'|trans }}</a><br>
+    <div>
+        {% include 'lib/_functionalGroup.html.twig' with {
+            'rows'    : ['nonPolar1', 'nonPolar2'],
+            'name'    : 'sideChains.nonPolar',
+            'bgColor' : '#dcecdf',
+        } %}
+        {% include 'lib/_functionalGroup.html.twig' with {
+            'rows'    : ['polar'],
+            'name'    : 'sideChains.polar',
+            'bgColor' : '#f6ecd9',
+        } %}
+        {% include 'lib/_functionalGroup.html.twig' with {
+            'rows'     : ['electrically'],
+            'name'     : 'sideChains.electricallyCharged',
+            'bgColor'  : '#f7e6e5',
+            'bgColor2' : '#e4f1f8',
+        } %}
     </div>
 
     <a href="{{ url('about') }}">{{ 'about.link'|trans }}</a>

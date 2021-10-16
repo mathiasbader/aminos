@@ -1,5 +1,4 @@
-<div style="border: 1px solid {% if action == 'svg' %}#eee{% else %}#ddd{% endif %};
-        width: 170px; background-color: {% if action == 'svg' %}#f8f8f8{% else %}#eee{% endif %};
+<div style="border: 1px solid #eee; width: 170px; background-color: #f8f8f8;
         margin: 0 5px 5px 0; border-radius: 4px; padding: 8px; overflow: hidden; margin-top: 8px;">
     <div style="margin-bottom: 8px;">
         <div style="float: right; display: inline-block">{{ amino.code3 }}, {{ amino.code1 }}</div>
@@ -8,6 +7,6 @@
         {% endif %}
     </div>
     <div style="text-align: center">
-        <img src="{{ amino.image(action) }}" style="max-width: 100%"/>
+        <img src="{{ amino.image }}" style="max-width: 100%"/>
     </div>
 </div>

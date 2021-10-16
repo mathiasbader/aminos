@@ -9,8 +9,10 @@ main {
     margin: 0 auto; }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
-.dashboard { margin: 24px 0 }
-.dashboard a { width: 180px; }
+.menu { margin: 0 }
+.menu a.btn {
+    text-align: center;
+    width: 180px; }
 .btn {
     display: inline-block;
     text-decoration: none;
