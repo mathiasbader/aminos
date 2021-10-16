@@ -30,14 +30,14 @@
                 <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
                 <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
                 <div>
-                    <img src="{{ answerAmino.image(true) }}" style="max-width: 100%"/>
+                    <img src="{{ answerAmino.image(true) }}" style="width: 100%"/>
                 </div>
             </div>
         {% endif %}
 
         <div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center">
             <div>
-                <img src="{{ amino.image(true) }}" style="max-width: 100%"/>
+                <img src="{{ amino.image }}" style="width: 100%"/>
             </div>
             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ amino.formula|lower_digits|raw }}</div>
             <div style="margin-top: 12px;">

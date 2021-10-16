@@ -8,7 +8,7 @@
 
     <div style="display: flex;">
         {% if selectedAmino is not null %}
-            <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px;
+            <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px; border-radius: 6px;
             {% if answerCorrect %} background-color: #d0f6d0; border: 3px solid #5aa05a;
             {% else %}             background-color: #ffdada; border: 3px solid #d45959; {% endif %}">
                 {% if answerCorrect %}
@@ -22,7 +22,7 @@
                     <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                     <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                     <div>
-                        <img src="{{ selectedAmino.image(true) }}" style="max-width: 100%"/>
+                        <img src="{{ selectedAmino.image(true) }}" style="width: 100%"/>
                     </div>
                 {% else %}
                     <div style="margin-bottom: 12px;">
@@ -40,7 +40,7 @@
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                             <div>
-                                <img src="{{ selectedAmino.image }}"/>
+                                <img src="{{ selectedAmino.image }}" style="width: 100%"/>
                             </div>
                         </div>
                         <div style="width: 50%; min-width: 150px;">
@@ -54,7 +54,7 @@
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
                             <div>
-                                <img src="{{ answerAmino.image }}"/>
+                                <img src="{{ answerAmino.image }}" style="width: 100%"/>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,8 @@
             </div>
         {% endif %}
 
-        <div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center">
+        <div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center;
+        border-radius: 6px;">
             <div style="margin-top: 12px;">
                 <form method="post">
                     <label for="answer" style="display: inline-block; margin-bottom: 6px;">
@@ -74,7 +75,7 @@
                     {% for a in answerAminos %}
                         <div style="width: 33%; min-width: 150px;">
                             <a href="#" onclick="choose({{ a.id }}); return false;">
-                                <img src="{{ a.image }}" style="padding: 8px;"/>
+                                <img src="{{ a.image }}" style="padding: 8px; width: 100%;"/>
                             </a>
                         </div>
                     {% endfor %}
