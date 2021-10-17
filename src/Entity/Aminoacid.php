@@ -24,7 +24,7 @@ class Aminoacid
     public function getImage($version = 'svg'): string
     {
         if ($version !== '3d') return '/img/aminos/svg/' . strtolower($this->code1) . '.svg';
-        else                   return '/img/aminos/120/' . strtolower($this->code1) . '1.png';
+        else                   return '/img/aminos/300/' . strtolower($this->code1) . '1.png';
     }
 
     public function setName     (string $name     ): self { $this->name      = $name     ; return $this; }

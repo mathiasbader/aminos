@@ -22,7 +22,7 @@
                     <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                     <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                     <div>
-                        <img src="{{ selectedAmino.image(true) }}" style="width: 100%"/>
+                        <img src="{{ selectedAmino.image(app.user.representation) }}" style="width: 100%"/>
                     </div>
                 {% else %}
                     <div style="margin-bottom: 12px;">
@@ -40,7 +40,7 @@
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ selectedAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ selectedAmino.formula|lower_digits|raw }}</div>
                             <div>
-                                <img src="{{ selectedAmino.image }}" style="width: 100%"/>
+                                <img src="{{ selectedAmino.image(app.user.representation) }}" style="width: 100%"/>
                             </div>
                         </div>
                         <div style="width: 50%; min-width: 150px;">
@@ -54,7 +54,7 @@
                             <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
                             <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
                             <div>
-                                <img src="{{ answerAmino.image }}" style="width: 100%"/>
+                                <img src="{{ answerAmino.image(app.user.representation) }}" style="width: 100%"/>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                     {% for a in answerAminos %}
                         <div style="width: 33%; min-width: 150px;">
                             <a href="#" onclick="choose({{ a.id }}); return false;">
-                                <img src="{{ a.image }}" style="padding: 8px; width: 100%;"/>
+                                <img src="{{ a.image(app.user.representation) }}" style="padding: 8px; width: 100%;"/>
                             </a>
                         </div>
                     {% endfor %}

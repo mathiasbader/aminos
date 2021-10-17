@@ -3,9 +3,12 @@
 {% block body %}
 
     <div class="menu">
-        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'test.imageToName'|trans }}</a>
-        <a href="{{ url('testNameToImg' ) }}" class="btn">{{ 'test.nameToImage'|trans }}</a>
-        <a href="{{ url('testCodeToName') }}" class="btn">{{ 'test.CodeToName'|trans }}</a>
+        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'testYourself'|trans }}</a>
+        {% if app.user.representation == 'svg' %}
+            <a href="{{ url('index', { 'representation' : '3d'}) }}" class="btn">{{ 'models.3d'|trans }}</a>
+        {% else %}
+            <a href="{{ url('index', { 'representation' : 'svg'}) }}" class="btn">{{ 'models.flat'|trans }}</a>
+        {% endif %}
         <a href="{{ url('profile') }}" style="float: right;">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
     </div>
 

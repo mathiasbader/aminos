@@ -2,9 +2,11 @@ aminoacids: Amino acids
 the20ProteinogenicAminoAcids: The 20 proteinogenic amino acids
 studyThe20ProteinogenicAminoAcids: Study the 20 proteinogenic amino acids
 back: Back
-test.imageToName: 'Test: Image to name'
-test.nameToImage: 'Test: Name to image'
-test.CodeToName: 'Test: Code to name'
+testYourself: Test yourself
+
+models:
+  3d: 3D Models
+  flat: Flat Models
 
 about:
   link: About

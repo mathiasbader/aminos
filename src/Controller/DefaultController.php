@@ -5,10 +5,10 @@ namespace App\Controller;
 
 
 use App\Constant\Common;
+use App\Constant\Representation;
 use App\Entity\Aminoacid;
 use App\Entity\User;
 use App\Service\AminoService;
-use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +21,19 @@ class DefaultController extends AbstractController
 {
     /** @Route("", name="index")
      *  @Template */
-    public function indexAction(TranslatorInterface $translator, UserService $userService)
+    public function indexAction(TranslatorInterface $translator, Request $request)
     {
-        $this->initUser($userService);
+        $user = $this->initUser();
+        if (!empty($request->get('representation'))) {
+            $representation = $request->get('representation');
+            if (in_array($representation, Representation::$all)) {
+                $user->setRepresentation($representation);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('index');
+            }
+        }
 
         $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
         $aminoMap = [];
@@ -47,9 +57,9 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("profile", name="profile") @Template */
-    public function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher, UserService $userService)
+    public function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
-        $this->initUser($userService);
+        $user = $this->initUser();
 
         $error = '';
         $email = '';
@@ -68,8 +78,6 @@ class DefaultController extends AbstractController
                 $userDb = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
                 if ($userDb instanceof User) $error = 'emailIsAlreadyInDb';
                 else {
-                    /* @var $user User */
-                    $user = $this->get('security.token_storage')->getToken()->getUser();
                     $user->setEmail($email);
                     $name = trim(preg_replace("/[^a-zA-Z]/", "", $name));
                     $user->setName($name);
@@ -79,8 +87,7 @@ class DefaultController extends AbstractController
                     $em->flush();
                 }
             }
-        }
-        elseif ($request->get('action') === 'edit') {
+        } elseif ($request->get('action') === 'edit') {
             $email = trim($request->get('email'));
             $name = $request->get('name');
             $name = trim(preg_replace("/[^a-zA-Z]/", "", $name));
@@ -108,8 +115,7 @@ class DefaultController extends AbstractController
     public function langAction(Request $request, AminoService $aminoService, string $lang)
     {
         if ($aminoService->isValidLanguage($lang)) {
-            /* @var $user User */
-            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $user = $this->initUser();
             $user->setLang($lang);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -209,11 +215,11 @@ class DefaultController extends AbstractController
         ];
     }
 
-    public function initUser(UserService $userService): User {
+    public function initUser(): User {
         $user = $this->getLoggedInUser();
         if ($user instanceof User) return $user;
 
-        return $this->generateNewUser($userService);
+        return $this->generateNewUser();
     }
 
     private function getLoggedInUser(): ?User {
@@ -221,13 +227,9 @@ class DefaultController extends AbstractController
         return $token === null ? null : $token->getUser();
     }
 
-    private function generateNewUser(UserService $userService): User {
+    private function generateNewUser(): User {
         // create new user
         $user = new User();
-
-        // Todo: Remove user name generation
-        $user->setName($userService->generateName());
-
         $user->setRoles(['ROLE_USER']);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

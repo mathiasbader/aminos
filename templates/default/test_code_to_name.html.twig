@@ -30,7 +30,7 @@
                 <div style="font-size: 0.8em; margin-bottom: 8px;">{{ answerAmino.code3 }}</div>
                 <div style="color: #888; margin-bottom: 8px; text-align: center">{{ answerAmino.formula|lower_digits|raw }}</div>
                 <div>
-                    <img src="{{ answerAmino.image(true) }}" style="width: 100%"/>
+                    <img src="{{ answerAmino.image(app.user.representation) }}" style="width: 100%"/>
                 </div>
             </div>
         {% endif %}
