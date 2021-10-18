@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity(repositoryClass=TestRunRepository::class) */
+/** @ORM\Entity(repositoryClass=TestRunRepository::class) @ORM\Table(name="test_runs") */
 class TestRun
 {
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer")                                     */ private  int       $id;

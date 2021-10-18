@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/** @ORM\Entity(repositoryClass=UserRepository::class) @ORM\HasLifecycleCallbacks() */
+/** @ORM\Entity(repositoryClass=UserRepository::class) @ORM\HasLifecycleCallbacks() @ORM\Table(name="users") */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /** @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue            */ private int     $id;

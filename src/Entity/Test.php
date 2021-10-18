@@ -6,7 +6,7 @@ use App\Repository\TestRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity(repositoryClass=TestRepository::class) */
+/** @ORM\Entity(repositoryClass=TestRepository::class) @ORM\Table(name="tests") */
 class Test
 {
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"                                      ) */ private  int       $id;
