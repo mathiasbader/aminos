@@ -6,6 +6,8 @@ use App\Constant\Language;
 use App\Constant\Representation;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,6 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @ORM\Column(type="json")                                           */ private array   $roles = [];
     /** @ORM\Column(type="string",                          nullable=true) */ private ?string $password = null;
     /** @ORM\Column(type="datetime_immutable",                           ) */ private DateTimeImmutable $created;
+    /** @ORM\OneToMany(targetEntity=TestRun::class, mappedBy="user") */ private $runs;
+
+    public function __construct() { $this->runs = new ArrayCollection(); }
 
     public function getId            (): ?int              { return $this->id            ; }
     public function getName          (): ?string           { return $this->name          ; }
@@ -47,4 +52,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @deprecated since Symfony 5.3, use getUserIdentifier instead */
     public function getUsername(): string { return $this->getUserIdentifier(); }
     public function eraseCredentials(): void { }
+
+    public function getRuns(): Collection { return $this->runs; }
+
+    public function addRun(TestRun $run): self
+    {
+        if (!$this->runs->contains($run)) {
+            $this->runs[] = $run;
+            $run->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeRun(TestRun $run): self
+    {
+        if ($this->runs->removeElement($run)) {
+            if ($run->getUser() === $this) { $run->setUser(null); }
+        }
+        return $this;
+    }
 }
