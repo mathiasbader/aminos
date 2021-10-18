@@ -13,6 +13,7 @@ about:
   thisProjectIsOpenSourceAndUsesTheMitLicense: Este proyecto es de código abierto y utiliza la {license}.
   youCanGetTheCodeOnGitHub: Puedes obtener el código en {github}.
   3DImagesWhereCreatedUsing: Las imágenes 3D de los amino ácidos fueron creadas usando {ballview}, la aplicación independiente de modelado y visualización molecular de {ball}.
+  flatImagesWhereCreatedAsPartOfThisProject: Las imágenes planas de los aminoácidos fueron creadas como parte de este proyecto y tienen licencia MIT.
 
 essential: esencial
 semiessential: semiesencial

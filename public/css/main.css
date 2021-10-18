@@ -2,6 +2,7 @@ body {
     font-family: 'Helvetica Neue','Segoe UI',Arial,sans-serif;
     color: #333;
     margin: 0;
+    line-height: 1.6em;
     -webkit-font-smoothing: antialiased; }
 main {
     max-width: 1200px;
