@@ -12,7 +12,7 @@ about:
   link: Über
   thisProjectIsOpenSourceAndUsesTheMitLicense: Dieses Projekt ist Open Source und nutzt die {license}.
   youCanGetTheCodeOnGitHub: Sie bekommen den Sourcecode auf {github}.
-  allAminoAcidImagesWhereCreatedUsing: Die Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
+  3DImagesWhereCreatedUsing: Die 3D Bilder der Aminosäurenwurden mit {ballview} erstellt, der Standalone molekularen Modelierungs- und Visualisierungsbibliothek von {ball}.
 
 essential: essenziell
 semiessential: semiessenziell
