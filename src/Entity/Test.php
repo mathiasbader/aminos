@@ -3,109 +3,32 @@
 namespace App\Entity;
 
 use App\Repository\TestRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=TestRepository::class)
- */
+/** @ORM\Entity(repositoryClass=TestRepository::class) */
 class Test
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"        ) */ private  int       $id;
+    /** @ORM\OneToMany(targetEntity=TestRun::class  , mappedBy="run"  ) */ private  TestRun   $run;
+    /** @ORM\OneToMany(targetEntity=Aminoacid::class, mappedBy="amino") */ private  Aminoacid $amino;
+    /** @ORM\Column(type="integer", nullable=true                     ) */ private  int       $type;
+    /** @ORM\Column(type="boolean", nullable=true                     ) */ private ?bool      $correct;
+    /** @ORM\Column(type="string", length=255, nullable=true          ) */ private ?string    $answer;
+    /** @ORM\Column(type="datetime"                                   ) */ private ?DateTime  $answered;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $run;
+    function getId      (): ?int       { return $this->id      ; }
+    function getRun     ():  TestRun   { return $this->run     ; }
+    function getAmino   ():  Aminoacid { return $this->amino   ; }
+    function getType    ():  int       { return $this->type    ; }
+    function getCorrect (): ?bool      { return $this->correct ; }
+    function getAnswer  (): ?string    { return $this->answer  ; }
+    function getAnswered(): ?DateTime  { return $this->answered; }
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $amino;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $type;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $correct;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $answer;
-
-    // Todo: Add answered as datetime
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getRun(): ?int
-    {
-        return $this->run;
-    }
-
-    public function setRun(int $run): self
-    {
-        $this->run = $run;
-
-        return $this;
-    }
-
-    public function getAmino(): ?int
-    {
-        return $this->amino;
-    }
-
-    public function setAmino(int $amino): self
-    {
-        $this->amino = $amino;
-
-        return $this;
-    }
-
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    public function setType(?int $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getCorrect(): ?bool
-    {
-        return $this->correct;
-    }
-
-    public function setCorrect(?bool $correct): self
-    {
-        $this->correct = $correct;
-
-        return $this;
-    }
-
-    public function getAnswer(): ?string
-    {
-        return $this->answer;
-    }
-
-    public function setAnswer(?string $answer): self
-    {
-        $this->answer = $answer;
-
-        return $this;
-    }
+    function setRun     ( TestRun   $run     ): self { $this->run     = $run     ; return $this; }
+    function setAmino   ( Aminoacid $amino   ): self { $this->amino   = $amino   ; return $this; }
+    function setType    ( int      $type    ): self { $this->type     = $type    ; return $this; }
+    function setCorrect (?bool     $correct ): self { $this->correct  = $correct ; return $this; }
+    function setAnswer  (?string   $answer  ): self { $this->answer   = $answer  ; return $this; }
+    function setAnswered(?DateTime $answered): self { $this->answered = $answered; return $this; }
 }
