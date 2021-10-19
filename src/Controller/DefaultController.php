@@ -295,26 +295,21 @@ class DefaultController extends AbstractController
         $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         if (count($activeTests) > 0) return $activeTests[0];
 
+        $aminos = ['g', 'a', 'v', 'l', 'i'];
+
         $run = new TestRun();
         $run->setUser($user);
+        $run->setAminos($aminos);
 
-        $run->addTest($this->generateTest('g', TestType::TEST_1_NAME_TO_IMAGE));
-        $run->addTest($this->generateTest('a', TestType::TEST_1_NAME_TO_IMAGE));
-        $run->addTest($this->generateTest('v', TestType::TEST_1_NAME_TO_IMAGE));
-        $run->addTest($this->generateTest('l', TestType::TEST_1_NAME_TO_IMAGE));
-        $run->addTest($this->generateTest('i', TestType::TEST_1_NAME_TO_IMAGE));
-
-        $run->addTest($this->generateTest('g', TestType::TEST_2_IMAGE_TO_NAME));
-        $run->addTest($this->generateTest('a', TestType::TEST_2_IMAGE_TO_NAME));
-        $run->addTest($this->generateTest('v', TestType::TEST_2_IMAGE_TO_NAME));
-        $run->addTest($this->generateTest('l', TestType::TEST_2_IMAGE_TO_NAME));
-        $run->addTest($this->generateTest('i', TestType::TEST_2_IMAGE_TO_NAME));
-
-        $run->addTest($this->generateTest('g', TestType::TEST_3_CODE_TO_NAME));
-        $run->addTest($this->generateTest('a', TestType::TEST_3_CODE_TO_NAME));
-        $run->addTest($this->generateTest('v', TestType::TEST_3_CODE_TO_NAME));
-        $run->addTest($this->generateTest('l', TestType::TEST_3_CODE_TO_NAME));
-        $run->addTest($this->generateTest('i', TestType::TEST_3_CODE_TO_NAME));
+        foreach ($aminos as $amino) {
+            $run->addTest($this->generateTest($amino, TestType::TEST_1_NAME_TO_IMAGE));
+        }
+        foreach ($aminos as $amino) {
+            $run->addTest($this->generateTest($amino, TestType::TEST_2_IMAGE_TO_NAME));
+        }
+        foreach ($aminos as $amino) {
+            $run->addTest($this->generateTest($amino, TestType::TEST_3_CODE_TO_NAME));
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($run);
