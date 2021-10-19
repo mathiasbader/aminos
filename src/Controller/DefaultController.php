@@ -128,7 +128,10 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/test/{run}", name="test") @Template */
-    function testAction(TestRun $run): array {
+    function testAction(TestRun $run): array | RedirectResponse {
+        $user = $this->initUser();
+        if ($user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
+
         return [
             'run' => $run,
         ];
