@@ -20,11 +20,18 @@ class TestRun
     public function __construct() { $this->tests = new ArrayCollection(); }
     /** @ORM\PrePersist() */ function prePersist()  { $this->started = new DateTime(); }
 
-    function getId       ():  int             { return $this->id       ; }
-    function getUser     ():  User            { return $this->user     ; }
-    function getStarted  ():  DateTime        { return $this->started  ; }
-    function getCompleted(): ?DateTime        { return $this->completed; }
-    function getTests    (): ?ArrayCollection { return $this->tests    ; }
+    function getId       ():  int        { return $this->id       ; }
+    function getUser     ():  User       { return $this->user     ; }
+    function getStarted  ():  DateTime   { return $this->started  ; }
+    function getCompleted(): ?DateTime   { return $this->completed; }
+    function getTests    (): ?Collection { return $this->tests    ; }
+    function getFirstUncompletedTest(): ?Test {
+        foreach($this->tests as $test) {
+            /* @var $test Test */
+            if ($test->getAnswered() === null) return $test;
+        }
+        return null;
+    }
 
     function setUser     ( User     $user     ): self { $this->user      = $user     ; return $this; }
     function setStarted  ( DateTime $started  ): self { $this->started   = $started  ; return $this; }
