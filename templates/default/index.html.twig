@@ -3,7 +3,7 @@
 {% block body %}
 
     <div class="menu">
-        <a href="{{ url('testImgToName' ) }}" class="btn">{{ 'testYourself'|trans }}</a>
+        <a href="{{ url('test') }}" class="btn">{{ 'testYourself'|trans }}</a>
         {% if app.user.representation == 'svg' %}
             <a href="{{ url('index', { 'representation' : '3d'}) }}" class="btn">{{ 'models.3d'|trans }}</a>
         {% else %}

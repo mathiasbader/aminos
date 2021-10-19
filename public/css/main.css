@@ -21,7 +21,7 @@ a:hover { text-decoration: underline; }
     background-color: #eee;
     color: #333;
     border-radius: 4px;
-    margin-bottom: 16px; }
+    margin: 8px 8px 8px 0; }
 .btn:hover {
     text-decoration: none;
     transition: background 0.3s;

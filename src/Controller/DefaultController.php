@@ -6,7 +6,10 @@ namespace App\Controller;
 
 use App\Constant\Common;
 use App\Constant\Representation;
+use App\Constant\TestType;
 use App\Entity\Aminoacid;
+use App\Entity\Test;
+use App\Entity\TestRun;
 use App\Entity\User;
 use App\Service\AminoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,7 +79,6 @@ class DefaultController extends AbstractController
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $error = 'invalidEmail';
             if (strlen($name) === 0)                             $error = 'noNameProvided';
             else {
-                $user = $this->get('security.token_storage')->getToken()->getUser();
                 $user->setEmail($email);
                 $user->setName($name);
                 $em = $this->getDoctrine()->getManager();
@@ -94,7 +96,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/lang/{lang}", name="lang") */
-    public function langAction(Request $request, AminoService $aminoService, string $lang)
+    public function langAction(Request $request, AminoService $aminoService, string $lang): RedirectResponse
     {
         if ($aminoService->isValidLanguage($lang)) {
             $user = $this->initUser();
@@ -105,6 +107,24 @@ class DefaultController extends AbstractController
             $request->getSession()->set('_lang', $user->getLang());
         }
         return $this->redirectToRoute('profile');
+    }
+
+
+    /** @Route("/test", name="test") @Template */
+    function testAction(TranslatorInterface $translator): array {
+        return [
+            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+        ];
+    }
+
+    /** @Route("/test/start", name="testStart") @Template */
+    function testStartAction(): array {
+        $user = $this->initUser();
+
+        $this->stopAllRunningTests($user);
+        $this->initNewTest($user);
+
+        return [];
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */
@@ -256,5 +276,57 @@ class DefaultController extends AbstractController
             'electrically' => ['D', 'E', 'K', 'R', 'H'],
         ];
         return [$aminoMap, $matrix];
+    }
+
+    private function stopAllRunningTests(User $user):void {
+        // Todo
+    }
+
+    private function initNewTest(User $user) {
+        $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
+        if (count($activeTests) === 0) {
+            $run = new TestRun();
+            $run->setUser($user);
+
+            $run->addTest($this->generateTest('g', TestType::TEST_1_NAME_TO_IMAGE));
+            $run->addTest($this->generateTest('a', TestType::TEST_1_NAME_TO_IMAGE));
+            $run->addTest($this->generateTest('v', TestType::TEST_1_NAME_TO_IMAGE));
+            $run->addTest($this->generateTest('l', TestType::TEST_1_NAME_TO_IMAGE));
+            $run->addTest($this->generateTest('i', TestType::TEST_1_NAME_TO_IMAGE));
+
+            $run->addTest($this->generateTest('g', TestType::TEST_2_IMAGE_TO_NAME));
+            $run->addTest($this->generateTest('a', TestType::TEST_2_IMAGE_TO_NAME));
+            $run->addTest($this->generateTest('v', TestType::TEST_2_IMAGE_TO_NAME));
+            $run->addTest($this->generateTest('l', TestType::TEST_2_IMAGE_TO_NAME));
+            $run->addTest($this->generateTest('i', TestType::TEST_2_IMAGE_TO_NAME));
+
+            $run->addTest($this->generateTest('g', TestType::TEST_3_CODE_TO_NAME));
+            $run->addTest($this->generateTest('a', TestType::TEST_3_CODE_TO_NAME));
+            $run->addTest($this->generateTest('v', TestType::TEST_3_CODE_TO_NAME));
+            $run->addTest($this->generateTest('l', TestType::TEST_3_CODE_TO_NAME));
+            $run->addTest($this->generateTest('i', TestType::TEST_3_CODE_TO_NAME));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($run);
+            $em->flush();
+
+            die('test created with id ' . $run->getId());
+        }
+        if (count($activeTests) === 1) {
+            die('current active test is ' . $activeTests[0]->getId());
+        }
+        die('don\'t know');
+    }
+
+    private function generateTest(String $amino, String $type): Test {
+        $test = new Test();
+        $test->setAmino($this->getAmino($amino));
+        $test->setType($type);
+        return $test;
+    }
+
+    private function getAmino(String $code): ?Aminoacid {
+        if (strlen($code) !== 1) return null;
+        return $this->getDoctrine()->getRepository(Aminoacid::class)->findOneBy(['code1' => $code]);
     }
 }
