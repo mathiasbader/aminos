@@ -11,14 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
 /** @ORM\Entity(repositoryClass=TestRunRepository::class) @ORM\HasLifecycleCallbacks() @ORM\Table(name="test_runs") */
 class TestRun
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer")                                           */ private  int        $id;
-    /** @ORM\ManyToOne(targetEntity=User::class, inversedBy="runs") @ORM\JoinColumn(nullable=false)       */ private  User       $user;
-    /** @ORM\Column(type="datetime")                                                                      */ private  DateTime   $started;
-    /** @ORM\Column(type="datetime", nullable=true)                                                       */ private ?DateTime   $completed;
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"                                          ) */ private  int        $id;
+    /** @ORM\ManyToOne(targetEntity=User::class, inversedBy="runs") @ORM\JoinColumn(nullable=false      ) */ private  User       $user;
+    /** @ORM\Column(type="datetime"                                                                     ) */ private  DateTime   $started;
+    /** @ORM\Column(type="datetime", nullable=true                                                      ) */ private ?DateTime   $completed;
     /** @ORM\OneToMany(targetEntity=Test::class, mappedBy="run", orphanRemoval=true, cascade={"persist"}) */ private ?Collection $tests;
-    /** @ORM\Column(type="json")                                                                          */ private ?array      $aminos = [];
+    /** @ORM\ManyToMany(targetEntity=Aminoacid::class                                                   ) */ private ?Collection $aminos;
 
-    public function __construct() { $this->tests = new ArrayCollection(); }
+    public function __construct() {
+        $this->tests  = new ArrayCollection();
+        $this->aminos = new ArrayCollection();
+    }
     /** @ORM\PrePersist() */ function prePersist()  { $this->started = new DateTime(); }
 
     function getId       ():  int        { return $this->id       ; }
@@ -26,7 +29,7 @@ class TestRun
     function getStarted  ():  DateTime   { return $this->started  ; }
     function getCompleted(): ?DateTime   { return $this->completed; }
     function getTests    (): ?Collection { return $this->tests    ; }
-    function getAminos   (): ?array      { return $this->aminos   ; }
+    function getAminos   (): ?Collection { return $this->aminos   ; }
     function getFirstUncompletedTest(): ?Test {
         foreach($this->tests as $test) {
             /* @var $test Test */
@@ -38,7 +41,6 @@ class TestRun
     function setUser     ( User     $user     ): self { $this->user      = $user     ; return $this; }
     function setStarted  ( DateTime $started  ): self { $this->started   = $started  ; return $this; }
     function setCompleted(?DateTime $completed): self { $this->completed = $completed; return $this; }
-    function setAminos   ( array    $aminos   ): self { $this->aminos    = $aminos   ; return $this; }
 
     public function addTest(Test $test): self
     {
@@ -56,4 +58,7 @@ class TestRun
         }
         return $this;
     }
+
+    public function addAmino   (Aminoacid $amino): self { if (!$this->aminos->contains($amino)) $this->aminos[] = $amino; return $this; }
+    public function removeAmino(Aminoacid $amino): self { $this->aminos->removeElement($amino);                           return $this; }
 }
