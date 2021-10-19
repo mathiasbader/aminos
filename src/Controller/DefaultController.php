@@ -110,21 +110,28 @@ class DefaultController extends AbstractController
     }
 
 
-    /** @Route("/test", name="test") @Template */
-    function testAction(TranslatorInterface $translator): array {
+    /** @Route("/test/overview", name="testOverview") @Template */
+    function testOverviewAction(TranslatorInterface $translator): array {
         return [
             'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
         ];
     }
 
-    /** @Route("/test/start", name="testStart") @Template */
-    function testStartAction(): array {
+    /** @Route("/test/start", name="testStart") */
+    function testStartAction(): RedirectResponse {
         $user = $this->initUser();
 
         $this->stopAllRunningTests($user);
-        $this->initNewTest($user);
+        $run = $this->initNewTestRun($user);
 
-        return [];
+        return $this->redirectToRoute('test', [ 'run' => $run->getId()]);
+    }
+
+    /** @Route("/test/{run}", name="test") @Template */
+    function testAction(TestRun $run): array {
+        return [
+            'run' => $run,
+        ];
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */
@@ -206,7 +213,6 @@ class DefaultController extends AbstractController
             'answerAmino'   => $answerAmino,
             'answerCorrect' => $answerCorrect,
         ];
-
     }
 
     /** @Route("/about", name="about") @Template */
@@ -282,40 +288,36 @@ class DefaultController extends AbstractController
         // Todo
     }
 
-    private function initNewTest(User $user) {
+    private function initNewTestRun(User $user): TestRun {
         $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
-        if (count($activeTests) === 0) {
-            $run = new TestRun();
-            $run->setUser($user);
+        if (count($activeTests) > 0) return $activeTests[0];
 
-            $run->addTest($this->generateTest('g', TestType::TEST_1_NAME_TO_IMAGE));
-            $run->addTest($this->generateTest('a', TestType::TEST_1_NAME_TO_IMAGE));
-            $run->addTest($this->generateTest('v', TestType::TEST_1_NAME_TO_IMAGE));
-            $run->addTest($this->generateTest('l', TestType::TEST_1_NAME_TO_IMAGE));
-            $run->addTest($this->generateTest('i', TestType::TEST_1_NAME_TO_IMAGE));
+        $run = new TestRun();
+        $run->setUser($user);
 
-            $run->addTest($this->generateTest('g', TestType::TEST_2_IMAGE_TO_NAME));
-            $run->addTest($this->generateTest('a', TestType::TEST_2_IMAGE_TO_NAME));
-            $run->addTest($this->generateTest('v', TestType::TEST_2_IMAGE_TO_NAME));
-            $run->addTest($this->generateTest('l', TestType::TEST_2_IMAGE_TO_NAME));
-            $run->addTest($this->generateTest('i', TestType::TEST_2_IMAGE_TO_NAME));
+        $run->addTest($this->generateTest('g', TestType::TEST_1_NAME_TO_IMAGE));
+        $run->addTest($this->generateTest('a', TestType::TEST_1_NAME_TO_IMAGE));
+        $run->addTest($this->generateTest('v', TestType::TEST_1_NAME_TO_IMAGE));
+        $run->addTest($this->generateTest('l', TestType::TEST_1_NAME_TO_IMAGE));
+        $run->addTest($this->generateTest('i', TestType::TEST_1_NAME_TO_IMAGE));
 
-            $run->addTest($this->generateTest('g', TestType::TEST_3_CODE_TO_NAME));
-            $run->addTest($this->generateTest('a', TestType::TEST_3_CODE_TO_NAME));
-            $run->addTest($this->generateTest('v', TestType::TEST_3_CODE_TO_NAME));
-            $run->addTest($this->generateTest('l', TestType::TEST_3_CODE_TO_NAME));
-            $run->addTest($this->generateTest('i', TestType::TEST_3_CODE_TO_NAME));
+        $run->addTest($this->generateTest('g', TestType::TEST_2_IMAGE_TO_NAME));
+        $run->addTest($this->generateTest('a', TestType::TEST_2_IMAGE_TO_NAME));
+        $run->addTest($this->generateTest('v', TestType::TEST_2_IMAGE_TO_NAME));
+        $run->addTest($this->generateTest('l', TestType::TEST_2_IMAGE_TO_NAME));
+        $run->addTest($this->generateTest('i', TestType::TEST_2_IMAGE_TO_NAME));
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($run);
-            $em->flush();
+        $run->addTest($this->generateTest('g', TestType::TEST_3_CODE_TO_NAME));
+        $run->addTest($this->generateTest('a', TestType::TEST_3_CODE_TO_NAME));
+        $run->addTest($this->generateTest('v', TestType::TEST_3_CODE_TO_NAME));
+        $run->addTest($this->generateTest('l', TestType::TEST_3_CODE_TO_NAME));
+        $run->addTest($this->generateTest('i', TestType::TEST_3_CODE_TO_NAME));
 
-            die('test created with id ' . $run->getId());
-        }
-        if (count($activeTests) === 1) {
-            die('current active test is ' . $activeTests[0]->getId());
-        }
-        die('don\'t know');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($run);
+        $em->flush();
+
+        return $run;
     }
 
     private function generateTest(String $amino, String $type): Test {

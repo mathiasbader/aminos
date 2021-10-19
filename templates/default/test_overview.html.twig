@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block bodyParam %} onLoad="document.getElementById('answer').focus();"{% endblock %}
+
+{% block body %}
+
+    <div style="margin-bottom: 12px;">
+        <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
+    </div>
+
+    <div style="display: flex;">
+        <a href="{{ url('testStart') }}" class="btn">Nicht polar 1</a>
+        <a href="{{ url('testStart') }}" class="btn">Nicht polar 2</a>
+        <a href="{{ url('testStart') }}" class="btn">Polar</a>
+        <a href="{{ url('testStart') }}" class="btn">El. geladen</a>
+    </div>
+
+{% endblock %}
