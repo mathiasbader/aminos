@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Service\AminoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,30 +25,11 @@ class DefaultController extends AbstractController
     public function indexAction(TranslatorInterface $translator, Request $request)
     {
         $user = $this->initUser();
-        if (!empty($request->get('representation'))) {
-            $representation = $request->get('representation');
-            if (in_array($representation, Representation::$all)) {
-                $user->setRepresentation($representation);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-                return $this->redirectToRoute('index');
-            }
-        }
 
-        $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
-        $aminoMap = [];
-        foreach($aminos as $amino) {
-            /* @var $amino Aminoacid  */
-            $aminoMap[$amino->getCode1()] = $amino;
-        }
+        $redirect = $this->updatePresentation($request, $user);
+        if ($redirect !== null) return $redirect;
 
-        $matrix = [
-            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
-            'nonPolar2'    => ['M', 'F', 'W', 'P'],
-            'polar'        => ['N', 'Q', 'S', 'T', 'C', 'Y'],
-            'electrically' => ['D', 'E', 'K', 'R', 'H'],
-        ];
+        list($aminoMap, $matrix) = $this->loadAminosForOverview();
 
         return [
             'pageTitle' => $translator->trans('the20ProteinogenicAminoAcids'),
@@ -243,5 +225,36 @@ class DefaultController extends AbstractController
         $session->set('_security_' . $firewallName, serialize($token));
 
         return $user;
+    }
+
+    private function updatePresentation(Request $request, User $user): ?RedirectResponse {
+        if (!empty($request->get('representation'))) {
+            $representation = $request->get('representation');
+            if (in_array($representation, Representation::$all)) {
+                $user->setRepresentation($representation);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('index');
+            }
+        }
+        return null;
+    }
+
+    private function loadAminosForOverview(): array {
+        $aminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findAll();
+        $aminoMap = [];
+        foreach($aminos as $amino) {
+            /* @var $amino Aminoacid  */
+            $aminoMap[$amino->getCode1()] = $amino;
+        }
+
+        $matrix = [
+            'nonPolar1'    => ['G', 'A', 'V', 'L', 'I'],
+            'nonPolar2'    => ['M', 'F', 'W', 'P'],
+            'polar'        => ['N', 'Q', 'S', 'T', 'C', 'Y'],
+            'electrically' => ['D', 'E', 'K', 'R', 'H'],
+        ];
+        return [$aminoMap, $matrix];
     }
 }
