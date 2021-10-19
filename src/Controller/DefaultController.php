@@ -25,7 +25,7 @@ class DefaultController extends AbstractController
 {
     /** @Route("", name="index")
      *  @Template */
-    public function indexAction(TranslatorInterface $translator, Request $request)
+    function indexAction(TranslatorInterface $translator, Request $request)
     {
         $user = $this->initUser();
 
@@ -42,7 +42,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("profile", name="profile") @Template */
-    public function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher)
+    function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
         $user = $this->initUser();
 
@@ -96,7 +96,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/lang/{lang}", name="lang") */
-    public function langAction(Request $request, AminoService $aminoService, string $lang): RedirectResponse
+    function langAction(Request $request, AminoService $aminoService, string $lang): RedirectResponse
     {
         if ($aminoService->isValidLanguage($lang)) {
             $user = $this->initUser();
@@ -128,7 +128,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */
-    public function testImgToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
+    function testImgToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerAminoId = $request->get('amino');
@@ -152,7 +152,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/n2i", name="testNameToImg") @Template */
-    public function testNameToImgAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
+    function testNameToImgAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $selectedAminoId = $request->get('answer');
         $answerAminoId   = $request->get('amino');
@@ -183,7 +183,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/c2n", name="testCodeToName") @Template */
-    public function testCodeToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
+    function testCodeToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
     {
         $answerText    = $request->get('answer');
         $answerText = htmlentities($answerText);
@@ -210,14 +210,14 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/about", name="about") @Template */
-    public function aboutAction()
+    function aboutAction()
     {
         return [
             'pageTitle' => 'About',
         ];
     }
 
-    public function initUser(): User {
+    function initUser(): User {
         $user = $this->getLoggedInUser();
         if ($user instanceof User) return $user;
 
