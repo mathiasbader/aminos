@@ -38,9 +38,10 @@ class TestRun
         return null;
     }
 
-    function setUser     ( User     $user     ): self { $this->user      = $user     ; return $this; }
-    function setStarted  ( DateTime $started  ): self { $this->started   = $started  ; return $this; }
-    function setCompleted(?DateTime $completed): self { $this->completed = $completed; return $this; }
+    function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }
+    function setStarted  ( DateTime   $started  ): self { $this->started   = $started  ; return $this; }
+    function setCompleted(?DateTime   $completed): self { $this->completed = $completed; return $this; }
+    function setAminos   ( Collection $aminos   ): self { $this->aminos    = $aminos   ; return $this; }
 
     public function addTest(Test $test): self
     {

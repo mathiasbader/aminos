@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\Common;
 use App\Repository\TestRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,13 +32,40 @@ class Test
     function getAnswered(): ?DateTime   { return $this->answered; }
     function getChoices ():  Collection { return $this->choices ; }
 
-    function setRun     (TestRun   $run     ): self { $this->run      = $run     ; return $this; }
-    function setAmino   (Aminoacid $amino   ): self { $this->amino    = $amino   ; return $this; }
-    function setType    (int       $type    ): self { $this->type     = $type    ; return $this; }
-    function setCorrect (bool      $correct ): self { $this->correct  = $correct ; return $this; }
-    function setAnswer  (string    $answer  ): self { $this->answer   = $answer  ; return $this; }
-    function setAnswered(DateTime  $answered): self { $this->answered = $answered; return $this; }
+    function setRun     (TestRun    $run     ): self { $this->run      = $run     ; return $this; }
+    function setAmino   (Aminoacid  $amino   ): self { $this->amino    = $amino   ; return $this; }
+    function setType    (int        $type    ): self { $this->type     = $type    ; return $this; }
+    function setCorrect (bool       $correct ): self { $this->correct  = $correct ; return $this; }
+    function setAnswer  (string     $answer  ): self { $this->answer   = $answer  ; return $this; }
+    function setAnswered(DateTime   $answered): self { $this->answered = $answered; return $this; }
+    function defineChoices (Collection $choices ): self {
 
-    public function addChoice   (Aminoacid $amino): self { if (!$this->choices->contains($amino)) $this->choices[] = $amino; return $this; }
-    public function removeChoice(Aminoacid $amino): self { $this->choices->removeElement($amino)                           ; return $this; }
+        // shuffle array
+        $choicesArray = $choices->toArray();
+        shuffle($choicesArray);
+
+        // ensure max size
+        if (count($choicesArray) > Common::MAX_ANSWERS_COUNT_FOR_NAME_TO_IMAGE) {
+            $choicesArray = array_slice($choicesArray, 0, Common::MAX_ANSWERS_COUNT_FOR_NAME_TO_IMAGE);
+        }
+
+        // ensure that correct answer is still in array
+        $correctAnswerAvailable = false;
+        foreach ($choicesArray as $amino) {
+            if ($amino->getId() === $this->amino->getId()) {
+                $correctAnswerAvailable = true;
+                break;
+            }
+        }
+        if (!$correctAnswerAvailable) {
+            $choicesArray[rand(0, Common::MAX_ANSWERS_COUNT_FOR_NAME_TO_IMAGE - 1)] = $this->amino;
+        }
+
+        $choices = new ArrayCollection($choicesArray);
+        $this->choices = $choices;
+        return $this;
+    }
+
+    function addChoice   (Aminoacid  $amino  ): self { if (!$this->choices->contains($amino)) $this->choices[] = $amino; return $this; }
+    function removeChoice(Aminoacid  $amino  ): self { $this->choices->removeElement($amino)                           ; return $this; }
 }

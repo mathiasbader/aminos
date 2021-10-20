@@ -12,6 +12,8 @@ use App\Entity\Test;
 use App\Entity\TestRun;
 use App\Entity\User;
 use App\Service\AminoService;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -295,20 +297,19 @@ class DefaultController extends AbstractController
         $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         if (count($activeTests) > 0) return $activeTests[0];
 
-        $aminos = ['g', 'a', 'v', 'l', 'i'];
 
         $run = new TestRun();
         $run->setUser($user);
-        $run->setAminos($aminos);
+        $run->setAminos($this->resolveAminos(['g', 'a', 'v', 'l', 'i']));
 
-        foreach ($aminos as $amino) {
-            $run->addTest($this->generateTest($amino, TestType::TEST_1_NAME_TO_IMAGE));
+        foreach ($run->getAminos() as $amino) {
+            $run->addTest($this->generateTest($run, $amino, TestType::TEST_1_NAME_TO_IMAGE));
         }
-        foreach ($aminos as $amino) {
-            $run->addTest($this->generateTest($amino, TestType::TEST_2_IMAGE_TO_NAME));
+        foreach ($run->getAminos() as $amino) {
+            $run->addTest($this->generateTest($run, $amino, TestType::TEST_2_IMAGE_TO_NAME));
         }
-        foreach ($aminos as $amino) {
-            $run->addTest($this->generateTest($amino, TestType::TEST_3_CODE_TO_NAME));
+        foreach ($run->getAminos() as $amino) {
+            $run->addTest($this->generateTest($run, $amino, TestType::TEST_3_CODE_TO_NAME));
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -318,15 +319,20 @@ class DefaultController extends AbstractController
         return $run;
     }
 
-    private function generateTest(String $amino, String $type): Test {
+    private function generateTest(TestRun $run, Aminoacid $amino, String $type): Test {
         $test = new Test();
-        $test->setAmino($this->getAmino($amino));
+        $test->setAmino($amino);
         $test->setType($type);
+        if ($type === TestType::TEST_1_NAME_TO_IMAGE) $test->defineChoices($run->getAminos());
         return $test;
     }
 
-    private function getAmino(String $code): ?Aminoacid {
-        if (strlen($code) !== 1) return null;
-        return $this->getDoctrine()->getRepository(Aminoacid::class)->findOneBy(['code1' => $code]);
+    private function resolveAminos(array $strings): Collection {
+        $aminos = new ArrayCollection();
+        foreach ($strings as $string) {
+            $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->findOneBy(['code1' => $string]);
+            if ($amino instanceof Aminoacid) $aminos[] = $amino;
+        }
+        return $aminos;
     }
 }
