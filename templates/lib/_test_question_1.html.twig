@@ -65,7 +65,7 @@
             </form>
 
             <div style="display: flex; flex-wrap: wrap; margin-top: 24px;">
-                {% for a in answerAminos %}
+                {% for a in test.choices %}
                     <div style="width: 33%; min-width: 150px;">
                         <a href="#" onclick="choose({{ a.id }}); return false;">
                             <img src="{{ a.image(app.user.representation) }}" style="padding: 8px; width: 100%;"/>
