@@ -344,15 +344,24 @@ class DefaultController extends AbstractController
         if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'l', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
         if ($aminos === null) return null;
 
+        $aminos1 = $aminos;
+        $aminos2 = $aminos;
+        $aminos3 = $aminos;
+        shuffle($aminos1);
+        shuffle($aminos2);
+        shuffle($aminos3);
+        $this->ensureFirstDoesNotEndEquallyAsSecondStarts($aminos1, $aminos2);
+        $this->ensureFirstDoesNotEndEquallyAsSecondStarts($aminos2, $aminos3);
+
         $run->setAminos($this->resolveAminos($aminos));
 
-        foreach ($run->getAminos() as $amino) {
+        foreach ($this->resolveAminos($aminos1) as $amino) {
             $run->addTest($this->generateTest($run, $amino, TestType::TEST_1_NAME_TO_IMAGE));
         }
-        foreach ($run->getAminos() as $amino) {
+        foreach ($this->resolveAminos($aminos2) as $amino) {
             $run->addTest($this->generateTest($run, $amino, TestType::TEST_2_IMAGE_TO_NAME));
         }
-        foreach ($run->getAminos() as $amino) {
+        foreach ($this->resolveAminos($aminos3) as $amino) {
             $run->addTest($this->generateTest($run, $amino, TestType::TEST_3_CODE_TO_NAME));
         }
 
@@ -378,5 +387,18 @@ class DefaultController extends AbstractController
             if ($amino instanceof Aminoacid) $aminos[] = $amino;
         }
         return $aminos;
+    }
+
+    private function ensureFirstDoesNotEndEquallyAsSecondStarts(array &$a1, array &$a2): void {
+        /* @var $a1 string[] */
+        /* @var $a2 string[] */
+
+        $end = end($a1);
+        $front = $a2[0];
+        if ($end === $front) {
+            $tmp = $a2[0];
+            $a2[0] = $a2[1];
+            $a2[1] = $tmp;
+        }
     }
 }
