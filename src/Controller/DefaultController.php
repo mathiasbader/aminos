@@ -179,6 +179,7 @@ class DefaultController extends AbstractController
                 $otherTests = $this->getDoctrine()->getRepository(Test::class)->findBy(['run' => $run->getId(), 'amino' => $test->getAmino(), 'answered' => null]);
                 $nextTestType = $test->getType() + (($correct && $test->getType() < 3) ? 1 : 0);
                 foreach ($otherTests as $otherTest) {
+                    if ($otherTest->getId() === $test->getId()) continue;
                     $otherTest->setType($nextTestType);
                     if ($nextTestType === TestType::TEST_1_NAME_TO_IMAGE) $otherTest->defineChoices($run->getAminos());
                     else                                                  $otherTest->defineChoices(new ArrayCollection());
