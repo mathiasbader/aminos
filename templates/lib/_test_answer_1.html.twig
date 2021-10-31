@@ -6,14 +6,14 @@
     {% set bgColor = '#d45959' %}
 {% endif %}
 
-
+<div
 {% if test.correct %}
-    <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px; border-radius: 6px;
-            background-color: #d0f6d0; border: 3px solid #5aa05a;">
+    style="width: 50%; padding: 16px; text-align: center; margin-right: 4px; border-radius: 6px;
+            background-color: #d0f6d0; border: 3px solid #5aa05a;"
 {% else %}
-    <div style="width: 50%; padding: 16px; text-align: center; margin-right: 4px; border-radius: 6px;
-            background-color: #ffdada; border: 3px solid #d45959;">
-{% endif %}
+    style="width: 50%; padding: 16px; text-align: center; margin-right: 4px; border-radius: 6px;
+            background-color: #ffdada; border: 3px solid #d45959;"
+{% endif %}>
     {% if test.correct %}
         <div style="margin-bottom: 12px;">
             {{ 'test.answer.isCorrect'|trans }}:

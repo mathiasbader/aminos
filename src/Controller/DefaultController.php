@@ -149,15 +149,29 @@ class DefaultController extends AbstractController
         }
 
         if ($request->get('answer') !== null) {
-            $answer       = (int)$request->get('answer');
+            $answer       =      $request->get('answer');
             $answerTestId = (int)$request->get('test'  );
             $test = $run->getFirstUncompletedTest();
             if ($test !== null && $test->getId() === $answerTestId) {
                 $em = $this->getDoctrine()->getManager();
-                if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE || true) {
-                    $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answer));
+                if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE) {
+                    $answerId = (int)$answer;
+                    $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answerId));
                     $test->setAnswered(new DateTime());
-                    $test->setCorrect($test->getAmino()->getId() === $answer);
+                    $test->setCorrect($test->getAmino()->getId() === $answerId);
+                    $em->persist($test);
+                    $em->flush();
+                } elseif ($test->getType() === TestType::TEST_2_IMAGE_TO_NAME) {
+                    $test->setAnswer(htmlentities($answer));
+                    $test->setAnswered(new DateTime());
+                    $test->setCorrect($test->getAmino()->isCorrectAnswer($answer));
+                    $em->persist($test);
+                    $em->flush();
+                } elseif ($test->getType() === TestType::TEST_3_CODE_TO_NAME) {
+                    die($test);
+                    $test->setAnswer(htmlentities($answer));
+                    $test->setAnswered(new DateTime());
+                    $test->setCorrect($test->getAmino()->isCorrectAnswer($answer));
                     $em->persist($test);
                     $em->flush();
                 }
@@ -376,7 +390,7 @@ class DefaultController extends AbstractController
         $test = new Test();
         $test->setAmino($amino);
         $test->setType($type);
-        if ($type === TestType::TEST_1_NAME_TO_IMAGE || true) $test->defineChoices($run->getAminos());
+        if ($type === TestType::TEST_1_NAME_TO_IMAGE) $test->defineChoices($run->getAminos());
         return $test;
     }
 

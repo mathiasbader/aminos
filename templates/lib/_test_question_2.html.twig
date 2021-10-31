@@ -1,0 +1,17 @@
+<div style="background-color: #eee; border: 1px solid #ddd; width: 50%; padding: 16px; text-align: center; border-radius: 6px;">
+    <div>
+        <img src="{{ test.amino.image(app.user.representation) }}" style="width: 100%"/>
+    </div>
+    <div style="color: #888; margin-bottom: 8px; text-align: center">{{ test.amino.formula|lower_digits|raw }}</div>
+    <div style="margin-top: 12px;">
+        <form method="post">
+            <label for="answer" style="display: inline-block; margin-bottom: 6px;">
+                {{ 'test.whatsTheNameOfThisAminoacid'|trans }}
+            </label>
+            <input type="text" name="answer" id="answer" autocomplete="false" style="width: 100%;
+                    font-size: 1.2em; padding: 6px;" />
+            <input type="hidden" name="amino" value="{{ test.amino.id }}"/>
+            <input type="hidden" name="test" value="{{ test.id }}"/>
+        </form>
+    </div>
+</div>
