@@ -14,6 +14,7 @@ a:hover { text-decoration: underline; }
 .menu a.btn {
     text-align: center;
     width: 180px; }
+
 .btn {
     display: inline-block;
     text-decoration: none;
@@ -25,8 +26,11 @@ a:hover { text-decoration: underline; }
 .btn:hover {
     text-decoration: none;
     transition: background 0.3s;
-    background-color: #ddd; }
+    background-color: #ccc; }
 .btn.active { border: 1px solid #888; }
+.btn-special       { background-color: #93d5a3; }
+.btn-special:hover { background-color: #66b87a; }
+
 .alert {
     margin: 8px 0;
     border: 1px solid red;

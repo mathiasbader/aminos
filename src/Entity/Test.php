@@ -47,6 +47,7 @@ class Test
     function setAnswerAmino(Aminoacid  $answerAmino): self { $this->answerAmino = $answerAmino; return $this; }
     function setAnswered   (DateTime   $answered   ): self { $this->answered    = $answered   ; return $this; }
     function defineChoices (Collection $choices    ): self {
+        if ($choices->count() === 0) return $this;
 
         // ensure max size
         $choicesArray = $choices->toArray();
@@ -68,6 +69,7 @@ class Test
 
         $choices = new ArrayCollection($choicesArray);
         $this->choices = $choices;
+
         return $this;
     }
 

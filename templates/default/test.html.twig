@@ -22,8 +22,6 @@
             </div>
 
         {% else %}
-            Sie führen Test run {{ run.id }} aus, Aktueller Test ist {{ test.id }}{% if lastTest is not null %}, letzter Test war {{ lastTest.id }}{% endif %}:
-            <br><br>
             {% include 'lib/_test_progress.html.twig' %}
             <div style="display: flex;">
                 {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}

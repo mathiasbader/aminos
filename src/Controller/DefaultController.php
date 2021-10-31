@@ -116,8 +116,13 @@ class DefaultController extends AbstractController
 
     /** @Route("/test/overview", name="testOverview") @Template */
     function testOverviewAction(TranslatorInterface $translator): array {
+        $user = $this->initUser();
+        $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
+        $activeRun = !empty($activeRuns) ? $activeRuns[0] : null;
+
         return [
-            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+            'activeRun' => $activeRun,
         ];
     }
 
@@ -125,7 +130,7 @@ class DefaultController extends AbstractController
     function testStartAction(string $group): RedirectResponse {
         $user = $this->initUser();
 
-        $this->stopAllRunningTests($user);
+        $this->stopAllRuns($user);
         $run = $this->initNewTestRun($user, $group);
         if ($run === null) return $this->redirectToRoute('testOverview');
 
@@ -141,10 +146,7 @@ class DefaultController extends AbstractController
             $user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
 
         if ($request->get('action') === 'stop') {
-            $run->setCompleted(new DateTime());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($run);
-            $em->flush();
+            $this->stopAllRuns($user);
             return $this->redirectToRoute('testOverview');
         }
 
@@ -154,26 +156,38 @@ class DefaultController extends AbstractController
             $test = $run->getFirstUncompletedTest();
             if ($test !== null && $test->getId() === $answerTestId) {
                 $em = $this->getDoctrine()->getManager();
+                $correct = false;
                 if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE) {
                     $answerId = (int)$answer;
                     $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answerId));
                     $test->setAnswered(new DateTime());
-                    $test->setCorrect($test->getAmino()->getId() === $answerId);
-                    $em->persist($test);
-                    $em->flush();
+                    $correct = $test->getAmino()->getId() === $answerId;
+                    $test->setCorrect($correct);
                 } elseif ($test->getType() === TestType::TEST_2_IMAGE_TO_NAME) {
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
-                    $test->setCorrect($test->getAmino()->isCorrectAnswer($answer));
-                    $em->persist($test);
-                    $em->flush();
+                    $correct = $test->getAmino()->isCorrectAnswer($answer);
+                    $test->setCorrect($correct);
                 } elseif ($test->getType() === TestType::TEST_3_CODE_TO_NAME) {
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
-                    $test->setCorrect($test->getAmino()->isCorrectAnswer($answer));
-                    $em->persist($test);
-                    $em->flush();
+                    $correct = $test->getAmino()->isCorrectAnswer($answer);
+                    $test->setCorrect($correct);
                 }
+
+                // update next test type for this amino acid in current run
+                $otherTests = $this->getDoctrine()->getRepository(Test::class)->findBy(['run' => $run->getId(), 'amino' => $test->getAmino(), 'answered' => null]);
+                $nextTestType = $test->getType() + (($correct && $test->getType() < 3) ? 1 : 0);
+                foreach ($otherTests as $otherTest) {
+                    $otherTest->setType($nextTestType);
+                    if ($nextTestType === TestType::TEST_1_NAME_TO_IMAGE) $otherTest->defineChoices($run->getAminos());
+                    else                                                  $otherTest->defineChoices(new ArrayCollection());
+                    $em->persist($otherTest);
+                }
+
+                $em->persist($test);
+                $em->flush();
+
                 $run->recalculateCorrectCount();
                 if ($run->isFinished()) {
                     $run->setCompleted(new DateTime());
@@ -335,8 +349,14 @@ class DefaultController extends AbstractController
         return [$aminoMap, $matrix];
     }
 
-    private function stopAllRunningTests(User $user):void {
-        // Todo
+    private function stopAllRuns(User $user): void {
+        $em = $this->getDoctrine()->getManager();
+        $runs = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user]);
+        foreach ($runs as $run) {
+            $run->setCompleted(new DateTime());
+            $em->persist($run);
+        }
+        $em->flush();
     }
 
     private function initNewTestRun(User $user, string $group): ?TestRun {
