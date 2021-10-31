@@ -18,7 +18,9 @@
         {% if test.correct %}
             {{ 'test.answer.xIsCorrect'|trans( { '{answer}' : '<span class="answer">' ~ test.answer ~ '</span>' } )|raw }}
         {% else %}
-            {{ 'test.answer.xIsNotCorrect'|trans( { '{answer}' : '<span class="answer">' ~ test.answer ~ '</span>', '{amino}' : test.amino.code1 } )|raw }}<br>
+            {% if test.answer is not empty %}
+                {{ 'test.answer.xIsNotCorrect'|trans( { '{answer}' : '<span class="answer">' ~ test.answer ~ '</span>', '{amino}' : test.amino.code1 } )|raw }}<br>
+            {% endif %}
             {{ 'test.answer.correctAnswerWouldHaveBeen'|trans }}:
         {% endif %}
     </div>

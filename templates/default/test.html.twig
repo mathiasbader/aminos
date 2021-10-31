@@ -15,7 +15,7 @@
 
         {% if run.finished %}
 
-            Ergebnis:
+            <h4>Ergebnis</h4>
             {% include 'lib/_test_progress.html.twig' with { 'big' : true } %}
             <div style="text-align: center">
                 <a href="{{ url('testOverview') }}">Weiter</a>
@@ -30,7 +30,6 @@
             <div style="text-align: right; margin-top: 12px;">
                 <a href="{{ url('test', { 'runId' : run.id, 'action' : 'stop' } ) }}" style="color: #aaa">Beenden</a>
             </div>
-
         {% endif %}
     </div>
 
