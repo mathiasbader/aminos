@@ -168,7 +168,6 @@ class DefaultController extends AbstractController
                     $em->persist($test);
                     $em->flush();
                 } elseif ($test->getType() === TestType::TEST_3_CODE_TO_NAME) {
-                    die($test);
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
                     $test->setCorrect($test->getAmino()->isCorrectAnswer($answer));
