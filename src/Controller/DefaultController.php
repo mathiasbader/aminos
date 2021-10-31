@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Constant\Common;
+use App\Constant\GroupType;
 use App\Constant\Representation;
 use App\Constant\TestType;
 use App\Entity\Aminoacid;
@@ -120,12 +121,13 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/test/start", name="testStart") */
-    function testStartAction(): RedirectResponse {
+    /** @Route("/test/start/{group}", name="testStart") */
+    function testStartAction(string $group): RedirectResponse {
         $user = $this->initUser();
 
         $this->stopAllRunningTests($user);
-        $run = $this->initNewTestRun($user);
+        $run = $this->initNewTestRun($user, $group);
+        if ($run === null) return $this->redirectToRoute('testOverview');
 
         return $this->redirectToRoute('test', [ 'runId' => $run->getId()]);
     }
@@ -324,14 +326,25 @@ class DefaultController extends AbstractController
         // Todo
     }
 
-    private function initNewTestRun(User $user): TestRun {
+    private function initNewTestRun(User $user, string $group): ?TestRun {
         $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         if (count($activeTests) > 0) return $activeTests[0];
 
 
         $run = new TestRun();
         $run->setUser($user);
-        $run->setAminos($this->resolveAminos(['g', 'a', 'v', 'l', 'i']));
+
+        $aminos = [];
+        if ($group == GroupType::GROUP_NOT_POLAR_1  ) $aminos = ['g', 'a', 'v', 'l', 'i'];
+        if ($group == GroupType::GROUP_NOT_POLAR_2  ) $aminos = ['m', 'f', 'w', 'l', 'p'];
+        if ($group == GroupType::GROUP_NOT_POLAR    ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'l', 'p'];
+        if ($group == GroupType::GROUP_POLAR        ) $aminos = ['n', 'q', 's', 't', 'c', 'y'];
+        if ($group == GroupType::GROUP_CHARGED      ) $aminos = ['d', 'e', 'k', 'r', 'h'];
+        if ($group == GroupType::GROUP_POLAR_CHARGED) $aminos = ['n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
+        if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'l', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
+        if ($aminos === null) return null;
+
+        $run->setAminos($this->resolveAminos($aminos));
 
         foreach ($run->getAminos() as $amino) {
             $run->addTest($this->generateTest($run, $amino, TestType::TEST_1_NAME_TO_IMAGE));
