@@ -48,3 +48,6 @@ security:
         - { path: ^/n2i     , roles: ROLE_USER }
         - { path: ^/i2n     , roles: ROLE_USER }
         - { path: ^/c2i     , roles: ROLE_USER }
+        - { path: ^/lang    , roles: ROLE_USER }
+        - { path: ^/about   , roles: ROLE_USER }
+        - { path: ^/versions, roles: ROLE_USER }

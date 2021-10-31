@@ -18,6 +18,12 @@
     <link href="{{ asset('css/main.css') }}?v=1" rel="stylesheet"/>
     {% block css %}{% endblock %}
 
+    <script type="text/javascript">
+        function changeLanguage(lang) {
+            document.getElementById("language").value = lang;
+            document.getElementById("formLanguage").submit();
+        }
+    </script>
     {% block javascripts %}{% endblock %}
 </head>
 <body{% block bodyParam %}{% endblock %}>
@@ -25,6 +31,23 @@
     <h2>{% if pageTitle is defined %}{{ pageTitle }}{% else %}{{ 'aminoacids'|trans }}{% endif %}</h2>
 
     {% block body %}{% endblock %}
+
+    {% block footer %}
+        <div class="footer">
+            <div style="float: left;">
+                <a href="{{ url('about') }}">{{ 'about.link'|trans }}</a>
+                <a href="{{ url('versions') }}">{{ 'versionHistory'|trans }}</a>
+            </div>
+            <a href="#" onclick="changeLanguage('en');">English</a>
+            <a href="#" onclick="changeLanguage('es');">Español</a>
+            <a href="#" onclick="changeLanguage('de');">Deutsch</a>
+        </div>
+
+        <form action='{{ url('lang') }}' method="post" id="formLanguage">
+            <input type="hidden" name="lang" id="language" value=""/>
+            <input type="hidden" name="route" value="{{ app.request.uri }}"/>
+        </form>
+    {% endblock %}
 
 </main>
 </body>

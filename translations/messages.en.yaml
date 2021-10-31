@@ -91,3 +91,9 @@ testGroup:
   charged: Charged
   all: All
 
+versionHistory: Version history
+version: Version
+version_0_1:
+  addedFlatImagesOfAminoAcids: Added flat images of amino acids
+  improvedTestingSystem: Improved testing system
+  addedLanguageSelectorOnEveryPage: Added language selector on every page

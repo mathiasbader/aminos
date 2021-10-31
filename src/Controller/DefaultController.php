@@ -13,6 +13,7 @@ use App\Entity\Test;
 use App\Entity\TestRun;
 use App\Entity\User;
 use App\Service\AminoService;
+use App\Service\VersionsService;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -99,9 +100,10 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/lang/{lang}", name="lang") */
-    function langAction(Request $request, AminoService $aminoService, string $lang): RedirectResponse
+    /** @Route("/lang", name="lang") */
+    function langAction(Request $request, AminoService $aminoService): RedirectResponse
     {
+        $lang = $request->request->get('lang');
         if ($aminoService->isValidLanguage($lang)) {
             $user = $this->initUser();
             $user->setLang($lang);
@@ -110,7 +112,10 @@ class DefaultController extends AbstractController
             $em->flush();
             $request->getSession()->set('_lang', $user->getLang());
         }
-        return $this->redirectToRoute('profile');
+
+        $route = $request->request->get('route');
+        if ($route === null) $route = 'profile';
+        return $this->redirect($route);
     }
 
 
@@ -203,12 +208,19 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/about", name="about") @Template */
-    function aboutAction()
+    /** @Route("/versions", name="versions") @Template */
+    public function versionsAction(TranslatorInterface $translator, VersionsService $versionsService)
     {
         return [
-            'pageTitle' => 'About',
+            'pageTitle' => $translator->trans('versionHistory'),
+            'versions'  => $versionsService->getVersions(),
         ];
+    }
+
+    /** @Route("/about", name="about") @Template */
+    function aboutAction(TranslatorInterface $translator)
+    {
+        return ['pageTitle' => $translator->trans('about.link')];
     }
 
     function initUser(): User {
@@ -292,12 +304,12 @@ class DefaultController extends AbstractController
 
         $aminos = [];
         if ($group == GroupType::GROUP_NOT_POLAR_1  ) $aminos = ['g', 'a', 'v', 'l', 'i'];
-        if ($group == GroupType::GROUP_NOT_POLAR_2  ) $aminos = ['m', 'f', 'w', 'l', 'p'];
-        if ($group == GroupType::GROUP_NOT_POLAR    ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'l', 'p'];
+        if ($group == GroupType::GROUP_NOT_POLAR_2  ) $aminos = ['m', 'f', 'w', 'p'];
+        if ($group == GroupType::GROUP_NOT_POLAR    ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p'];
         if ($group == GroupType::GROUP_POLAR        ) $aminos = ['n', 'q', 's', 't', 'c', 'y'];
         if ($group == GroupType::GROUP_CHARGED      ) $aminos = ['d', 'e', 'k', 'r', 'h'];
         if ($group == GroupType::GROUP_POLAR_CHARGED) $aminos = ['n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
-        if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'l', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
+        if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
         if ($aminos === null) return null;
 
         $aminos1 = $aminos;

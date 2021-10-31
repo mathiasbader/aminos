@@ -6,16 +6,9 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
-    <h4>{{ 'language'|trans }}</h4>
-    <div>
-        <a href="{{ url('lang', { 'lang' : 'en' }) }}" class="btn{% if app.request.locale == 'en' %} active{% endif %}">English</a>
-        <a href="{{ url('lang', { 'lang' : 'es' }) }}" class="btn{% if app.request.locale == 'es' %} active{% endif %}">Español</a>
-        <a href="{{ url('lang', { 'lang' : 'de' }) }}" class="btn{% if app.request.locale == 'de' %} active{% endif %}">Deutsch</a><br><br>
-    </div>
-
     {% if app.user.email is not null %}
         <h4>{{ 'yourAccount'|trans }}</h4>
-        <div>
+        <div style="margin-bottom: 64px;">
             <div id="editLink" style="width: 50%;">
 
                 {% if error is defined and error is not empty %}

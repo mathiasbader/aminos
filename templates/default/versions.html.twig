@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <div>
+            <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
+        </div>
+        <div class="versions">
+            {% for version in versions %}
+                <h4>{{ 'version'|trans }} {{ version.version }}</h4>
+                <span class="date">{{ version.date|localizeddate('long', 'none',  app.request.locale) }}</span>
+                <ul>
+                    {% for change in version.changes %}
+                        <li>{{ ('version_' ~ version.version|replace( { '.' : '_' } ) ~ '.' ~ change)|trans }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

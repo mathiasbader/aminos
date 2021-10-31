@@ -90,3 +90,10 @@ testGroup:
   polar: Polar
   charged: Geladen
   all: Alle
+
+versionHistory: Versionsverlauf
+version: Version
+version_0_1:
+  addedFlatImagesOfAminoAcids: Neue Bilder für Aminosäuren im flachen Stil hinzugefügt
+  improvedTestingSystem: Abfragesystem verbessert
+  addedLanguageSelectorOnEveryPage: Sprachwahl wird nun auf jeder Seite angezeigt

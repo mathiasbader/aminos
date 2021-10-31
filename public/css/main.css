@@ -82,3 +82,14 @@ input {
 .progress.big>div { height: 32px; }
 .progress .correct { background-color: #6dc26d; }
 .progress .incorrect { background-color: #f15757; }
+.footer {
+    margin-top: 24px;
+    text-align: right; }
+.footer a { color: #aaa; }
+.footer>a { margin-left: 24px; }
+.footer>div>a { margin-right: 24px; }
+
+.versions h4 { margin-bottom: 2px; }
+.versions .date {
+    font-size: 0.9rem;
+    color: #aaa; }

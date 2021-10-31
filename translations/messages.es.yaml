@@ -90,3 +90,10 @@ testGroup:
   polar: Polares
   charged: Cargadas
   all: Todos
+
+versions: Historial de versiones
+version: Versión
+version_0_1:
+  addedFlatImagesOfAminoAcids: Añadido imágenes planas de aminoácidos
+  improvedTestingSystem: Mejorado el sistema de pruebas
+  addedLanguageSelectorOnEveryPage: Añadido selector de idioma en cada página
