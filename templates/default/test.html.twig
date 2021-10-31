@@ -12,13 +12,12 @@
     </div>
 
     <div>
-
         {% if run.finished %}
 
-            <h4>Ergebnis</h4>
+            <h4>{{ 'result'|trans }}</h4>
             {% include 'lib/_test_progress.html.twig' with { 'big' : true } %}
             <div style="text-align: center">
-                <a href="{{ url('testOverview') }}">Weiter</a>
+                <a href="{{ url('testOverview') }}">{{ 'continue'|trans }}</a>
             </div>
 
         {% else %}
@@ -28,7 +27,7 @@
                 {% include 'lib/_test_question.html.twig' with { 'test' : test } %}
             </div>
             <div style="text-align: right; margin-top: 12px;">
-                <a href="{{ url('test', { 'runId' : run.id, 'action' : 'stop' } ) }}" style="color: #aaa">Beenden</a>
+                <a href="{{ url('test', { 'runId' : run.id, 'action' : 'stop' } ) }}" style="color: #aaa">{{ 'stopRun'|trans }}</a>
             </div>
         {% endif %}
     </div>

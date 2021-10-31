@@ -81,3 +81,6 @@ sideChains:
   polar: Polar side chains
   nonPolar: Nonpolar side chains
   electricallyCharged: Electrically charged side chains
+result: Result
+continue: Continue
+stopRun: Stop run
