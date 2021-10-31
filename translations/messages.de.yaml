@@ -84,3 +84,9 @@ sideChains:
 result: Ergebnis
 continue: Weiter
 stopRun: Abfrage beenden
+
+testGroup:
+  unpolar: Unpolar
+  polar: Polar
+  charged: Geladen
+  all: Alle

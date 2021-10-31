@@ -12,13 +12,13 @@
         {% if activeRun is not null %}
             <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="btn btn-special">Aktiven Test wiederaufnehmen</a><br>
         {% endif %}
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  )} ) }}" class="btn">Unpolar 1</a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  )} ) }}" class="btn">Unpolar 2</a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'    )} ) }}" class="btn">Unpolar 1 + 2</a><br>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR'        )} ) }}" class="btn">Polar</a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_CHARGED'      )} ) }}" class="btn">Geladen</a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED')} ) }}" class="btn">Polar + Geladen</a><br>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_ALL'          )} ) }}" class="btn">Alle</a>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  )} ) }}" class="btn">{{ 'testGroup.unpolar'|trans }} 1</a>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  )} ) }}" class="btn">{{ 'testGroup.unpolar'|trans }} 2</a>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'    )} ) }}" class="btn">{{ 'testGroup.unpolar'|trans }} 1 + 2</a><br>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR'        )} ) }}" class="btn">{{ 'testGroup.polar'|trans }}</a>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_CHARGED'      )} ) }}" class="btn">{{ 'testGroup.charged'|trans }}</a>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED')} ) }}" class="btn">{{ 'testGroup.polar'|trans }} + {{ 'testGroup.charged'|trans }}</a><br>
+        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_ALL'          )} ) }}" class="btn">{{ 'testGroup.all'|trans }}</a>
     </div>
 
 {% endblock %}

@@ -138,7 +138,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/test/{runId}", name="test") @Template */
-    function testAction(int $runId, Request $request): array | RedirectResponse {
+    function testAction(int $runId, Request $request, TranslatorInterface $translator): array | RedirectResponse {
         $user = $this->initUser();
 
         $run = $this->getDoctrine()->getRepository(TestRun::class)->find($runId);
@@ -196,87 +196,9 @@ class DefaultController extends AbstractController
                 }
             }
         }
-        return ['run' => $run];
-    }
-
-    /** @Route("/i2n", name="testImgToName") @Template */
-    function testImgToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
-    {
-        $answerText    = $request->get('answer');
-        $answerAminoId = $request->get('amino');
-
-        $answerCorrect = null;
-        $answerAmino   = null;
-        if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
-            /* @var $answerAmino Aminoacid */
-            $answerAmino = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-            $answerCorrect = $aminoService->isCorrectAnswer($translator, $answerText, $answerAmino);
-        }
-
-        $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
         return [
-            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'amino'         => $amino,
-            'answerText'    => $answerText,
-            'answerAmino'   => $answerAmino,
-            'answerCorrect' => $answerCorrect,
-        ];
-    }
-
-    /** @Route("/n2i", name="testNameToImg") @Template */
-    function testNameToImgAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
-    {
-        $selectedAminoId = $request->get('answer');
-        $answerAminoId   = $request->get('amino');
-
-        $selectedAmino = null;
-        $answerAmino   = null;
-        $answerCorrect = null;
-        if ($answerAminoId !== null && is_numeric($answerAminoId)) {
-            /* @var $answerAmino Aminoacid */
-            $selectedAmino = $this->getDoctrine()->getRepository(Aminoacid::class)->find($selectedAminoId);
-            $answerAmino   = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-            $answerCorrect = $selectedAmino->getId() === $answerAmino->getId();
-        }
-
-        $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
-        $otherAminoIds = $aminoService->getOtherAminoIds($amino->getId());
-        $answerAminos = $this->getDoctrine()->getRepository(Aminoacid::class)->findBy(['id' => $otherAminoIds]);
-        array_splice($answerAminos, mt_rand(0, 4), 0, [$amino]);
-
-        return [
-            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'amino'         => $amino,
-            'answerAminos'  => $answerAminos,
-            'selectedAmino' => $selectedAmino,
-            'answerAmino'   => $answerAmino,
-            'answerCorrect' => $answerCorrect,
-        ];
-    }
-
-    /** @Route("/c2n", name="testCodeToName") @Template */
-    function testCodeToNameAction(Request $request, TranslatorInterface $translator, AminoService $aminoService)
-    {
-        $answerText    = $request->get('answer');
-        $answerText = htmlentities($answerText);
-        $answerAminoId = $request->get('amino');
-
-        $answerAmino   = null;
-        $answerCorrect = null;
-        if (!empty($answerText) && $answerAminoId !== null && is_numeric($answerAminoId)) {
-            /* @var $answerAmino Aminoacid */
-            $answerAmino   = $this->getDoctrine()->getRepository(Aminoacid::class)->find($answerAminoId);
-            $answerCorrect = $aminoService->isCorrectAnswer($translator, $answerText, $answerAmino, false);
-        }
-
-        $amino = $this->getDoctrine()->getRepository(Aminoacid::class)->find(rand(1, Common::AMINOS_COUNT));
-
-        return [
-            'pageTitle'     => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'amino'         => $amino,
-            'answerText'    => $answerText,
-            'answerAmino'   => $answerAmino,
-            'answerCorrect' => $answerCorrect,
+            'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
+            'run' => $run
         ];
     }
 

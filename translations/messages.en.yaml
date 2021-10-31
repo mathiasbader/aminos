@@ -84,3 +84,10 @@ sideChains:
 result: Result
 continue: Continue
 stopRun: Stop run
+
+testGroup:
+  unpolar: Unpolar
+  polar: Polar
+  charged: Charged
+  all: All
+
