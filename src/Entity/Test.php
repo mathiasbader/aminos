@@ -18,27 +18,30 @@ class Test
     /** @ORM\Column(type="integer" ,             nullable=true                                      ) */ private ?int        $type;
     /** @ORM\Column(type="boolean" ,             nullable=true                                      ) */ private ?bool       $correct;
     /** @ORM\Column(type="string"  , length=255, nullable=true                                      ) */ private ?string     $answer;
+    /** @ORM\ManyToOne(targetEntity=Aminoacid::class) @ORM\JoinColumn(nullable=true                 ) */ private ?Aminoacid  $answerAmino;
     /** @ORM\Column(type="datetime",             nullable=true                                      ) */ private ?DateTime   $answered;
     /** @ORM\ManyToMany(targetEntity=Aminoacid::class                                               ) */ private ?Collection $choices;
 
     public function __construct() { $this->choices = new ArrayCollection(); }
 
-    function getId      ():  int        { return $this->id      ; }
-    function getRun     ():  TestRun    { return $this->run     ; }
-    function getAmino   ():  Aminoacid  { return $this->amino   ; }
-    function getType    (): ?int        { return $this->type    ; }
-    function getCorrect (): ?bool       { return $this->correct ; }
-    function getAnswer  (): ?string     { return $this->answer  ; }
-    function getAnswered(): ?DateTime   { return $this->answered; }
-    function getChoices ():  Collection { return $this->choices ; }
+    function getId         ():  int        { return $this->id         ; }
+    function getRun        ():  TestRun    { return $this->run        ; }
+    function getAmino      ():  Aminoacid  { return $this->amino      ; }
+    function getType       (): ?int        { return $this->type       ; }
+    function getCorrect    (): ?bool       { return $this->correct    ; }
+    function getAnswer     (): ?string     { return $this->answer     ; }
+    function getAnswerAmino(): ?Aminoacid  { return $this->answerAmino; }
+    function getAnswered   (): ?DateTime   { return $this->answered   ; }
+    function getChoices    ():  Collection { return $this->choices    ; }
 
-    function setRun     (TestRun    $run     ): self { $this->run      = $run     ; return $this; }
-    function setAmino   (Aminoacid  $amino   ): self { $this->amino    = $amino   ; return $this; }
-    function setType    (int        $type    ): self { $this->type     = $type    ; return $this; }
-    function setCorrect (bool       $correct ): self { $this->correct  = $correct ; return $this; }
-    function setAnswer  (string     $answer  ): self { $this->answer   = $answer  ; return $this; }
-    function setAnswered(DateTime   $answered): self { $this->answered = $answered; return $this; }
-    function defineChoices (Collection $choices ): self {
+    function setRun        (TestRun    $run        ): self { $this->run         = $run        ; return $this; }
+    function setAmino      (Aminoacid  $amino      ): self { $this->amino       = $amino      ; return $this; }
+    function setType       (int        $type       ): self { $this->type        = $type       ; return $this; }
+    function setCorrect    (bool       $correct    ): self { $this->correct     = $correct    ; return $this; }
+    function setAnswer     (string     $answer     ): self { $this->answer      = $answer     ; return $this; }
+    function setAnswerAmino(Aminoacid  $answerAmino): self { $this->answerAmino = $answerAmino; return $this; }
+    function setAnswered   (DateTime   $answered   ): self { $this->answered    = $answered   ; return $this; }
+    function defineChoices (Collection $choices    ): self {
 
         // shuffle array
         $choicesArray = $choices->toArray();

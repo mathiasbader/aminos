@@ -12,6 +12,7 @@ use App\Entity\Test;
 use App\Entity\TestRun;
 use App\Entity\User;
 use App\Service\AminoService;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -126,13 +127,32 @@ class DefaultController extends AbstractController
         $this->stopAllRunningTests($user);
         $run = $this->initNewTestRun($user);
 
-        return $this->redirectToRoute('test', [ 'run' => $run->getId()]);
+        return $this->redirectToRoute('test', [ 'runId' => $run->getId()]);
     }
 
-    /** @Route("/test/{run}", name="test") @Template */
-    function testAction(TestRun $run): array | RedirectResponse {
+    /** @Route("/test/{runId}", name="test") @Template */
+    function testAction(int $runId, Request $request): array | RedirectResponse {
         $user = $this->initUser();
-        if ($user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
+
+        $run = $this->getDoctrine()->getRepository(TestRun::class)->find($runId);
+        if ($run === null ||
+            $user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
+
+        if ($request->get('answer') !== null) {
+            $answer       = (int)$request->get('answer');
+            $answerTestId = (int)$request->get('test'  );
+            $test = $run->getFirstUncompletedTest();
+            if ($test->getId() === $answerTestId) {
+                if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE || true) {
+                    $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answer));
+                    $test->setAnswered(new DateTime());
+                    $test->setCorrect($test->getAmino()->getId() === $answer);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($test);
+                    $em->flush();
+                }
+            }
+        }
 
         return [
             'run' => $run,
@@ -319,11 +339,11 @@ class DefaultController extends AbstractController
         return $run;
     }
 
-    private function generateTest(TestRun $run, Aminoacid $amino, String $type): Test {
+    private function generateTest(TestRun $run, Aminoacid $amino, int $type): Test {
         $test = new Test();
         $test->setAmino($amino);
         $test->setType($type);
-        if ($type === TestType::TEST_1_NAME_TO_IMAGE) $test->defineChoices($run->getAminos());
+        if ($type === TestType::TEST_1_NAME_TO_IMAGE || true) $test->defineChoices($run->getAminos());
         return $test;
     }
 

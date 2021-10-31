@@ -18,6 +18,9 @@ class TestRun
     /** @ORM\OneToMany(targetEntity=Test::class, mappedBy="run", orphanRemoval=true, cascade={"persist"}) */ private ?Collection $tests;
     /** @ORM\ManyToMany(targetEntity=Aminoacid::class                                                   ) */ private ?Collection $aminos;
 
+    private ?int   $correctCount = null;
+    private ?int $incorrectCount = null;
+
     public function __construct() {
         $this->tests  = new ArrayCollection();
         $this->aminos = new ArrayCollection();
@@ -30,12 +33,49 @@ class TestRun
     function getCompleted(): ?DateTime   { return $this->completed; }
     function getTests    (): ?Collection { return $this->tests    ; }
     function getAminos   (): ?Collection { return $this->aminos   ; }
+    function getLastCompletedTest(): ?Test {
+        $lastTest = null;
+        foreach($this->tests as $test) {
+            /* @var $test Test */
+            if ($test->getAnswered() !== null) {
+                if ($lastTest == null || $lastTest->getAnswered() < $test->getAnswered()) $lastTest = $test;
+            }
+        }
+        return $lastTest;
+    }
     function getFirstUncompletedTest(): ?Test {
         foreach($this->tests as $test) {
             /* @var $test Test */
             if ($test->getAnswered() === null) return $test;
         }
         return null;
+    }
+    function calculateCorrectCount(): void {
+        if ($this->correctCount === null) {
+            $this->  correctCount = 0;
+            $this->incorrectCount = 0;
+            foreach ($this->tests as $test) {
+                /* @var $test Test */
+                if     ($test->getCorrect() === true ) $this->  correctCount++;
+                elseif ($test->getCorrect() === false) $this->incorrectCount++;
+            }
+        }
+    }
+    function getCorrectCount(): int {
+        $this->calculateCorrectCount();
+        return $this->correctCount;
+    }
+    function getIncorrectCount(): int {
+        $this->calculateCorrectCount();
+        return $this->incorrectCount;
+    }
+    function getPercentageCorrect(): float {
+        $this->calculateCorrectCount();
+        return round($this->correctCount / ($this->tests->count()) * 100, 2);
+    }
+    function getPercentageIncorrect(): float {
+        $this->calculateCorrectCount();
+        return round($this->incorrectCount / ($this->tests->count()) * 100, 2);
     }
 
     function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }

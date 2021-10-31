@@ -62,5 +62,15 @@ input {
 }
 .inner {
     transform: rotate(180deg);
-    padding: 8px;
-}
+    padding: 8px; }
+
+.progress {
+    display: flex;
+    margin-bottom: 12px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #ddd; }
+.progress,
+.progress>div { height: 16px; }
+.progress .correct { background-color: #6dc26d; }
+.progress .incorrect { background-color: #f15757; }

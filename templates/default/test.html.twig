@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% set lastTest = run.lastCompletedTest %}
 {% set test = run.firstUncompletedTest %}
 
 {% block bodyParam %} onLoad="document.getElementById('answer').focus();"{% endblock %}
@@ -11,20 +12,24 @@
     </div>
 
     <div>
-        Sie führen Test run {{ run.id }} aus:<br><br>
 
-        {% include 'lib/_test_question.html.twig' with { 'test' : test } %}
+        Sie führen Test run {{ run.id }} aus, Aktueller Test ist {{ test.id }}{% if lastTest is not null %}, letzter Test war {{ lastTest.id }}{% endif %}:
+        <br><br>
+
+        {% include 'lib/_test_progress.html.twig' %}
+        <div style="display: flex;">
+            {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
+            {% include 'lib/_test_question.html.twig' with { 'test' : test } %}
+        </div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
-    {% if test.type == constant('App\\Constant\\TestType::TEST_1_NAME_TO_IMAGE') %}
-        <script type="text/javascript">
-            function choose(aminoId) {
-                document.getElementById('answer').value = aminoId;
-                document.getElementById('form').submit();
-            }
-        </script>
-    {% endif %}
+    <script type="text/javascript">
+        function choose(aminoId) {
+            document.getElementById('answer').value = aminoId;
+            document.getElementById('form').submit();
+        }
+    </script>
 {% endblock %}

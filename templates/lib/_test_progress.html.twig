@@ -1,0 +1,6 @@
+{% if run.correctCount != 0 or run.incorrectCount != 0 %}
+    <div class="progress">
+        <div class="incorrect" style="width: {{ run.percentageIncorrect }}%"></div>
+        <div class="correct"   style="width: {{ run.percentageCorrect   }}%"></div>
+    </div>
+{% endif %}
