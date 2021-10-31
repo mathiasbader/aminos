@@ -51,14 +51,15 @@ class TestRun
         return null;
     }
     function calculateCorrectCount(): void {
-        if ($this->correctCount === null) {
-            $this->  correctCount = 0;
-            $this->incorrectCount = 0;
-            foreach ($this->tests as $test) {
-                /* @var $test Test */
-                if     ($test->getCorrect() === true ) $this->  correctCount++;
-                elseif ($test->getCorrect() === false) $this->incorrectCount++;
-            }
+        if ($this->correctCount === null) $this->recalculateCorrectCount();
+    }
+    function recalculateCorrectCount(): void {
+        $this->  correctCount = 0;
+        $this->incorrectCount = 0;
+        foreach ($this->tests as $test) {
+            /* @var $test Test */
+            if     ($test->getCorrect() === true ) $this->  correctCount++;
+            elseif ($test->getCorrect() === false) $this->incorrectCount++;
         }
     }
     function getCorrectCount(): int {
@@ -68,6 +69,14 @@ class TestRun
     function getIncorrectCount(): int {
         $this->calculateCorrectCount();
         return $this->incorrectCount;
+    }
+    function hasAnswers(): bool {
+        $this->calculateCorrectCount();
+        return $this->correctCount > 0 || $this->incorrectCount > 0;
+    }
+    function isFinished(): bool {
+        $this->calculateCorrectCount();
+        return $this->correctCount + $this->incorrectCount ===$this->tests->count();
     }
     function getPercentageCorrect(): float {
         $this->calculateCorrectCount();

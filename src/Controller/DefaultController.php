@@ -142,21 +142,24 @@ class DefaultController extends AbstractController
             $answer       = (int)$request->get('answer');
             $answerTestId = (int)$request->get('test'  );
             $test = $run->getFirstUncompletedTest();
-            if ($test->getId() === $answerTestId) {
+            if ($test !== null && $test->getId() === $answerTestId) {
+                $em = $this->getDoctrine()->getManager();
                 if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE || true) {
                     $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answer));
                     $test->setAnswered(new DateTime());
                     $test->setCorrect($test->getAmino()->getId() === $answer);
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($test);
+                    $em->flush();
+                }
+                $run->recalculateCorrectCount();
+                if ($run->isFinished()) {
+                    $run->setCompleted(new DateTime());
+                    $em->persist($run);
                     $em->flush();
                 }
             }
         }
-
-        return [
-            'run' => $run,
-        ];
+        return ['run' => $run];
     }
 
     /** @Route("/i2n", name="testImgToName") @Template */

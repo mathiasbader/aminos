@@ -1,5 +1,5 @@
-{% if run.correctCount != 0 or run.incorrectCount != 0 %}
-    <div class="progress">
+{% if run.hasAnswers %}
+    <div class="progress{% if big is defined and big %} big{% endif %}">
         <div class="incorrect" style="width: {{ run.percentageIncorrect }}%"></div>
         <div class="correct"   style="width: {{ run.percentageCorrect   }}%"></div>
     </div>

@@ -69,8 +69,12 @@ input {
     margin-bottom: 12px;
     width: 100%;
     border-radius: 6px;
+    overflow: hidden;
     background-color: #ddd; }
 .progress,
 .progress>div { height: 16px; }
+.progress.big { border-radius: 6px; }
+.progress.big,
+.progress.big>div { height: 32px; }
 .progress .correct { background-color: #6dc26d; }
 .progress .incorrect { background-color: #f15757; }
