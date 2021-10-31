@@ -29,6 +29,10 @@
                 {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
                 {% include 'lib/_test_question.html.twig' with { 'test' : test } %}
             </div>
+            <div style="text-align: right; margin-top: 12px;">
+                <a href="{{ url('test', { 'runId' : run.id, 'action' : 'stop' } ) }}" style="color: #aaa">Beenden</a>
+            </div>
+
         {% endif %}
     </div>
 

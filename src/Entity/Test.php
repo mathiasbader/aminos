@@ -32,7 +32,12 @@ class Test
     function getAnswer     (): ?string     { return $this->answer     ; }
     function getAnswerAmino(): ?Aminoacid  { return $this->answerAmino; }
     function getAnswered   (): ?DateTime   { return $this->answered   ; }
-    function getChoices    ():  Collection { return $this->choices    ; }
+    function getChoices    ():  Collection {
+        $choicesArray = $this->choices->toArray();
+        shuffle($choicesArray);
+        $choices = new ArrayCollection($choicesArray);
+        return $choices;
+    }
 
     function setRun        (TestRun    $run        ): self { $this->run         = $run        ; return $this; }
     function setAmino      (Aminoacid  $amino      ): self { $this->amino       = $amino      ; return $this; }
@@ -43,11 +48,8 @@ class Test
     function setAnswered   (DateTime   $answered   ): self { $this->answered    = $answered   ; return $this; }
     function defineChoices (Collection $choices    ): self {
 
-        // shuffle array
-        $choicesArray = $choices->toArray();
-        shuffle($choicesArray);
-
         // ensure max size
+        $choicesArray = $choices->toArray();
         if (count($choicesArray) > Common::MAX_ANSWERS_COUNT_FOR_NAME_TO_IMAGE) {
             $choicesArray = array_slice($choicesArray, 0, Common::MAX_ANSWERS_COUNT_FOR_NAME_TO_IMAGE);
         }

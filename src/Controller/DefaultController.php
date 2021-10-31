@@ -138,6 +138,14 @@ class DefaultController extends AbstractController
         if ($run === null ||
             $user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
 
+        if ($request->get('action') === 'stop') {
+            $run->setCompleted(new DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($run);
+            $em->flush();
+            return $this->redirectToRoute('testOverview');
+        }
+
         if ($request->get('answer') !== null) {
             $answer       = (int)$request->get('answer');
             $answerTestId = (int)$request->get('test'  );
