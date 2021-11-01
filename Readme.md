@@ -1,9 +1,14 @@
 # Study the 20 proteinogetic amino acids
-This project aims to help learning the 20 proteinogetic amino acids that build
+This project helps you learn the 20 proteinogetic amino acids that build
 up proteins, the building blocks of all living organisms on earth.
 
 ## Website
-This project is hosted at www.aminos.org
+This project is hosted at [aminos.org](https://www.aminos.org).
+
+Redirects to this domain are installed under
+
+* [study-the-aminoacids.org](http://www.study-the-aminoacids.org)
+* [study-aminoacids.org](http://www.study-aminoacids.org)
 
 ## License
 The project is licensed under the MIT License.
