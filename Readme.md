@@ -13,4 +13,4 @@ Redirects to this domain are installed under
 The project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de)
+For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de).
