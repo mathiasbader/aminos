@@ -1,6 +1,5 @@
 # Study the 20 proteinogetic amino acids
-This project helps you learn the 20 proteinogetic amino acids that build
-up proteins, the building blocks of all living organisms on earth.
+Learn the 20 proteinogetic amino acids that build up proteins, the building blocks of all living organisms on earth.
 
 ## Website
 This project is hosted at [aminos.org](https://www.aminos.org).
