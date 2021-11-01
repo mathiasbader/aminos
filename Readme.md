@@ -11,7 +11,7 @@ Redirects to this domain are installed under
 * [study-aminoacids.org](http://www.study-aminoacids.org)
 
 ## License
-The project is licensed under the MIT License.
+The project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de)
