@@ -10,7 +10,7 @@
 
     <div>
         {% if activeRun is not null %}
-            <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="btn btn-special">Aktiven Test wiederaufnehmen</a><br>
+            <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="btn btn-special">{{ 'continueActiveTest'|trans }}</a><br>
         {% endif %}
         <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  )} ) }}" class="btn">{{ 'testGroup.unpolar'|trans }} 1</a>
         <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  )} ) }}" class="btn">{{ 'testGroup.unpolar'|trans }} 2</a>
