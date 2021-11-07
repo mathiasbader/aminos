@@ -28,8 +28,6 @@ a:hover { text-decoration: underline; }
     transition: background 0.3s;
     background-color: #ccc; }
 .btn.active { border: 1px solid #888; }
-.btn-special       { background-color: #93d5a3; }
-.btn-special:hover { background-color: #66b87a; }
 
 .alert {
     margin: 8px 0;
@@ -93,3 +91,30 @@ input {
 .versions .date {
     font-size: 0.9rem;
     color: #aaa; }
+
+#testOverview>a {
+    display: inline-block;
+    width: 240px;
+    height: 180px;
+    margin: 0 12px 12px 0;
+    border-radius: 6px;
+    background-color: #eee; }
+#testOverview>a:hover {
+    text-decoration: none;
+    background-color: #ddd;
+    transition: background 0.3s; }
+#testOverview>a.highlight {
+    height: 84px;
+    background-color: #93d5a3; }
+#testOverview>a.highlight>div {
+    color: #333;
+    margin-top: 4px; }
+#testOverview>a.highlight:hover { background-color: #66b87a; }
+#testOverview>a>div {
+    margin-top: 120px;
+    padding: 12px;
+    text-align: center;
+    color: #666; }
+#testOverview>a:hover>div {
+    color: #333;
+}
