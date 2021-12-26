@@ -123,9 +123,9 @@ input {
 #testOverview > a.level-0 { border-style: dashed; }
 
 #testOverview > a.level-1 {
-    background-color: #fffbb1;
+    background-color: #fcf9d3;
     color: #888;
-    border-color: #f1e95b;
+    border-color: #f7f29b;
     border-style: dashed;
 }
 
@@ -137,8 +137,8 @@ input {
 }
 
 #testOverview > a.level-3 {
-    background-color: #93de63;
+    background-color: #ade5ad;
     color: #333;
-    border-color: #489119;
+    border-color: #6dc26d;
     font-size: 1.4em;
 }
