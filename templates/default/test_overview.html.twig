@@ -16,41 +16,14 @@
                 </div>
             </a><br>
         {% endif %}
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  )} ) }}">
-            <div>
-                {{ 'testGroup.unpolar'|trans }} 1
-            </div>
-        </a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  )} ) }}">
-            <div>
-                {{ 'testGroup.unpolar'|trans }} 2
-            </div>
-        </a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'    )} ) }}">
-            <div>
-                {{ 'testGroup.unpolar'|trans }} 1 + 2
-            </div>
-        </a><br>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR'        )} ) }}">
-            <div>
-                {{ 'testGroup.polar'|trans }}
-            </div>
-        </a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_CHARGED'      )} ) }}">
-            <div>
-                {{ 'testGroup.charged'|trans }}
-            </div>
-        </a>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED')} ) }}">
-            <div>
-                {{ 'testGroup.polar'|trans }} + {{ 'testGroup.charged'|trans }}
-            </div>
-        </a><br>
-        <a href="{{ url('testStart', { 'group' : constant('App\\Constant\\GroupType::GROUP_ALL'          )} ) }}">
-            <div>
-                {{ 'testGroup.all'|trans }}
-            </div>
-        </a>
+
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  ), 'name' : 'testGroup.unpolar'|trans ~ ' 1'     } %}
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  ), 'name' : 'testGroup.unpolar'|trans ~ ' 2'     } %}
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'    ), 'name' : 'testGroup.unpolar'|trans ~ ' 1 + 2' } %}<br>
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR'        ), 'name' : 'testGroup.polar'  |trans            } %}
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_CHARGED'      ), 'name' : 'testGroup.charged'|trans            } %}
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED'), 'name' : 'testGroup.polar'  |trans ~ ' + ' ~ 'testGroup.charged'|trans } %}<br>
+        {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_ALL'          ), 'name' : 'testGroup.all'    |trans            } %}
     </div>
 
 {% endblock %}
