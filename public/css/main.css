@@ -97,11 +97,9 @@ input {
     width: 240px;
     height: 180px;
     margin: 0 12px 12px 0;
-    border-radius: 6px;
-    background-color: #eee; }
+    border-radius: 6px; }
 #testOverview>a:hover {
     text-decoration: none;
-    background-color: #ddd;
     transition: background 0.3s; }
 #testOverview>a.highlight {
     height: 84px;
@@ -113,8 +111,34 @@ input {
 #testOverview>a>div {
     margin-top: 120px;
     padding: 12px;
-    text-align: center;
-    color: #666; }
-#testOverview>a:hover>div {
+    text-align: center; }
+#testOverview>a:hover>div { color: #333; }
+
+#testOverview > a {
+    background-color: #eee;
+    color: #aaa;
+    border: 2px solid #ccc;
+}
+
+#testOverview > a.level-0 { border-style: dashed; }
+
+#testOverview > a.level-1 {
+    background-color: #fffbb1;
+    color: #888;
+    border-color: #f1e95b;
+    border-style: dashed;
+}
+
+#testOverview > a.level-2 {
+    background-color: #fff978;
+    color: #666;
+    border-color: #f2e71a;
+    border-style: dashed;
+}
+
+#testOverview > a.level-3 {
+    background-color: #93de63;
     color: #333;
+    border-color: #489119;
+    font-size: 1.4em;
 }
