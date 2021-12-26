@@ -126,7 +126,7 @@ class DefaultController extends AbstractController
         $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         $activeRun = !empty($activeRuns) ? $activeRuns[0] : null;
         $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
-        $nextGroup = $testService->getRecommendedNextLevel($levels);
+        $nextGroup = $activeRun !== null ? '' : $testService->getRecommendedNextLevel($levels);
 
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),

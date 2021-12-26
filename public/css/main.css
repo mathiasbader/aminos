@@ -103,11 +103,14 @@ input {
     transition: background 0.3s; }
 #testOverview>a.highlight {
     height: 84px;
-    background-color: #93d5a3; }
+    background-color: #ade5ad;
+    color: #333;
+    border-color: #6dc26d;
+}
 #testOverview>a.highlight>div {
     color: #333;
     margin-top: 4px; }
-#testOverview>a.highlight:hover { background-color: #66b87a; }
+#testOverview>a.highlight:hover { background-color: #8cd88c; }
 #testOverview>a>div {
     margin-top: 120px;
     padding: 12px;

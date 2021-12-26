@@ -10,7 +10,7 @@
 
     <div id="testOverview">
         {% if activeRun is not null %}
-            <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="highlight">
+            <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="highlight nextLevel">
                 <div>
                     {{ 'continueActiveTest'|trans }}
                 </div>
