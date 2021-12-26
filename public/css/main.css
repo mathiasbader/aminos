@@ -140,9 +140,12 @@ input {
 }
 #testOverview > a.level-3 {
     background-color: #ade5ad;
-    color: #333;
     border-color: #6dc26d;
+}
+#testOverview > a.level-3,
+#testOverview > a.nextLevel {
     font-size: 1.4em;
+    color: #333;
 }
 #testOverview > a.nextLevel {
     border-style: solid;
