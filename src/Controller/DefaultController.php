@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Constant\Common;
 use App\Constant\GroupType;
 use App\Constant\Representation;
-use App\Constant\TestType;
+use App\Constant\TestLevel;
 use App\Entity\Aminoacid;
 use App\Entity\Test;
 use App\Entity\TestRun;
@@ -146,6 +146,7 @@ class DefaultController extends AbstractController
     function testAction(int $runId, Request $request, TranslatorInterface $translator): array | RedirectResponse {
         $user = $this->initUser();
 
+        /* @var $run TestRun */
         $run = $this->getDoctrine()->getRepository(TestRun::class)->find($runId);
         if ($run === null ||
             $user->getId() !== $run->getUser()->getId()) return $this->redirectToRoute('testOverview');
@@ -162,18 +163,18 @@ class DefaultController extends AbstractController
             if ($test !== null && $test->getId() === $answerTestId) {
                 $em = $this->getDoctrine()->getManager();
                 $correct = false;
-                if ($test->getType() === TestType::TEST_1_NAME_TO_IMAGE) {
+                if ($test->getLevel() === TestLevel::LEVEL_1_NAME_TO_IMAGE) {
                     $answerId = (int)$answer;
                     $test->setAnswerAmino($this->getDoctrine()->getRepository(Aminoacid::class)->find($answerId));
                     $test->setAnswered(new DateTime());
                     $correct = $test->getAmino()->getId() === $answerId;
                     $test->setCorrect($correct);
-                } elseif ($test->getType() === TestType::TEST_2_IMAGE_TO_NAME) {
+                } elseif ($test->getLevel() === TestLevel::LEVEL_2_IMAGE_TO_NAME) {
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
                     $correct = $test->getAmino()->isCorrectAnswer($answer);
                     $test->setCorrect($correct);
-                } elseif ($test->getType() === TestType::TEST_3_CODE_TO_NAME) {
+                } elseif ($test->getLevel() === TestLevel::LEVEL_3_CODE_TO_NAME) {
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
                     $correct = $test->getAmino()->isCorrectAnswer($answer);
@@ -182,11 +183,11 @@ class DefaultController extends AbstractController
 
                 // update next test type for this amino acid in current run
                 $otherTests = $this->getDoctrine()->getRepository(Test::class)->findBy(['run' => $run->getId(), 'amino' => $test->getAmino(), 'answered' => null]);
-                $nextTestType = $test->getType() + (($correct && $test->getType() < 3) ? 1 : 0);
+                $nextTestLevel = $test->getLevel() + (($correct && $test->getLevel() < 3) ? 1 : 0);
                 foreach ($otherTests as $otherTest) {
                     if ($otherTest->getId() === $test->getId()) continue;
-                    $otherTest->setType($nextTestType);
-                    if ($nextTestType === TestType::TEST_1_NAME_TO_IMAGE) $otherTest->defineChoices($run->getAminos());
+                    $otherTest->setLevel($nextTestLevel);
+                    if ($nextTestLevel === TestLevel::LEVEL_1_NAME_TO_IMAGE) $otherTest->defineChoices($run->getAminos());
                     else                                                  $otherTest->defineChoices(new ArrayCollection());
                     $em->persist($otherTest);
                 }
@@ -197,6 +198,7 @@ class DefaultController extends AbstractController
                 $run->recalculateCorrectCount();
                 if ($run->isFinished()) {
                     $run->setCompleted(new DateTime());
+                    $run->calculateLevel();
                     $em->persist($run);
                     $em->flush();
                 }
@@ -298,9 +300,9 @@ class DefaultController extends AbstractController
         $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         if (count($activeTests) > 0) return $activeTests[0];
 
-
         $run = new TestRun();
         $run->setUser($user);
+        $run->setGroup($group);
 
         $aminos = [];
         if ($group == GroupType::GROUP_NOT_POLAR_1  ) $aminos = ['g', 'a', 'v', 'l', 'i'];
@@ -310,7 +312,6 @@ class DefaultController extends AbstractController
         if ($group == GroupType::GROUP_CHARGED      ) $aminos = ['d', 'e', 'k', 'r', 'h'];
         if ($group == GroupType::GROUP_POLAR_CHARGED) $aminos = ['n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
         if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
-        if ($aminos === null) return null;
 
         $aminos1 = $aminos;
         $aminos2 = $aminos;
@@ -324,13 +325,13 @@ class DefaultController extends AbstractController
         $run->setAminos($this->resolveAminos($aminos));
 
         foreach ($this->resolveAminos($aminos1) as $amino) {
-            $run->addTest($this->generateTest($run, $amino, TestType::TEST_1_NAME_TO_IMAGE));
+            $run->addTest($this->generateTest($run, $amino, TestLevel::LEVEL_1_NAME_TO_IMAGE));
         }
         foreach ($this->resolveAminos($aminos2) as $amino) {
-            $run->addTest($this->generateTest($run, $amino, TestType::TEST_2_IMAGE_TO_NAME));
+            $run->addTest($this->generateTest($run, $amino, TestLevel::LEVEL_2_IMAGE_TO_NAME));
         }
         foreach ($this->resolveAminos($aminos3) as $amino) {
-            $run->addTest($this->generateTest($run, $amino, TestType::TEST_3_CODE_TO_NAME));
+            $run->addTest($this->generateTest($run, $amino, TestLevel::LEVEL_3_CODE_TO_NAME));
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -340,11 +341,11 @@ class DefaultController extends AbstractController
         return $run;
     }
 
-    private function generateTest(TestRun $run, Aminoacid $amino, int $type): Test {
+    private function generateTest(TestRun $run, Aminoacid $amino, int $level): Test {
         $test = new Test();
         $test->setAmino($amino);
-        $test->setType($type);
-        if ($type === TestType::TEST_1_NAME_TO_IMAGE) $test->defineChoices($run->getAminos());
+        $test->setLevel($level);
+        if ($level === TestLevel::LEVEL_1_NAME_TO_IMAGE) $test->defineChoices($run->getAminos());
         return $test;
     }
 

@@ -15,7 +15,7 @@ class Test
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"                                      ) */ private  int        $id;
     /** @ORM\ManyToOne(targetEntity=TestRun::class, inversedBy="run") @ORM\JoinColumn(nullable=false) */ private  TestRun    $run;
     /** @ORM\ManyToOne(targetEntity=Aminoacid::class) @ORM\JoinColumn(nullable=false                ) */ private  Aminoacid  $amino;
-    /** @ORM\Column(type="integer" ,             nullable=true                                      ) */ private ?int        $type;
+    /** @ORM\Column(type="integer" ,             nullable=true                                      ) */ private ?int        $level;
     /** @ORM\Column(type="boolean" ,             nullable=true                                      ) */ private ?bool       $correct;
     /** @ORM\Column(type="string"  , length=255, nullable=true                                      ) */ private ?string     $answer;
     /** @ORM\ManyToOne(targetEntity=Aminoacid::class) @ORM\JoinColumn(nullable=true                 ) */ private ?Aminoacid  $answerAmino;
@@ -27,7 +27,7 @@ class Test
     function getId         ():  int        { return $this->id         ; }
     function getRun        ():  TestRun    { return $this->run        ; }
     function getAmino      ():  Aminoacid  { return $this->amino      ; }
-    function getType       (): ?int        { return $this->type       ; }
+    function getLevel      (): ?int        { return $this->level      ; }
     function getCorrect    (): ?bool       { return $this->correct    ; }
     function getAnswer     (): ?string     { return $this->answer     ; }
     function getAnswerAmino(): ?Aminoacid  { return $this->answerAmino; }
@@ -35,13 +35,12 @@ class Test
     function getChoices    ():  Collection {
         $choicesArray = $this->choices->toArray();
         shuffle($choicesArray);
-        $choices = new ArrayCollection($choicesArray);
-        return $choices;
+        return new ArrayCollection($choicesArray);
     }
 
     function setRun        (TestRun    $run        ): self { $this->run         = $run        ; return $this; }
     function setAmino      (Aminoacid  $amino      ): self { $this->amino       = $amino      ; return $this; }
-    function setType       (int        $type       ): self { $this->type        = $type       ; return $this; }
+    function setLevel      (int        $level      ): self { $this->level       = $level      ; return $this; }
     function setCorrect    (bool       $correct    ): self { $this->correct     = $correct    ; return $this; }
     function setAnswer     (string     $answer     ): self { $this->answer      = $answer     ; return $this; }
     function setAnswerAmino(Aminoacid  $answerAmino): self { $this->answerAmino = $answerAmino; return $this; }
@@ -69,7 +68,6 @@ class Test
 
         $choices = new ArrayCollection($choicesArray);
         $this->choices = $choices;
-
         return $this;
     }
 
