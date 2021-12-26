@@ -93,9 +93,13 @@ testGroup:
 
 versionHistory: Version history
 version: Version
+
 version_0_1:
   addedFlatImagesOfAminoAcids: Added flat images of amino acids
   improvedTestingSystem: Improved testing system
   addedLanguageSelectorOnEveryPage: Added language selector on every page
+version_0_2:
+  saveLearningProgress: Learning progress is saved and displayed via colors
+
 continueActiveTest: Continue active test
 toSaveProgressClickHere: To save your progress, click here

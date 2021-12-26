@@ -93,9 +93,13 @@ testGroup:
 
 versionHistory: Versionsverlauf
 version: Version
+
 version_0_1:
   addedFlatImagesOfAminoAcids: Neue Bilder für Aminosäuren im flachen Stil hinzugefügt
   improvedTestingSystem: Abfragesystem verbessert
   addedLanguageSelectorOnEveryPage: Sprachwahl wird nun auf jeder Seite angezeigt
+version_0_2:
+  saveLearningProgress: Der Lernfortschritt wird gespeichert und über Farbindikatoren angezeigt
+
 continueActiveTest: Aktiven Test wiederaufnehmen
 toSaveProgressClickHere: Um Ihren Fortschritt zu speichern, klicken Sie hier
