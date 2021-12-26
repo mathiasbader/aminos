@@ -158,3 +158,18 @@ input {
     from { box-shadow: 0 0 20px #fff; }
     to   { box-shadow: 0 0 20px #aaa; }
 }
+a.btnReminder {
+    display: inline-block;
+    padding: 8px 24px;
+    background-color: #eee;
+    border: 1px solid #eee;
+    color: #888;
+    border-radius: 4px;
+}
+a.btnReminder:hover {
+    border-color: #888;
+    background-color: #ddd;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+}

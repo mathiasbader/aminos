@@ -8,6 +8,12 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
+    {% if app.user.email is null %}
+        <div style="text-align: center; margin-bottom: 24px;">
+            <a href="{{ url('profile') }}" class="btnReminder">To save your progress, click here</a>
+        </div>
+    {% endif %}
+
     <div id="testOverview">
         {% if activeRun is not null %}
             <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="highlight nextLevel">
