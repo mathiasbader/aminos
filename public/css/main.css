@@ -135,10 +135,20 @@ input {
     border-color: #f2e71a;
     border-style: dashed;
 }
-
 #testOverview > a.level-3 {
     background-color: #ade5ad;
     color: #333;
     border-color: #6dc26d;
     font-size: 1.4em;
+}
+#testOverview > a.nextLevel {
+    border-style: solid;
+    animation-name: nextLevel;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+@keyframes nextLevel {
+    from { box-shadow: 0 0 20px #fff; }
+    to   { box-shadow: 0 0 20px #aaa; }
 }

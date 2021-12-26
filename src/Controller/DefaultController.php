@@ -13,6 +13,7 @@ use App\Entity\Test;
 use App\Entity\TestRun;
 use App\Entity\User;
 use App\Service\AminoService;
+use App\Service\TestsService;
 use App\Service\VersionsService;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -120,16 +121,18 @@ class DefaultController extends AbstractController
 
 
     /** @Route("/test/overview", name="testOverview") @Template */
-    function testOverviewAction(TranslatorInterface $translator): array {
+    function testOverviewAction(TranslatorInterface $translator, TestsService $testService): array {
         $user = $this->initUser();
         $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
         $activeRun = !empty($activeRuns) ? $activeRuns[0] : null;
         $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
+        $nextGroup = $testService->getRecommendedNextLevel($levels);
 
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'activeRun' => $activeRun,
             'levels'    => $levels,
+            'nextGroup' => $nextGroup,
         ];
     }
 

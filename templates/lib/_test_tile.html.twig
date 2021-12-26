@@ -1,6 +1,9 @@
 {% if levels[group] is not defined %} {% set level = 0 %}
 {% else %}                            {% set level = levels[group] %}{% endif %}
 
-<a href="{{ url('testStart', { 'group' : group } ) }}" class="level-{{ level }}">
+{% if group == nextGroup %} {% set highlight = ' nextLevel' %}
+{% else %}                  {% set highlight = '' %}{% endif %}
+
+<a href="{{ url('testStart', { 'group' : group } ) }}" class="level-{{ level }}{{ highlight }}">
     <div>{{ name }}</div>
 </a>
