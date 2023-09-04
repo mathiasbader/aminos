@@ -4,11 +4,6 @@ Learn the 20 proteinogetic amino acids that build up proteins, the building bloc
 ## Website
 This project is hosted at [aminos.org](https://www.aminos.org).
 
-Redirects to this domain are installed under
-
-* [study-the-aminoacids.org](http://www.study-the-aminoacids.org)
-* [study-aminoacids.org](http://www.study-aminoacids.org)
-
 ## License
 The project is licensed under the [MIT License](LICENSE).
 
