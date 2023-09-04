@@ -100,6 +100,8 @@ version_0_1:
   addedLanguageSelectorOnEveryPage: Added language selector on every page
 version_0_2:
   saveLearningProgress: Learning progress is saved and displayed via colors
+version_0_3:
+  testTubeIconsForLearningProgress: Test tube icons for learning progress in the tests
 
 continueActiveTest: Continue active test
 toSaveProgressClickHere: To save your progress, click here

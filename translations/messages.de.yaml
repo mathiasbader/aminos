@@ -100,6 +100,8 @@ version_0_1:
   addedLanguageSelectorOnEveryPage: Sprachwahl wird nun auf jeder Seite angezeigt
 version_0_2:
   saveLearningProgress: Der Lernfortschritt wird gespeichert und über Farbindikatoren angezeigt
+version_0_3:
+  testTubeIconsForLearningProgress: Reagenzglas-Icons für Lernfortschritt in den Tests
 
 continueActiveTest: Aktiven Test wiederaufnehmen
 toSaveProgressClickHere: Um Ihren Fortschritt zu speichern, klicken Sie hier

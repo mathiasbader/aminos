@@ -92,10 +92,16 @@ input {
     font-size: 0.9rem;
     color: #aaa; }
 
+#testOverview>a>img {
+    height: 160px;
+}
 #testOverview>a {
+    background-color: #eee;
+    color: #aaa;
+    border: 2px solid #ccc;
     display: inline-block;
     width: 240px;
-    height: 180px;
+    height: 200px;
     margin: 0 12px 12px 0;
     border-radius: 6px; }
 #testOverview>a:hover {
@@ -112,41 +118,12 @@ input {
     margin-top: 4px; }
 #testOverview>a.highlight:hover { background-color: #8cd88c; }
 #testOverview>a>div {
-    margin-top: 120px;
-    padding: 12px;
+    padding: 0 12px;
     text-align: center; }
 #testOverview>a:hover>div { color: #333; }
 
-#testOverview > a {
-    background-color: #eee;
-    color: #aaa;
-    border: 2px solid #ccc;
-}
-
 #testOverview > a.level-0 { border-style: dashed; }
 
-#testOverview > a.level-1 {
-    background-color: #fcf9d3;
-    color: #888;
-    border-color: #f7f29b;
-    border-style: dashed;
-}
-
-#testOverview > a.level-2 {
-    background-color: #fff978;
-    color: #666;
-    border-color: #f2e71a;
-    border-style: dashed;
-}
-#testOverview > a.level-3 {
-    background-color: #ade5ad;
-    border-color: #6dc26d;
-}
-#testOverview > a.level-3,
-#testOverview > a.nextLevel {
-    font-size: 1.4em;
-    color: #333;
-}
 #testOverview > a.nextLevel {
     border-style: solid;
     animation-name: nextLevel;

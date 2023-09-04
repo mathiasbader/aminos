@@ -100,6 +100,8 @@ version_0_1:
   addedLanguageSelectorOnEveryPage: Añadido selector de idioma en cada página
 version_0_2:
   saveLearningProgress: El progreso del aprendizaje se guarda y se muestra mediante colores
+version_0_3:
+  testTubeIconsForLearningProgress: Iconos de probeta para conocer el progreso en las pruebas
 
 continueActiveTest: Reanudar prueba activa
 toSaveProgressClickHere: Para guardar su progreso, haga clic aquí
