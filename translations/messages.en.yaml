@@ -2,11 +2,11 @@ aminoacids: Amino acids
 the20ProteinogenicAminoAcids: The 20 proteinogenic amino acids
 studyThe20ProteinogenicAminoAcids: Study the 20 proteinogenic amino acids
 back: Back
-testYourself: Test yourself
+testYourself: Test
 
 models:
-  3d: 3D Models
-  flat: Flat Models
+  3d: 3D models
+  svg: Flat models
 
 about:
   link: About

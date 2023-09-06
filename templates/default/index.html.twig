@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if app.user.representation == 'svg' %} {% set rep = '3d'  %}
+    {% else %}                                {% set rep = 'svg' %} {% endif %}
 
     <div class="menu">
-        <a href="{{ url('testOverview') }}" class="btn">{{ 'testYourself'|trans }}</a>
-        {% if app.user.representation == 'svg' %}
-            <a href="{{ url('index', { 'representation' : '3d'}) }}" class="btn">{{ 'models.3d'|trans }}</a>
-        {% else %}
-            <a href="{{ url('index', { 'representation' : 'svg'}) }}" class="btn">{{ 'models.flat'|trans }}</a>
-        {% endif %}
-        <a href="{{ url('profile') }}" style="float: right;">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
+        <a href="{{ url('profile') }}">{% if app.user.email is null %}{{ 'profile'|trans }}{% else %}{{ app.user.name }}{% endif %}</a>
+        <a href="{{ url('index', { 'representation' : rep}) }}">{{ ('models.' ~ rep)|trans }}</a>
     </div>
+
+    <a href="{{ url('testOverview') }}" style="display: inline-block; text-align: center;
+    margin-bottom: 12px;">
+        <div style="width: 226px">
+            {% include 'default/svg/testTubes/tubes.html.twig' %}
+        </div>
+        <div style="margin-top: -4px">
+            {{ 'testYourself'|trans }}
+        </div>
+    </a>
 
     <div>
         {% include 'lib/_functionalGroup.html.twig' with {

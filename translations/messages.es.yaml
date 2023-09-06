@@ -2,11 +2,11 @@ aminoacids: Aminoácidos
 the20ProteinogenicAminoAcids: Los 20 aminoácidos proteinogénicos
 studyThe20ProteinogenicAminoAcids: Aprende los 20 aminoácidos proteinogénicos
 back: Atrás
-testYourself: Mostrar las pruebas
+testYourself: Prueba
 
 models:
   3d: Modelos 3D
-  flat: Modelos planos
+  svg: Modelos planos
 
 about:
   link: Sobre

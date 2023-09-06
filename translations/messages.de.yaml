@@ -2,11 +2,11 @@ aminoacids: Aminosäuren
 the20ProteinogenicAminoAcids: Die 20 proteinogenen Aminosäuren
 studyThe20ProteinogenicAminoAcids: Lerne die 20 proteinogenen Aminosäuren
 back: Zurück
-testYourself: Zu den Tests
+testYourself: Test
 
 models:
   3d: 3D Modelle
-  flat: Flache Modelle
+  svg: Flache Modelle
 
 about:
   link: Über

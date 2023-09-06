@@ -14,15 +14,12 @@
         </div>
     {% endif %}
 
+    {% if activeRun is not null %}
+        <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" style="margin-bottom: 8px; display: inline-block">
+            {{ 'continueActiveTest'|trans }}
+        </a><br>
+    {% endif %}
     <div id="testOverview">
-        {% if activeRun is not null %}
-            <a href="{{ url('test', { 'runId' : activeRun.id } ) }}" class="highlight nextLevel">
-                <div>
-                    {{ 'continueActiveTest'|trans }}
-                </div>
-            </a><br>
-        {% endif %}
-
         {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1'  ), 'name' : 'testGroup.unpolar'|trans ~ ' 1'     } %}
         {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2'  ), 'name' : 'testGroup.unpolar'|trans ~ ' 2'     } %}
         {% include 'lib/_test_tile.html.twig' with { 'group' : constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'    ), 'name' : 'testGroup.unpolar'|trans ~ ' 1 + 2' } %}<br>

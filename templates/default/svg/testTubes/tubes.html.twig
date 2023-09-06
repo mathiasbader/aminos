@@ -1,0 +1,47 @@
+<svg id="test_tubes" xmlns="http://www.w3.org/2000/svg" viewBox="0 30 217.78 134">
+    <defs>
+        <style>
+            .cls-shadowGrey {
+                fill: #dcdcdc;
+                stroke-width: 0; }
+            .cls-white {
+                stroke-width: 0;
+                fill: #fff; }
+            .cls-black {
+                stroke-width: 0;
+                fill: #1a1a1a; }
+            .cls-glasGrey {
+                stroke-width: 0;
+                fill: #b3b3b3; }
+            .cls-fluidNonPolar {
+                stroke-width: 0;
+                fill: #a3cdaf; }
+            .cls-fluidPolar {
+                stroke-width: 0;
+                fill: #edd9af; }
+            .cls-fluidCharged {
+                stroke-width: 0;
+                fill: #b7d8ee; }
+            .cls-reflex {
+                stroke-width: 0;
+                fill: #fff; }
+        </style>
+    </defs>
+
+    {% include 'default/svg/testTubes/_lib/1_unpolar_1.html.twig' with { 'group' : constant('GROUP_NOT_POLAR_1', groups ) } %}
+    {% include 'default/svg/testTubes/_lib/2_unpolar_2.html.twig' with { 'group' : constant('GROUP_NOT_POLAR_2', groups ) } %}
+    {% include 'default/svg/testTubes/_lib/3_polar.html.twig'     with { 'group' : constant('GROUP_POLAR'      , groups ) } %}
+    {% include 'default/svg/testTubes/_lib/4_charged.html.twig'   with { 'group' : constant('GROUP_CHARGED'    , groups ) } %}
+
+    <g id="shelf">
+        <rect id="s-shadow"      class="cls-shadowGrey" x="12.24" y="158.91" width="193.31" height="6.6" rx="3.11" ry="3.11"/>
+        <rect id="s-lower-white" class="cls-white"      x="14.24" y="139.63" width="189.31" height="6.15" rx="2.8" ry="2.8"/>
+        <path id="s-lower-black" class="cls-black"      d="m200.74,137.63H17.04c-2.65,0-4.8,2.15-4.8,4.8v.55c0,2.65,2.16,4.8,4.8,4.8h183.7c2.65,0,4.8-2.15,4.8-4.8v-.55c0-2.65-2.16-4.8-4.8-4.8Zm2.8,5.35c0,1.55-1.26,2.8-2.8,2.8H17.04c-1.55,0-2.8-1.26-2.8-2.8v-.55c0-1.55,1.26-2.8,2.8-2.8h183.7c1.55,0,2.8,1.26,2.8,2.8v.55Z"/>
+        <rect id="s-upper-white" class="cls-white"      x="14.24" y="100.22" width="189.31" height="6.15" rx="2.8" ry="2.8"/>
+        <path id="s-upper-black" class="cls-black"      d="m200.74,98.22H17.04c-2.65,0-4.8,2.16-4.8,4.8v.55c0,2.65,2.16,4.8,4.8,4.8h183.7c2.65,0,4.8-2.15,4.8-4.8v-.55c0-2.65-2.16-4.8-4.8-4.8Zm2.8,5.35c0,1.55-1.26,2.8-2.8,2.8H17.04c-1.55,0-2.8-1.26-2.8-2.8v-.55c0-1.55,1.26-2.8,2.8-2.8h183.7c1.55,0,2.8,1.26,2.8,2.8v.55Z"/>
+        <path id="s-right-white" class="cls-white"      d="m193.85,42.07c-1.56,0-2.83,1.27-2.83,2.83v113.22c0,1.56,1.27,2.83,2.83,2.83s2.83-1.27,2.83-2.83V44.9c0-1.56-1.27-2.83-2.83-2.83Z"/>
+        <path id="s-right-black" class="cls-black"      d="m193.85,40.07c-2.66,0-4.83,2.17-4.83,4.83v113.22c0,2.66,2.17,4.83,4.83,4.83s4.83-2.17,4.83-4.83V44.9c0-2.66-2.17-4.83-4.83-4.83Zm2.83,118.05c0,1.56-1.27,2.83-2.83,2.83s-2.83-1.27-2.83-2.83V44.9c0-1.56,1.27-2.83,2.83-2.83s2.83,1.27,2.83,2.83v113.22Z"/>
+        <path id="s-left-white"  class="cls-white"      d="m23.69,42.07c-1.56,0-2.83,1.27-2.83,2.83v113.22c0,1.56,1.27,2.83,2.83,2.83s2.83-1.27,2.83-2.83V44.9c0-1.56-1.27-2.83-2.83-2.83Z"/>
+        <path id="s-left-black"  class="cls-black"      d="m23.69,40.07c-2.66,0-4.83,2.17-4.83,4.83v113.22c0,2.66,2.17,4.83,4.83,4.83s4.83-2.17,4.83-4.83V44.9c0-2.66-2.17-4.83-4.83-4.83Zm2.83,118.05c0,1.56-1.27,2.83-2.83,2.83s-2.83-1.27-2.83-2.83V44.9c0-1.56,1.27-2.83,2.83-2.83s2.83,1.27,2.83,2.83v113.22Z"/>
+    </g>
+</svg>

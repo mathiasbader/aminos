@@ -11,10 +11,10 @@ main {
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 .menu { margin: 0 }
-.menu a.btn {
-    text-align: center;
-    width: 180px; }
-
+.menu > a {
+    display: inline-block;
+    float: right;
+    margin-left: 32px; }
 .btn {
     display: inline-block;
     text-decoration: none;

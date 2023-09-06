@@ -34,21 +34,24 @@ class DefaultController extends AbstractController
     function indexAction(TranslatorInterface $translator, Request $request)
     {
         $user = $this->initUser();
-
         $redirect = $this->updatePresentation($request, $user);
         if ($redirect !== null) return $redirect;
 
         list($aminoMap, $matrix) = $this->loadAminosForOverview();
+        $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
 
         return [
             'pageTitle' => $translator->trans('the20ProteinogenicAminoAcids'),
             'aminoMap'  => $aminoMap,
             'matrix'    => $matrix,
+            'levels'    => $levels,
+            'groups'    => new GroupType(),
         ];
     }
 
     /** @Route("profile", name="profile") @Template */
-    function profileAction(TranslatorInterface $translator, Request $request, UserPasswordHasherInterface $passwordHasher)
+    function profileAction(TranslatorInterface $translator, Request $request,
+                           UserPasswordHasherInterface $passwordHasher)
     {
         $user = $this->initUser();
 
@@ -115,7 +118,7 @@ class DefaultController extends AbstractController
         }
 
         $route = $request->request->get('route');
-        if ($route === null) $route = 'profile';
+        if ($route === null) $route = 'index';
         return $this->redirect($route);
     }
 
@@ -123,7 +126,8 @@ class DefaultController extends AbstractController
     /** @Route("/test/overview", name="testOverview") @Template */
     function testOverviewAction(TranslatorInterface $translator, TestsService $testService): array {
         $user = $this->initUser();
-        $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
+        $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(
+            ['user' => $user, 'completed' => null]);
         $activeRun = !empty($activeRuns) ? $activeRuns[0] : null;
         $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
         $nextGroup = $activeRun !== null ? '' : $testService->getRecommendedNextLevel($levels);
@@ -187,13 +191,15 @@ class DefaultController extends AbstractController
                 }
 
                 // update next test type for this amino acid in current run
-                $otherTests = $this->getDoctrine()->getRepository(Test::class)->findBy(['run' => $run->getId(), 'amino' => $test->getAmino(), 'answered' => null]);
+                $otherTests = $this->getDoctrine()->getRepository(Test::class)->findBy(
+                    ['run' => $run->getId(), 'amino' => $test->getAmino(), 'answered' => null]);
                 $nextTestLevel = $test->getLevel() + (($correct && $test->getLevel() < 3) ? 1 : 0);
                 foreach ($otherTests as $otherTest) {
                     if ($otherTest->getId() === $test->getId()) continue;
                     $otherTest->setLevel($nextTestLevel);
-                    if ($nextTestLevel === TestLevel::LEVEL_1_NAME_TO_IMAGE) $otherTest->defineChoices($run->getAminos());
-                    else                                                  $otherTest->defineChoices(new ArrayCollection());
+                    if ($nextTestLevel === TestLevel::LEVEL_1_NAME_TO_IMAGE) {
+                        $otherTest->defineChoices($run->getAminos());
+                    } else $otherTest->defineChoices(new ArrayCollection());
                     $em->persist($otherTest);
                 }
 
@@ -302,8 +308,9 @@ class DefaultController extends AbstractController
     }
 
     private function initNewTestRun(User $user, string $group): ?TestRun {
-        $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(['user' => $user, 'completed' => null]);
-        if (count($activeTests) > 0) return $activeTests[0];
+        $activeTests = $this->getDoctrine()->getRepository(TestRun::class)->findBy(
+            ['user' => $user, 'completed' => null]);
+        if (!empty($activeTests)) return $activeTests[0];
 
         $run = new TestRun();
         $run->setUser($user);
@@ -316,7 +323,8 @@ class DefaultController extends AbstractController
         if ($group == GroupType::GROUP_POLAR        ) $aminos = ['n', 'q', 's', 't', 'c', 'y'];
         if ($group == GroupType::GROUP_CHARGED      ) $aminos = ['d', 'e', 'k', 'r', 'h'];
         if ($group == GroupType::GROUP_POLAR_CHARGED) $aminos = ['n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
-        if ($group == GroupType::GROUP_ALL          ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
+        if ($group == GroupType::GROUP_ALL          ) $aminos =
+            ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
 
         $aminos1 = $aminos;
         $aminos2 = $aminos;
