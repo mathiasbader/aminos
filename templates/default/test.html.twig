@@ -8,21 +8,18 @@
 {% block body %}
 
     <div>
-        {% if run.finished %}
-
-            <h4>{{ 'result'|trans }}</h4>
-            {% include 'lib/_test_progress.html.twig' with { 'big' : true } %}
-            <div style="text-align: center">
-                <a href="{{ url('index') }}">{{ 'continue'|trans }}</a>
-            </div>
-
-        {% else %}
-            {% include 'lib/_test_progress.html.twig' %}
-            <div style="display: flex;">
-                {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
+        {% include 'lib/_test_progress.html.twig' %}
+        <div style="display: flex;">
+            {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
+            {% if run.finished %}
+                <div style="width: 50%;">
+                    <a href="{{ url('index') }}" style="display: block; padding: 84px 24px; text-align: center;
+                    color: #666;background-color: #eee; border-radius: 6px;">{{ 'continue'|trans }}</a>
+                </div>
+            {% else %}
                 {% include 'lib/_test_question.html.twig' with { 'test' : test } %}
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
 
 {% endblock %}
@@ -35,10 +32,12 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
-        function choose(aminoId) {
-            document.getElementById('answer').value = aminoId;
-            document.getElementById('form').submit();
-        }
-    </script>
+    {% if not run.finished %}
+        <script type="text/javascript">
+            function choose(aminoId) {
+                document.getElementById('answer').value = aminoId;
+                document.getElementById('form').submit();
+            }
+        </script>
+    {% endif %}
 {% endblock %}
