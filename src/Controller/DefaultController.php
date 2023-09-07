@@ -178,12 +178,8 @@ class DefaultController extends AbstractController
                     $test->setAnswered(new DateTime());
                     $correct = $test->getAmino()->getId() === $answerId;
                     $test->setCorrect($correct);
-                } elseif ($test->getLevel() === TestLevel::LEVEL_2_IMAGE_TO_NAME) {
-                    $test->setAnswer(htmlentities($answer));
-                    $test->setAnswered(new DateTime());
-                    $correct = $test->getAmino()->isCorrectAnswer($answer);
-                    $test->setCorrect($correct);
-                } elseif ($test->getLevel() === TestLevel::LEVEL_3_CODE_TO_NAME) {
+                } elseif ($test->getLevel() === TestLevel::LEVEL_2_IMAGE_TO_NAME ||
+                          $test->getLevel() === TestLevel::LEVEL_3_CODE_TO_NAME) {
                     $test->setAnswer(htmlentities($answer));
                     $test->setAnswered(new DateTime());
                     $correct = $test->getAmino()->isCorrectAnswer($answer);
@@ -222,7 +218,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/versions", name="versions") @Template */
-    public function versionsAction(TranslatorInterface $translator, VersionsService $versionsService)
+    public function versionsAction(TranslatorInterface $translator, VersionsService $versionsService): array
     {
         return [
             'pageTitle' => $translator->trans('versionHistory'),
@@ -231,7 +227,7 @@ class DefaultController extends AbstractController
     }
 
     /** @Route("/about", name="about") @Template */
-    function aboutAction(TranslatorInterface $translator)
+    function aboutAction(TranslatorInterface $translator): array
     {
         return ['pageTitle' => $translator->trans('about.link')];
     }
