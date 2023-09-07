@@ -202,10 +202,11 @@ class DefaultController extends AbstractController
                 $em->persist($test);
                 $em->flush();
 
-                $run->recalculateCorrectCount();
+                $run->calculateCorrectCount();
                 if ($run->isFinished()) {
                     $run->setCompleted(new DateTime());
                     $run->calculateLevel();
+                    $run->calculateScore();
                     $em->persist($run);
                     $em->flush();
                 }

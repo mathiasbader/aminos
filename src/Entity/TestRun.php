@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
 /** @ORM\Entity(repositoryClass=TestRunRepository::class) @ORM\HasLifecycleCallbacks() @ORM\Table(name="test_runs") */
 class TestRun
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"                                          ) */ private  int        $id;
-    /** @ORM\ManyToOne(targetEntity=User::class, inversedBy="runs") @ORM\JoinColumn(nullable=false      ) */ private  User       $user;
-    /** @ORM\Column(type="string"  , length=255, name="testGroup"                                       ) */ private  string     $group;
-    /** @ORM\Column(type="datetime"                                                                     ) */ private  DateTime   $started;
-    /** @ORM\Column(type="datetime", nullable=true                                                      ) */ private ?DateTime   $completed;
-    /** @ORM\Column(type="integer" , nullable=true                                                      ) */ private ?int        $level;
-    /** @ORM\OneToMany(targetEntity=Test::class, mappedBy="run", orphanRemoval=true, cascade={"persist"}) */ private ?Collection $tests;
-    /** @ORM\ManyToMany(targetEntity=Aminoacid::class                                                   ) */ private ?Collection $aminos;
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"    ) */ private  int        $id;
+    /** @ORM\ManyToOne(targetEntity=User::class, inversedBy="runs") @ORM\JoinColumn(nullable=false) */
+    private User $user;
+    /** @ORM\Column(type="string"  , length=255, name="testGroup" ) */ private  string     $group;
+    /** @ORM\Column(type="datetime"                               ) */ private  DateTime   $started;
+    /** @ORM\Column(type="datetime", nullable=true                ) */ private ?DateTime   $completed;
+    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $level;
+    /** @ORM\OneToMany(targetEntity=Test::class, mappedBy="run", orphanRemoval=true, cascade={"persist"}) */
+    private ?Collection $tests;
+    /** @ORM\ManyToMany(targetEntity=Aminoacid::class             ) */ private ?Collection $aminos;
+    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $score;
 
     private ?int   $correctCount = null;
     private ?int $incorrectCount = null;
@@ -38,12 +41,14 @@ class TestRun
     function getLevel    (): ?int        { return $this->level    ; }
     function getTests    (): ?Collection { return $this->tests    ; }
     function getAminos   (): ?Collection { return $this->aminos   ; }
+    function getScore    (): ?int        { return $this->score    ; }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
         foreach($this->tests as $test) {
             /* @var $test Test */
-            if ($test->getAnswered() !== null) {
-                if ($lastTest == null || $lastTest->getAnswered() < $test->getAnswered()) $lastTest = $test;
+            if (($test->getAnswered() !== null) &&
+                ($lastTest == null || $lastTest->getAnswered() < $test->getAnswered())) {
+                    $lastTest = $test;
             }
         }
         return $lastTest;
@@ -56,24 +61,13 @@ class TestRun
         return null;
     }
     function calculateCorrectCount(): void {
-        if ($this->correctCount === null) $this->recalculateCorrectCount();
-    }
-    function recalculateCorrectCount(): void {
-        $this->  correctCount = 0;
+        $this->correctCount = 0;
         $this->incorrectCount = 0;
         foreach ($this->tests as $test) {
             /* @var $test Test */
             if     ($test->getCorrect() === true ) $this->  correctCount++;
             elseif ($test->getCorrect() === false) $this->incorrectCount++;
         }
-    }
-    function getCorrectCount(): int {
-        $this->calculateCorrectCount();
-        return $this->correctCount;
-    }
-    function getIncorrectCount(): int {
-        $this->calculateCorrectCount();
-        return $this->incorrectCount;
     }
     function hasAnswers(): bool {
         $this->calculateCorrectCount();
@@ -82,38 +76,6 @@ class TestRun
     function isFinished(): bool {
         $this->calculateCorrectCount();
         return $this->correctCount + $this->incorrectCount === $this->tests->count();
-    }
-    function getPercentageCorrect(): float {
-        $this->calculateCorrectCount();
-        return round($this->correctCount / ($this->tests->count()) * 100, 2);
-    }
-    function getPercentageIncorrect(): float {
-        $this->calculateCorrectCount();
-        return round($this->incorrectCount / ($this->tests->count()) * 100, 2);
-    }
-
-    function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }
-    function setGroup    ( string     $group    ): self { $this->group     = $group    ; return $this; }
-    function setStarted  ( DateTime   $started  ): self { $this->started   = $started  ; return $this; }
-    function setCompleted(?DateTime   $completed): self { $this->completed = $completed; return $this; }
-    function setLevel    (?int        $level    ): self { $this->level     = $level    ; return $this; }
-    function setAminos   ( Collection $aminos   ): self { $this->aminos    = $aminos   ; return $this; }
-
-    public function addTest(Test $test): self
-    {
-        if (!$this->tests->contains($test)) {
-            $this->tests[] = $test;
-            $test->setRun($this);
-        }
-        return $this;
-    }
-
-    public function removeTest(Test $test): self
-    {
-        if ($this->tests->removeElement($test)) {
-            if ($test->getRun() === $this) $test->setRun(null);
-        }
-        return $this;
     }
 
     function calculateLevel(): void {
@@ -136,6 +98,28 @@ class TestRun
         $this->level = $level;
     }
 
-    public function addAmino   (Aminoacid $amino): self { if (!$this->aminos->contains($amino)) $this->aminos[] = $amino; return $this; }
-    public function removeAmino(Aminoacid $amino): self { $this->aminos->removeElement($amino);                           return $this; }
+    /** Calculates the percentage of correct answers and sets it to the score variable */
+    function calculateScore(): void {
+        $this->calculateCorrectCount();
+        if ($this->hasAnswers()) {
+            $this->score = intdiv($this->correctCount * 100, $this->incorrectCount + $this->correctCount);
+        }
+    }
+
+    function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }
+    function setGroup    ( string     $group    ): self { $this->group     = $group    ; return $this; }
+    function setStarted  ( DateTime   $started  ): self { $this->started   = $started  ; return $this; }
+    function setCompleted(?DateTime   $completed): self { $this->completed = $completed; return $this; }
+    function setLevel    (?int        $level    ): self { $this->level     = $level    ; return $this; }
+    function setAminos   ( Collection $aminos   ): self { $this->aminos    = $aminos   ; return $this; }
+    function setScore    (?int        $score    ): self { $this->score     = $score    ; return $this; }
+
+    public function addTest(Test $test): self
+    {
+        if (!$this->tests->contains($test)) {
+            $this->tests[] = $test;
+            $test->setRun($this);
+        }
+        return $this;
+    }
 }
