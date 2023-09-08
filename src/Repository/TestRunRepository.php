@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\GroupType;
 use App\Entity\TestRun;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -35,7 +36,7 @@ class TestRunRepository extends ServiceEntityRepository
         return $levels;
     }
 
-    function getScoresForUser(User $user): array {
+    function getBasicScoresForUser(User $user): array {
         $qb = $this->createQueryBuilder('t');
         $qb->select('t.group');
         $qb->addSelect('MAX(t.score) as score');
@@ -46,7 +47,18 @@ class TestRunRepository extends ServiceEntityRepository
         $results   = $qb->getQuery()->getResult();
 
         $scores = [];
-        foreach ($results as $result) $scores[$result['group']] = $result['score'];
+        foreach ($results as $result) {
+            $baseGroups = GroupType::getBaseGroup($result['group']);
+            if (empty($baseGroups)) {
+                $scores[$result['group']] = $result['score'];
+            } else {
+                foreach($baseGroups as $group) {
+                    if (!isset($scores[$group]) || $scores[$group] < $result['score']) {
+                        $scores[$group] = $result['score'];
+                    }
+                }
+            }
+        }
         return $scores;
     }
 }
