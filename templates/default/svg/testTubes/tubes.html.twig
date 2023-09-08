@@ -28,10 +28,30 @@
         </style>
     </defs>
 
-    {% include 'default/svg/testTubes/_lib/1_unpolar_1.html.twig' with { 'group' : constant('GROUP_NOT_POLAR_1', groups ) } %}
-    {% include 'default/svg/testTubes/_lib/2_unpolar_2.html.twig' with { 'group' : constant('GROUP_NOT_POLAR_2', groups ) } %}
-    {% include 'default/svg/testTubes/_lib/3_polar.html.twig'     with { 'group' : constant('GROUP_POLAR'      , groups ) } %}
-    {% include 'default/svg/testTubes/_lib/4_charged.html.twig'   with { 'group' : constant('GROUP_CHARGED'    , groups ) } %}
+    {% if group is not defined or
+        group == constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_1') or
+        group == constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'  ) or
+        group == constant('App\\Constant\\GroupType::GROUP_ALL'        ) %}
+        {% include 'default/svg/testTubes/_lib/1_unpolar_1.html.twig' %}
+    {% endif %}
+    {% if group is not defined or
+        group == constant('App\\Constant\\GroupType::GROUP_NOT_POLAR_2') or
+        group == constant('App\\Constant\\GroupType::GROUP_NOT_POLAR'  ) or
+        group == constant('App\\Constant\\GroupType::GROUP_ALL'        ) %}
+        {% include 'default/svg/testTubes/_lib/2_unpolar_2.html.twig' %}
+    {% endif %}
+    {% if group is not defined or
+        group == constant('App\\Constant\\GroupType::GROUP_POLAR'        ) or
+        group == constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED') or
+        group == constant('App\\Constant\\GroupType::GROUP_ALL'          ) %}
+        {% include 'default/svg/testTubes/_lib/3_polar.html.twig'     %}
+    {% endif %}
+    {% if group is not defined or
+        group == constant('App\\Constant\\GroupType::GROUP_CHARGED'      ) or
+        group == constant('App\\Constant\\GroupType::GROUP_POLAR_CHARGED') or
+        group == constant('App\\Constant\\GroupType::GROUP_ALL'          ) %}
+        {% include 'default/svg/testTubes/_lib/4_charged.html.twig'   %}
+    {% endif %}
 
     <g id="shelf">
         <rect id="s-shadow"      class="cls-shadowGrey" x="12.24" y="158.91" width="193.31" height="6.6" rx="3.11" ry="3.11"/>

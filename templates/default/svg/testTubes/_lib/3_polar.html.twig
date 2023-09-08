@@ -1,3 +1,7 @@
+{% if group is not defined %}
+    {% set group = constant('App\\Constant\\GroupType::GROUP_POLAR') %}
+{% endif %}
+
 {% if scores[group] is not defined %} {% set score = 0 %}
 {% else %}                            {% set score = scores[group] %}{% endif %}
 

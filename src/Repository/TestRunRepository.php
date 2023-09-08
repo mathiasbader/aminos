@@ -28,7 +28,6 @@ class TestRunRepository extends ServiceEntityRepository
         $qb->where('t.user = :userId');
         $qb->setParameter('userId', $user->getId());
         $qb->groupBy('t.group');
-
         $results   = $qb->getQuery()->getResult();
 
         $levels = [];
@@ -36,19 +35,19 @@ class TestRunRepository extends ServiceEntityRepository
         return $levels;
     }
 
-    function getBasicScoresForUser(User $user): array {
+    function getScoresForUser(User $user, $onlyBasicScoresCombined = false): array {
         $qb = $this->createQueryBuilder('t');
         $qb->select('t.group');
         $qb->addSelect('MAX(t.score) as score');
         $qb->where('t.user = :userId');
         $qb->setParameter('userId', $user->getId());
         $qb->groupBy('t.group');
-
         $results   = $qb->getQuery()->getResult();
 
         $scores = [];
+        $baseGroups = [];
         foreach ($results as $result) {
-            $baseGroups = GroupType::getBaseGroup($result['group']);
+            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroup($result['group']);
             if (empty($baseGroups)) {
                 $scores[$result['group']] = $result['score'];
             } else {

@@ -38,20 +38,19 @@ class DefaultController extends AbstractController
         if ($redirect !== null) return $redirect;
 
         list($aminoMap, $matrix) = $this->loadAminosForOverview();
-        $scores = $this->getDoctrine()->getRepository(TestRun::class)->getBasicScoresForUser($user);
+        $scores = $this->getDoctrine()->getRepository(TestRun::class)->getScoresForUser($user, true);
 
         return [
             'pageTitle' => $translator->trans('the20ProteinogenicAminoAcids'),
             'aminoMap'  => $aminoMap,
             'matrix'    => $matrix,
             'scores'    => $scores,
-            'groups'    => new GroupType(),
         ];
     }
 
     /** @Route("profile", name="profile") @Template */
     function profileAction(TranslatorInterface $translator, Request $request,
-                           UserPasswordHasherInterface $passwordHasher)
+                           UserPasswordHasherInterface $passwordHasher): array
     {
         $user = $this->initUser();
 
@@ -131,12 +130,14 @@ class DefaultController extends AbstractController
         $activeRun = !empty($activeRuns) ? $activeRuns[0] : null;
         $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
         $nextGroup = $activeRun !== null ? '' : $testService->getRecommendedNextLevel($levels);
+        $scores = $this->getDoctrine()->getRepository(TestRun::class)->getScoresForUser($user);
 
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
             'activeRun' => $activeRun,
             'levels'    => $levels,
             'nextGroup' => $nextGroup,
+            'scores'    => $scores,
         ];
     }
 
