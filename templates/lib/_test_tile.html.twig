@@ -1,12 +1,4 @@
-{% if levels[group] is not defined %} {% set level = 0 %}
-{% else %}                            {% set level = levels[group] - 1 %}{% endif %}
-{% if level < 0 %}{% set level = 0 %}{% endif %}
-
-{% if group == nextGroup %} {% set highlight = ' nextLevel' %}
-{% else %}                  {% set highlight = '' %}{% endif %}
-
-<a href="{{ url('testStart', { 'group' : group } ) }}" class="level-{{ level }}{{ highlight }}"
-   style="text-align: center;">
-    <img src="{{ asset('img/tests/' ~ group ~ '_' ~ level ~ '.svg') }}">
+<a href="{{ url('testStart', { 'group' : group } ) }}" style="text-align: center;">
+    <img src="{{ asset('img/tests/' ~ group ~ '_2.svg') }}">
     <div>{{ name }}</div>
 </a>
