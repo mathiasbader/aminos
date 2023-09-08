@@ -13,3 +13,8 @@ Please refer to [development](docs/Development.md).
 
 ## Contact
 For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de).
+
+## Contributors
+| Name                                                                       | Country | From    | Till    | Area                  |
+|----------------------------------------------------------------------------|---------|---------|---------|-----------------------|
+| [Mathias Bader](https://www.mathiasbader.de)                               | Germany | 01-2007 | today   | Project lead          |
