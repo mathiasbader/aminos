@@ -105,6 +105,14 @@ class TestRun
             $this->score = intdiv($this->correctCount * 100, $this->incorrectCount + $this->correctCount);
         }
     }
+     function getPercentageCorrect(): float {
+        $this->calculateCorrectCount();
+        return round($this->correctCount / ($this->tests->count()) * 100, 2);
+    }
+    function getPercentageIncorrect(): float {
+        $this->calculateCorrectCount();
+        return round($this->incorrectCount / ($this->tests->count()) * 100, 2);
+    }
 
     function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }
     function setGroup    ( string     $group    ): self { $this->group     = $group    ; return $this; }
