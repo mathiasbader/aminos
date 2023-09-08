@@ -18,3 +18,4 @@ For questions concerning the project, please contact [Mathias Bader](mailto:mail
 | Name                                                                       | Country | From    | Till    | Area                  |
 |----------------------------------------------------------------------------|---------|---------|---------|-----------------------|
 | [Mathias Bader](https://www.mathiasbader.de)                               | Germany | 01-2007 | today   | Project lead          |
+| [Andreas Balg](https://andreas-balg.de)                                    | Germany | 08-2023 | 09-2023 | Test tube icons       |
