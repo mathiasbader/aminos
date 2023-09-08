@@ -108,15 +108,14 @@ input {
     text-decoration: none;
     transition: background 0.3s; }
 #testOverview>a.highlight {
-    height: 84px;
-    background-color: #ade5ad;
-    color: #333;
-    border-color: #6dc26d;
+    background-color: #ddd;
+    color: #888;
+    border-color: #888;
 }
 #testOverview>a.highlight>div {
     color: #333;
     margin-top: 4px; }
-#testOverview>a.highlight:hover { background-color: #8cd88c; }
+#testOverview>a.highlight:hover { background-color: #d8d8d8; }
 #testOverview>a>div {
     padding: 0 12px;
     text-align: center; }

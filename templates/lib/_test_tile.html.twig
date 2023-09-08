@@ -1,4 +1,5 @@
-<a href="{{ url('testStart', { 'group' : group } ) }}" style="text-align: center;">
+<a href="{{ url('testStart', { 'group' : group } ) }}"{% if group == nextGroup %} class="highlight"{% endif %}
+   style="text-align: center;">
     <img src="{{ asset('img/tests/' ~ group ~ '_2.svg') }}">
     <div>{{ name }}</div>
 </a>
