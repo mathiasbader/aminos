@@ -112,13 +112,9 @@ input {
     color: #888;
     border-color: #888;
 }
-#testOverview>a.highlight>div {
-    color: #333;
-    margin-top: 4px; }
+#testOverview>a.highlight>div { color: #333; }
 #testOverview>a.highlight:hover { background-color: #d8d8d8; }
-#testOverview>a>div {
-    padding: 0 12px;
-    text-align: center; }
+#testOverview>a>div { text-align: center; }
 #testOverview>a:hover>div { color: #333; }
 
 #testOverview > a.level-0 { border-style: dashed; }

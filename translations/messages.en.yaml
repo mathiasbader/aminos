@@ -12,8 +12,8 @@ about:
   link: About
   thisProjectIsOpenSourceAndUsesTheMitLicense: This project is open source and uses the {license}.
   youCanGetTheCodeOnGitHub: You can get the code on {github}.
-  3DImagesWhereCreatedUsing: The 3D images of the amio acids where created using {ballview}, the standalone molecular modelling and visualization application of {ball}.
-  flatImagesWhereCreatedAsPartOfThisProject: The flat images of the amino acids where created as part of this project and are licensed under the MIT license.
+  3DImagesWhereCreatedUsing: The 3D images of the amino acids where created using {ballview}, the standalone molecular modelling and visualization application of {ball}.
+  flatImagesWhereCreatedAsPartOfThisProject: The flat images of the amino acids as well as the test tube icons where created as part of this project and are licensed under the MIT license.
 
 essential: essential
 semiessential: semiessential
