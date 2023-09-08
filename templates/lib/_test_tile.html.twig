@@ -1,4 +1,4 @@
-<a href="{{ url('testStart', { 'group' : group } ) }}"{% if group == nextGroup %} class="highlight"{% endif %}
+<a href="{{ url('testStart', { 'group' : group } ) }}"{% if group == nextGroup %} class="nextLevel"{% endif %}
    style="text-align: center;">
     <div style="padding: 22px 40px; text-align: center">
         {% include 'default/svg/testTubes/tubes.html.twig' %}

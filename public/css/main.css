@@ -107,13 +107,6 @@ input {
 #testOverview>a:hover {
     text-decoration: none;
     transition: background 0.3s; }
-#testOverview>a.highlight {
-    background-color: #ddd;
-    color: #888;
-    border-color: #888;
-}
-#testOverview>a.highlight>div { color: #333; }
-#testOverview>a.highlight:hover { background-color: #d8d8d8; }
 #testOverview>a>div { text-align: center; }
 #testOverview>a:hover>div { color: #333; }
 
@@ -123,7 +116,7 @@ input {
     border-style: solid;
     animation-name: nextLevel;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 4;
     animation-direction: alternate;
 }
 @keyframes nextLevel {
