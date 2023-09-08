@@ -1,9 +1,12 @@
-{% set score = 20 %}
-{% set x = (100 - score) / 100 * 74.56 %}
+{% if scores[group] is not defined %} {% set score = 0 %}
+{% else %}                            {% set score = scores[group] %}{% endif %}
 
 <g id="unpolar_1">
     <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
     {% if score >= 12 %}
+
+        {% set x = (100 - score) / 100 * 74.56 %}
+
         <path id="u1-fluid" class="cls-fluidNonPolar" d="
             m 56.77, {{ x + 67.84 }}
             h -19.98

@@ -1,4 +1,5 @@
-{% set score = 60 %}
+{% if scores[group] is not defined %} {% set score = 0 %}
+{% else %}                            {% set score = scores[group] %}{% endif %}
 
 <g id="polar">
     <path id="p-bg-white" class="cls-white" d="m126.13,95.95c-.06-.19-.1-.48-.1-.78v-18.1h-19.47v18.1c0,.3-.04.59-.12.88l-10,52.71c-.16.84.06,1.7.61,2.35s1.35,1.03,2.2,1.03h34.12c.85,0,1.66-.38,2.2-1.03s.77-1.52.61-2.35l-10.03-52.8Z"/>

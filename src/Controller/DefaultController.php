@@ -38,13 +38,13 @@ class DefaultController extends AbstractController
         if ($redirect !== null) return $redirect;
 
         list($aminoMap, $matrix) = $this->loadAminosForOverview();
-        $levels = $this->getDoctrine()->getRepository(TestRun::class)->getLevelsForUser($user);
+        $scores = $this->getDoctrine()->getRepository(TestRun::class)->getScoresForUser($user);
 
         return [
             'pageTitle' => $translator->trans('the20ProteinogenicAminoAcids'),
             'aminoMap'  => $aminoMap,
             'matrix'    => $matrix,
-            'levels'    => $levels,
+            'scores'    => $scores,
             'groups'    => new GroupType(),
         ];
     }

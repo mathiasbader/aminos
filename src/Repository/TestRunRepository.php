@@ -35,32 +35,18 @@ class TestRunRepository extends ServiceEntityRepository
         return $levels;
     }
 
-    // /**
-    //  * @return TestRun[] Returns an array of TestRun objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    function getScoresForUser(User $user): array {
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('t.group');
+        $qb->addSelect('MAX(t.score) as score');
+        $qb->where('t.user = :userId');
+        $qb->setParameter('userId', $user->getId());
+        $qb->groupBy('t.group');
 
-    /*
-    public function findOneBySomeField($value): ?TestRun
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $results   = $qb->getQuery()->getResult();
+
+        $scores = [];
+        foreach ($results as $result) $scores[$result['group']] = $result['score'];
+        return $scores;
     }
-    */
 }
