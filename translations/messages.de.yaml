@@ -84,6 +84,7 @@ sideChains:
 result: Ergebnis
 continue: Weiter
 stopRun: Abfrage beenden
+yourScore: Ihr Ergebnis
 
 testGroup:
   unpolar: Unpolar

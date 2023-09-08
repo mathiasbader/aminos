@@ -13,6 +13,11 @@
             {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
             {% if run.finished %}
                 <div style="width: 50%;">
+                    <div style="text-align: center; padding: 24px;">
+                        <span style="font-size: 0.85rem;">{{ 'yourScore'|trans }}:</span><br>
+                        <span style="font-size: 2rem; margin-top: 12px;
+                        display: inline-block">{{ run.score }} %</span>
+                    </div>
                     <a href="{{ url('index') }}" style="display: block; padding: 84px 24px; text-align: center;
                     color: #666;background-color: #eee; border-radius: 6px;">{{ 'continue'|trans }}</a>
                 </div>
