@@ -8,7 +8,7 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
-    {% if app.user.email is null and levels is not empty %}
+    {% if app.user.email is null and scores is defined and scores is not empty %}
         <div style="text-align: center; margin-bottom: 24px;">
             <a href="{{ url('profile') }}" class="btnReminder">{{ 'toSaveProgressClickHere'|trans }}</a>
         </div>

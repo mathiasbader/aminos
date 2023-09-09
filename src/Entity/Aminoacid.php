@@ -36,7 +36,7 @@ class Aminoacid
         $correct = false;
         foreach (Language::$all as $lng) {
             $expected = mb_strtolower($this->getTranslation($name, $lng));
-            $correct = $correct || $observed === $expected;;
+             $correct = $correct || trim($observed) === trim($expected);
         }
         return $correct;
     }
