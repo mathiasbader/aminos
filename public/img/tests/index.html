@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <style>
+        .cls-white {
+            stroke-width: 0;
+            fill: #fff; }
+        .cls-black {
+            stroke-width: 0;
+            fill: #1a1a1a; }
+        .cls-fluidNonPolar {
+            transition: 0.2s;
+            stroke-width: 0;
+            fill: #a3cdaf; }
+    </style>
+
+</head>
+<body>
+
+<div style="margin: 0 auto; max-width: 800px;">
+    <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="0 30 217.78 134">
+        <g id="unpolar_2">
+            <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
+            <path id="u1-fluid" class="cls-fluidNonPolar" d="
+                m 56.77, 67.84
+                h -19.98
+                v 74.56
+                c 0, 5.51, 4.48, 9.99, 9.99, 9.99
+                s 9.99-4.48, 9.99-9.99
+                v -74.56
+            Z"/>
+            <path id="u1-glas-black" class="cls-black" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
+        </g>
+    </svg>
+</div>
+
+<script type="text/javascript">
+    function to(score) {
+        if (score === gScore) return;
+
+        let newScore = gScore;
+        if (score < gScore) newScore--;
+        else if (score > gScore) newScore++;
+        fill(newScore);
+        setTimeout(function() {
+            to(score);
+        }, 4)
+    }
+
+    function fill(score) {
+        if (score < 0 || score > 100) return;
+
+        gScore = score;
+        let x = (100 - score) / 100 * 74.56;
+        document.getElementById('u1-fluid').setAttribute('d',
+        'm 56.77, ' + (x + 67.84) +
+        'h -19.98' +
+        'v ' + (74.56 - x) +
+        'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
+        's 9.99-4.48, 9.99-9.99' +
+        'v -' + (74.56 - x)
+        );
+    }
+    let gScore = 100;
+    fill(gScore);
+</script>
+
+</body>
+</html>
