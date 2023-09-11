@@ -13,10 +13,17 @@
             {% include 'lib/_test_answer.html.twig' with { 'test' : lastTest } %}
             {% if run.finished %}
                 <div style="width: 50%;">
-                    <div style="text-align: center; padding: 24px;">
-                        <span style="font-size: 0.85rem;">{{ 'yourScore'|trans }}:</span><br>
-                        <span style="font-size: 2rem; margin-top: 12px;
+                    <div style="display: flex; padding: 42px 12px">
+                        <div style="width: 50%; text-align: center;">
+                            <span style="font-size: 0.85rem;">Your last high score:</span><br>
+                            <span style="font-size: 2rem; margin-top: 12px;
+                        display: inline-block">{{ run.scoreBefore }} %</span>
+                        </div>
+                        <div style="width: 50%; text-align: center;">
+                            <span style="font-size: 0.85rem;">Your new score:</span><br>
+                            <span style="font-size: 2rem; margin-top: 12px;
                         display: inline-block">{{ run.score }} %</span>
+                        </div>
                     </div>
                     <a href="{{ url('testOverview') }}" style="display: block; padding: 84px 24px; text-align: center;
                     color: #666;background-color: #eee; border-radius: 6px;">{{ 'continue'|trans }}</a>

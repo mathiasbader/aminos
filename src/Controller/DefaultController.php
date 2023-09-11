@@ -206,6 +206,8 @@ class DefaultController extends AbstractController
                     $run->setCompleted(new DateTime());
                     $run->calculateLevel();
                     $run->calculateScore();
+                    $run->setScoreBefore(
+                        $this->getDoctrine()->getRepository(TestRun::class)->findHighestScore($run->getGroup()));
                     $em->persist($run);
                     $em->flush();
                 }
@@ -213,7 +215,7 @@ class DefaultController extends AbstractController
         }
         return [
             'pageTitle' => $translator->trans('studyThe20ProteinogenicAminoAcids'),
-            'run' => $run
+            'run' => $run,
         ];
     }
 

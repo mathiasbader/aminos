@@ -21,20 +21,6 @@ class TestRunRepository extends ServiceEntityRepository
         parent::__construct($registry, TestRun::class);
     }
 
-    function getLevelsForUser(User $user): array {
-        $qb = $this->createQueryBuilder('t');
-        $qb->select('t.group');
-        $qb->addSelect('MAX(t.level) as level');
-        $qb->where('t.user = :userId');
-        $qb->setParameter('userId', $user->getId());
-        $qb->groupBy('t.group');
-        $results   = $qb->getQuery()->getResult();
-
-        $levels = [];
-        foreach ($results as $result) $levels[$result['group']] = $result['level'];
-        return $levels;
-    }
-
     function getScoresForUser(User $user, $onlyBasicScoresCombined = false): array {
         $qb = $this->createQueryBuilder('t');
         $qb->select('t.group');
@@ -59,5 +45,9 @@ class TestRunRepository extends ServiceEntityRepository
             }
         }
         return $scores;
+    }
+
+    function findHighestScore(string $group): int {
+        return 10;
     }
 }

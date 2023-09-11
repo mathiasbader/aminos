@@ -23,6 +23,7 @@ class TestRun
     private ?Collection $tests;
     /** @ORM\ManyToMany(targetEntity=Aminoacid::class             ) */ private ?Collection $aminos;
     /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $score;
+    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $scoreBefore;
 
     private ?int   $correctCount = null;
     private ?int $incorrectCount = null;
@@ -33,15 +34,19 @@ class TestRun
     }
     /** @ORM\PrePersist() */ function prePersist()  { $this->started = new DateTime(); }
 
-    function getId       ():  int        { return $this->id       ; }
-    function getUser     ():  User       { return $this->user     ; }
-    function getGroup    ():  string     { return $this->group    ; }
-    function getStarted  ():  DateTime   { return $this->started  ; }
-    function getCompleted(): ?DateTime   { return $this->completed; }
-    function getLevel    (): ?int        { return $this->level    ; }
-    function getTests    (): ?Collection { return $this->tests    ; }
-    function getAminos   (): ?Collection { return $this->aminos   ; }
-    function getScore    (): ?int        { return $this->score    ; }
+    function getId         ():  int        { return $this->id         ; }
+    function getUser       ():  User       { return $this->user       ; }
+    function getGroup      ():  string     { return $this->group      ; }
+    function getStarted    ():  DateTime   { return $this->started    ; }
+    function getCompleted  (): ?DateTime   { return $this->completed  ; }
+    function getLevel      (): ?int        { return $this->level      ; }
+    function getTests      (): ?Collection { return $this->tests      ; }
+    function getAminos     (): ?Collection { return $this->aminos     ; }
+    function getScore      (): ?int        { return $this->score      ; }
+    function getScoreBefore(): ?int        {
+        if ($this->scoreBefore === null) return 0;
+        return $this->scoreBefore;
+    }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
         foreach($this->tests as $test) {
@@ -114,13 +119,14 @@ class TestRun
         return round($this->incorrectCount / ($this->tests->count()) * 100, 2);
     }
 
-    function setUser     ( User       $user     ): self { $this->user      = $user     ; return $this; }
-    function setGroup    ( string     $group    ): self { $this->group     = $group    ; return $this; }
-    function setStarted  ( DateTime   $started  ): self { $this->started   = $started  ; return $this; }
-    function setCompleted(?DateTime   $completed): self { $this->completed = $completed; return $this; }
-    function setLevel    (?int        $level    ): self { $this->level     = $level    ; return $this; }
-    function setAminos   ( Collection $aminos   ): self { $this->aminos    = $aminos   ; return $this; }
-    function setScore    (?int        $score    ): self { $this->score     = $score    ; return $this; }
+    function setUser       ( User       $user       ): self { $this->user        = $user       ; return $this; }
+    function setGroup      ( string     $group      ): self { $this->group       = $group      ; return $this; }
+    function setStarted    ( DateTime   $started    ): self { $this->started     = $started    ; return $this; }
+    function setCompleted  (?DateTime   $completed  ): self { $this->completed   = $completed  ; return $this; }
+    function setLevel      (?int        $level      ): self { $this->level       = $level      ; return $this; }
+    function setAminos     ( Collection $aminos     ): self { $this->aminos      = $aminos     ; return $this; }
+    function setScore      (?int        $score      ): self { $this->score       = $score      ; return $this; }
+    function setScoreBefore(?int        $scoreBefore): self { $this->scoreBefore = $scoreBefore; return $this; }
 
     public function addTest(Test $test): self
     {
