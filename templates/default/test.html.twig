@@ -3,7 +3,7 @@
 {% set lastTest = run.lastCompletedTest %}
 {% set test = run.firstUncompletedTest %}
 
-{% block bodyParam %} onLoad="document.getElementById('answer').focus();"{% endblock %}
+{% block bodyParam %}{% if not run.finished %} onLoad="document.getElementById('answer').focus();"{% endif %}{% endblock %}
 
 {% block body %}
 
@@ -15,14 +15,98 @@
                 <div style="width: 50%;">
                     <div style="display: flex; padding: 42px 12px">
                         <div style="width: 50%; text-align: center;">
+                            <div style="margin: 0 auto; max-width: 800px;">
+                                <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
+                                     style="width: 60%;">
+                                    <defs>
+                                        <style>
+                                            .cls-shadowGrey {
+                                                fill: #dcdcdc;
+                                                stroke-width: 0; }
+                                            .cls-white {
+                                                stroke-width: 0;
+                                                fill: #fff; }
+                                            .cls-black {
+                                                stroke-width: 0;
+                                                fill: #1a1a1a; }
+                                            .cls-glasGrey {
+                                                stroke-width: 0;
+                                                fill: #b3b3b3; }
+                                            .cls-fluidNonPolar {
+                                                stroke-width: 0;
+                                                fill: #a3cdaf; }
+                                            .cls-fluidPolar {
+                                                stroke-width: 0;
+                                                fill: #edd9af; }
+                                            .cls-fluidCharged {
+                                                stroke-width: 0;
+                                                fill: #b7d8ee; }
+                                            .cls-reflex {
+                                                stroke-width: 0;
+                                                fill: #fff; }
+                                        </style>
+                                    </defs>
+                                    <g id="unpolar_2">
+                                        <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
+                                        <path id="u1-fluid-1" class="cls-fluidNonPolar" d=""/>
+                                        <path id="u1-glas-black" class="cls-black" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
+                                    </g>
+                                </svg>
+                            </div>
                             <span style="font-size: 0.85rem;">Your last high score:</span><br>
                             <span style="font-size: 2rem; margin-top: 12px;
                         display: inline-block">{{ run.scoreBefore }} %</span>
                         </div>
                         <div style="width: 50%; text-align: center;">
-                            <span style="font-size: 0.85rem;">Your new score:</span><br>
-                            <span style="font-size: 2rem; margin-top: 12px;
-                        display: inline-block">{{ run.score }} %</span>
+                            <div style="margin: 0 auto; max-width: 800px;">
+                                <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
+                                     style="width: 60%;">
+                                    <defs>
+                                        <style>
+                                            .cls-shadowGrey {
+                                                fill: #dcdcdc;
+                                                stroke-width: 0; }
+                                            .cls-white {
+                                                stroke-width: 0;
+                                                fill: #fff; }
+                                            .cls-black {
+                                                stroke-width: 0;
+                                                fill: #1a1a1a; }
+                                            .cls-glasGrey {
+                                                stroke-width: 0;
+                                                fill: #b3b3b3; }
+                                            .cls-fluidNonPolar {
+                                                stroke-width: 0;
+                                                fill: #a3cdaf; }
+                                            .cls-fluidPolar {
+                                                stroke-width: 0;
+                                                fill: #edd9af; }
+                                            .cls-fluidCharged {
+                                                stroke-width: 0;
+                                                fill: #b7d8ee; }
+                                            .cls-reflex {
+                                                stroke-width: 0;
+                                                fill: #fff; }
+                                        </style>
+                                    </defs>
+                                    <g id="unpolar_2">
+                                        <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
+                                        <path id="u1-fluid-2" class="cls-fluidNonPolar" d=""/>
+                                        <path id="u1-glas-black" class="cls-black" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <span style="font-size: 0.85rem;">
+                                {% if run.scoreBefore < run.score %}
+                                    Your new score:
+                                {% else %}
+                                    Your score:
+                                {% endif %}
+                            </span><br>
+                            <span style="font-size: 2rem; margin-top: 12px; display: inline-block">
+                                <span id="newScore">
+                                {% if run.scoreBefore < run.score %}{{ run.scoreBefore }}{% else %}
+                                    {{ run.score }}{% endif %}</span> %</span>
                         </div>
                     </div>
                     <a href="{{ url('testOverview') }}" style="display: block; padding: 84px 24px; text-align: center;
@@ -50,6 +134,52 @@
                 document.getElementById('answer').value = aminoId;
                 document.getElementById('form').submit();
             }
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            function to(score) {
+                if (score === gScore) return;
+
+                if (delay > 0) {
+                    delay--;
+                } else {
+                    let newScore = gScore;
+                    if (score < gScore) newScore--;
+                    else if (score > gScore) newScore++;
+                    fill(newScore, 2);
+                }
+                setTimeout(function() {
+                    to(score);
+                }, 20);
+            }
+
+            function fill(score, id) {
+                if (score < 0 || score > 100) return;
+
+                document.getElementById('newScore').innerText = score;
+                gScore = score;
+                let x = (100 - score) / 100 * 74.56;
+                document.getElementById('u1-fluid-' + id).setAttribute('d',
+                    'm 56.77, ' + (x + 67.84) +
+                    'h -19.98' +
+                    'v ' + (74.56 - x) +
+                    'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
+                    's 9.99-4.48, 9.99-9.99' +
+                    'v -' + (74.56 - x)
+                );
+            }
+            let gScore = {{ run.scoreBefore }};
+            let delay = 50;
+
+            document.addEventListener('DOMContentLoaded', function() {
+                fill({{ run.scoreBefore }}, 1);
+                {% if run.score <= run.scoreBefore %}
+                    fill({{ run.score }}, 2);
+                {% else %}
+                    fill({{ run.scoreBefore }}, 2);
+                    to({{ run.score }});
+                {% endif %}
+            }, false);
         </script>
     {% endif %}
 {% endblock %}

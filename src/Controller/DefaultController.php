@@ -207,7 +207,7 @@ class DefaultController extends AbstractController
                     $run->calculateLevel();
                     $run->calculateScore();
                     $run->setScoreBefore(
-                        $this->getDoctrine()->getRepository(TestRun::class)->findHighestScore($run->getGroup()));
+                        $this->getDoctrine()->getRepository(TestRun::class)->findHighestScore($run->getGroup(), $user));
                     $em->persist($run);
                     $em->flush();
                 }
