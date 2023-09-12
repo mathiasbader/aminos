@@ -52,23 +52,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @deprecated since Symfony 5.3, use getUserIdentifier instead */
     public function getUsername(): string { return $this->getUserIdentifier(); }
     public function eraseCredentials(): void { }
-
-    public function getRuns(): Collection { return $this->runs; }
-
-    public function addRun(TestRun $run): self
-    {
-        if (!$this->runs->contains($run)) {
-            $this->runs[] = $run;
-            $run->setUser($this);
-        }
-        return $this;
-    }
-
-    public function removeRun(TestRun $run): self
-    {
-        if ($this->runs->removeElement($run)) {
-            if ($run->getUser() === $this) { $run->setUser(null); }
-        }
-        return $this;
-    }
 }
