@@ -138,3 +138,21 @@ a.btnReminder:hover {
     text-decoration: none;
     transition: all 0.3s;
 }
+
+/* SVG styles for test tubes */
+.cls-shadowGrey,
+.cls-white,
+.cls-black,
+.cls-glasGrey,
+.cls-fluidNonPolar,
+.cls-fluidPolar,
+.cls-fluidCharged,
+.cls-reflex { stroke-width: 0; }
+.cls-shadowGrey    { fill: #dcdcdc; }
+.cls-white         { fill: #fff   ; }
+.cls-black         { fill: #1a1a1a; }
+.cls-glasGrey      { fill: #b3b3b3; }
+.cls-fluidNonPolar { fill: #a3cdaf; }
+.cls-fluidPolar    { fill: #edd9af; }
+.cls-fluidCharged  { fill: #b7d8ee; }
+.cls-reflex        { fill: #fff   ; }

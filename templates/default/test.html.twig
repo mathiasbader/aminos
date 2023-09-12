@@ -18,34 +18,6 @@
                             <div style="margin: 0 auto; max-width: 800px;">
                                 <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
                                      style="width: 60%;">
-                                    <defs>
-                                        <style>
-                                            .cls-shadowGrey {
-                                                fill: #dcdcdc;
-                                                stroke-width: 0; }
-                                            .cls-white {
-                                                stroke-width: 0;
-                                                fill: #fff; }
-                                            .cls-black {
-                                                stroke-width: 0;
-                                                fill: #1a1a1a; }
-                                            .cls-glasGrey {
-                                                stroke-width: 0;
-                                                fill: #b3b3b3; }
-                                            .cls-fluidNonPolar {
-                                                stroke-width: 0;
-                                                fill: #a3cdaf; }
-                                            .cls-fluidPolar {
-                                                stroke-width: 0;
-                                                fill: #edd9af; }
-                                            .cls-fluidCharged {
-                                                stroke-width: 0;
-                                                fill: #b7d8ee; }
-                                            .cls-reflex {
-                                                stroke-width: 0;
-                                                fill: #fff; }
-                                        </style>
-                                    </defs>
                                     <g id="unpolar_2">
                                         <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
                                         <path id="u1-fluid-1" class="cls-fluidNonPolar" d=""/>
@@ -61,34 +33,6 @@
                             <div style="margin: 0 auto; max-width: 800px;">
                                 <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
                                      style="width: 60%;">
-                                    <defs>
-                                        <style>
-                                            .cls-shadowGrey {
-                                                fill: #dcdcdc;
-                                                stroke-width: 0; }
-                                            .cls-white {
-                                                stroke-width: 0;
-                                                fill: #fff; }
-                                            .cls-black {
-                                                stroke-width: 0;
-                                                fill: #1a1a1a; }
-                                            .cls-glasGrey {
-                                                stroke-width: 0;
-                                                fill: #b3b3b3; }
-                                            .cls-fluidNonPolar {
-                                                stroke-width: 0;
-                                                fill: #a3cdaf; }
-                                            .cls-fluidPolar {
-                                                stroke-width: 0;
-                                                fill: #edd9af; }
-                                            .cls-fluidCharged {
-                                                stroke-width: 0;
-                                                fill: #b7d8ee; }
-                                            .cls-reflex {
-                                                stroke-width: 0;
-                                                fill: #fff; }
-                                        </style>
-                                    </defs>
                                     <g id="unpolar_2">
                                         <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
                                         <path id="u1-fluid-2" class="cls-fluidNonPolar" d=""/>
@@ -97,11 +41,8 @@
                                 </svg>
                             </div>
                             <span style="font-size: 0.85rem;">
-                                {% if run.scoreBefore < run.score %}
-                                    Your new score:
-                                {% else %}
-                                    Your score:
-                                {% endif %}
+                                {% if run.scoreBefore < run.score %} Your new score:
+                                {% else %}                           Your score: {% endif %}
                             </span><br>
                             <span style="font-size: 2rem; margin-top: 12px; display: inline-block">
                                 <span id="newScore">
