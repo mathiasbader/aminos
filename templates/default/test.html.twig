@@ -15,7 +15,7 @@
                 <div style="width: 50%;">
                     <div style="display: flex; padding: 42px 12px">
                         <div style="width: 50%; text-align: center;">
-                            <div style="margin: 0 auto; max-width: 800px;">
+                            <div>
                                 <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
                                      style="width: 60%;">
                                     <g id="unpolar_2">
@@ -37,7 +37,7 @@
                         display: inline-block">{{ run.scoreBefore }} %</span>
                         </div>
                         <div style="width: 50%; text-align: center;">
-                            <div style="margin: 0 auto; max-width: 800px;">
+                            <div>
                                 <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
                                      style="width: 60%;">
                                     <g id="unpolar_2">
@@ -64,8 +64,7 @@
                                 {% else %}                           Your score: {% endif %}
                             </span><br>
                             <span id="newScoreStyle" style="font-size: 2rem; margin-top: 12px; display: inline-block;
-                            {% if run.scoreBefore < run.score %} color: #eee;{% endif %}
-                            ">
+                                {% if run.scoreBefore < run.score %} color: #fff;{% endif %}">
                                 <span id="newScore">
                                 {% if run.scoreBefore < run.score %}{{ run.scoreBefore }}{% else %}
                                     {{ run.score }}{% endif %}</span> %</span>
