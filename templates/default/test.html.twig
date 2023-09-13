@@ -14,61 +14,8 @@
             {% if run.finished %}
                 <div style="width: 50%;">
                     <div style="display: flex; padding: 42px 12px">
-                        <div style="width: 50%; text-align: center;">
-                            <div>
-                                <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
-                                     style="width: 60%;">
-                                    <g id="unpolar_2">
-                                        <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
-                                        {% if run.scoreBefore > 4 %}
-                                            <path id="u1-fluid-1" class="cls-fluidNonPolar" d=""/>
-                                            <path id="u1-glas-black" class="cls-black" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
-                                            {% if run.scoreBefore == 100 %}
-                                                <path id="u1-reflex" class="cls-reflex" d="m50.16,123.46c.55,0,1-.45,1-1v-39.68c0-.55-.45-1-1-1s-1,.45-1,1v39.68c0,.55.45,1,1,1Zm-1,12.93c0,.55.45,1,1,1s1-.45,1-1v-8.96c0-.55-.45-1-1-1s-1,.45-1,1v8.96Zm.61,3.49c-.12.05-.23.12-.32.21-.19.19-.29.45-.29.71s.1.52.29.71c.09.09.2.16.32.21.13.05.26.08.39.08.26,0,.52-.11.7-.29.19-.19.3-.45.3-.71s-.11-.52-.3-.71c-.27-.28-.72-.37-1.09-.21Zm4.43-64.84c-.02-.07-.09-.11-.16-.1l-3.15.38-.66-3.11c-.01-.07-.08-.12-.15-.12-.06-.01-.13.05-.15.12l-.61,3.12-3.16-.33c-.08,0-.14.04-.16.1-.02.07,0,.14.07.18l2.78,1.54-1.29,2.9c-.03.06,0,.14.05.18.03.02.06.03.09.03.04,0,.07-.01.1-.04l2.33-2.16,2.36,2.13c.05.05.13.05.19,0,.06-.04.08-.12.05-.18l-1.34-2.88,2.75-1.59c.06-.04.09-.11.07-.18Z"/>
-                                            {% endif %}
-                                        {% else %}
-                                            <path id="u1-glas-grey" class="cls-glasGrey" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
-                                        {% endif %}
-                                    </g>
-                                </svg>
-                            </div>
-                            <span style="font-size: 0.85rem;">Your last high score:</span><br>
-                            <span style="font-size: 2rem; margin-top: 12px;
-                        display: inline-block">{{ run.scoreBefore }} %</span>
-                        </div>
-                        <div style="width: 50%; text-align: center;">
-                            <div>
-                                <svg id="unpolar_test1" xmlns="http://www.w3.org/2000/svg" viewBox="30 54 35 104"
-                                     style="width: 60%;">
-                                    <g id="unpolar_2">
-                                        <path id="u1-bg-white" class="cls-white" d="m56.77,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
-                                        {% if run.score > 4 %}
-                                            <path id="u1-fluid-2"{% if run.scoreBefore <= 4 and run.score > 4 %} style="visibility: hidden;"{% endif %}
-                                                  class="cls-fluidNonPolar" d=""/>
-                                            <path id="u1-glas-black-2"{% if run.scoreBefore <= 4 and run.score > 4 %} style="visibility: hidden;"{% endif %}
-                                                  class="cls-black" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
-                                            {% if run.score == 100 %}
-                                                <path id="u1-reflex-2"{% if run.scoreBefore < 100 %}
-                                                    style="visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s linear"
-                                                    {% endif %}
-                                                    class="cls-reflex" d="m50.16,123.46c.55,0,1-.45,1-1v-39.68c0-.55-.45-1-1-1s-1,.45-1,1v39.68c0,.55.45,1,1,1Zm-1,12.93c0,.55.45,1,1,1s1-.45,1-1v-8.96c0-.55-.45-1-1-1s-1,.45-1,1v8.96Zm.61,3.49c-.12.05-.23.12-.32.21-.19.19-.29.45-.29.71s.1.52.29.71c.09.09.2.16.32.21.13.05.26.08.39.08.26,0,.52-.11.7-.29.19-.19.3-.45.3-.71s-.11-.52-.3-.71c-.27-.28-.72-.37-1.09-.21Zm4.43-64.84c-.02-.07-.09-.11-.16-.1l-3.15.38-.66-3.11c-.01-.07-.08-.12-.15-.12-.06-.01-.13.05-.15.12l-.61,3.12-3.16-.33c-.08,0-.14.04-.16.1-.02.07,0,.14.07.18l2.78,1.54-1.29,2.9c-.03.06,0,.14.05.18.03.02.06.03.09.03.04,0,.07-.01.1-.04l2.33-2.16,2.36,2.13c.05.05.13.05.19,0,.06-.04.08-.12.05-.18l-1.34-2.88,2.75-1.59c.06-.04.09-.11.07-.18Z"/>
-                                            {% endif %}
-                                        {% endif %}
-                                        <path id="u1-glas-grey-2"{% if run.scoreBefore > 4 and run.score > 4 %} style="visibility: hidden;"{% endif %}
-                                              class="cls-glasGrey" d="m60.08,57.9h-26.6c-.55,0-1,.45-1,1s.45,1,1,1h1.31v82.5c0,6.61,5.38,11.99,11.99,11.99s11.99-5.38,11.99-11.99V59.9h1.31c.55,0,1-.45,1-1s-.45-1-1-1Zm-3.31,84.5c0,5.51-4.48,9.99-9.99,9.99s-9.99-4.48-9.99-9.99V59.9h19.98v82.5Z"/>
-                                    </g>
-                                </svg>
-                            </div>
-                            <span style="font-size: 0.85rem;">
-                                {% if run.scoreBefore < run.score %} Your new high score:
-                                {% else %}                           Your score: {% endif %}
-                            </span><br>
-                            <span id="newScoreStyle" style="font-size: 2rem; margin-top: 12px; display: inline-block;
-                                {% if run.scoreBefore < run.score %} color: #fff;{% endif %}">
-                                <span id="newScore">
-                                {% if run.scoreBefore < run.score %}{{ run.scoreBefore }}{% else %}
-                                    {{ run.score }}{% endif %}</span> %</span>
-                        </div>
+                        {% include 'default/_lib/_tubeScore.html.twig' with { 'id' : 1 } %}
+                        {% include 'default/_lib/_tubeScore.html.twig' with { 'id' : 2 } %}
                     </div>
                     <a href="{{ url('testOverview') }}" style="display: block; padding: 84px 24px; text-align: center;
                     color: #666;background-color: #eee; border-radius: 6px;">{{ 'continue'|trans }}</a>
@@ -98,68 +45,7 @@
         </script>
     {% else %}
         <script type="text/javascript">
-            function to(score) {
-                if (score === gScore) {
-                    document.getElementById('newScoreStyle').style.color = '#000';
-                    return;
-                }
-
-                if (delay > 0) {
-                    delay--;
-                    if (delay === 0) {
-                        document.getElementById('newScoreStyle').style.color = '#888';
-                        document.getElementById('u1-glas-grey-2').style.visibility = 'hidden';
-                        document.getElementById('u1-glas-black-2').style.visibility = 'visible';
-                        document.getElementById('u1-fluid-2').style.visibility = 'visible';
-                    }
-                } else {
-                    let newScore = gScore;
-                    if (score < gScore) newScore--;
-                    else if (score > gScore) newScore++;
-                    fill(newScore, 2);
-                }
-                setTimeout(function() { to(score); }, 20);
-            }
-
-            function fill(score, id) {
-                if (score < 0 || score > 100) return;
-
-                if (id === 2) document.getElementById('newScore').innerText = score;
-                gScore = score;
-                let x = (100 - score) / 100 * 74.56;
-                document.getElementById('u1-fluid-' + id).setAttribute('d',
-                    'm 56.77, ' + (x + 67.84) +
-                    'h -19.98' +
-                    'v ' + (74.56 - x) +
-                    'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
-                    's 9.99-4.48, 9.99-9.99' +
-                    'v -' + (74.56 - x)
-                );
-                {% if run.score == 100 %}
-                    if (score === 100) {
-                        setTimeout(function() {
-                            document.getElementById('u1-reflex-' + id).style.visibility = 'visible';
-                            document.getElementById('u1-reflex-' + id).style.opacity = '1';
-                        }, 400);
-                    }
-                {% endif %}
-            }
-            let gScore = {{ run.scoreBefore }};
-            let delay = 50;
-
-            document.addEventListener('DOMContentLoaded', function() {
-                {% if run.scoreBefore > 4 %}
-                    fill({{ run.scoreBefore }}, 1);
-                {% endif %}
-                {% if run.score > 4 %}
-                    {% if run.score <= run.scoreBefore %}
-                        fill({{ run.score }}, 2);
-                    {% else %}
-                        fill({{ run.scoreBefore }}, 2);
-                        to({{ run.score }});
-                    {% endif %}
-                {% endif %}
-            }, false);
+            {% include 'default/_lib/_tubeScore.js.twig' %}
         </script>
     {% endif %}
 {% endblock %}

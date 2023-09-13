@@ -1,0 +1,62 @@
+function to(score) {
+    if (score === gScore) {
+        document.getElementById('newScoreStyle').style.color = '#000';
+        return;
+    }
+    if (delay > 0) {
+        delay--;
+        if (delay === 0) {
+            document.getElementById('newScoreStyle').style.color = '#888';
+            document.getElementById('u1-glas-grey-2').style.visibility = 'hidden';
+            document.getElementById('u1-glas-black-2').style.visibility = 'visible';
+            document.getElementById('u1-fluid-2').style.visibility = 'visible';
+        }
+    } else {
+        let newScore = gScore;
+        if (score < gScore) newScore--;
+        else if (score > gScore) newScore++;
+        fill(newScore, 2);
+    }
+    setTimeout(function() { to(score); }, 20);
+}
+
+function fill(score, id) {
+    if (score < 0 || score > 100) return;
+
+    if (id === 2) document.getElementById('newScore').innerText = score;
+    gScore = score;
+    let x = (100 - score) / 100 * 74.56;
+    console.log(id);
+    document.getElementById('u1-fluid-' + id).setAttribute('d',
+        'm 56.77, ' + (x + 67.84) +
+        'h -19.98' +
+        'v ' + (74.56 - x) +
+        'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
+        's 9.99-4.48, 9.99-9.99' +
+        'v -' + (74.56 - x)
+    );
+    {% if run.score == 100 %}
+    if (score === 100) {
+        setTimeout(function() {
+            document.getElementById('u1-reflex-' + id).style.visibility = 'visible';
+            document.getElementById('u1-reflex-' + id).style.opacity = '1';
+        }, 400);
+    }
+    {% endif %}
+}
+let gScore = {{ run.scoreBefore }};
+let delay = 50;
+
+document.addEventListener('DOMContentLoaded', function() {
+    {% if run.scoreBefore > 4 %}
+    fill({{ run.scoreBefore }}, 1);
+    {% endif %}
+    {% if run.score > 4 %}
+    {% if run.score <= run.scoreBefore %}
+    fill({{ run.score }}, 2);
+    {% else %}
+    fill({{ run.scoreBefore }}, 2);
+    to({{ run.score }});
+    {% endif %}
+    {% endif %}
+}, false);
