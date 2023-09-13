@@ -5,11 +5,13 @@
 {% if scores[group] is not defined %} {% set score = 0 %}
 {% else %}                            {% set score = scores[group] %}{% endif %}
 
+{% set minScore = 4 %}
+
 <g id="charged">
     <path id="c-bg-white" class="cls-white" d="m155.74,152.14h14.36c6.32,0,11.46-5.14,11.46-11.46v-54.04h-37.28v54.04c0,6.32,5.14,11.46,11.46,11.46Z"/>
-    {% if score >= 17 %}
+    {% if score >= minScore %}
 
-        {% set x = (1 - (score - 17) / 83) * 45.5 %}
+        {% set x = (1 - (score - minScore) / (100 - minScore)) * 45.5 %}
 
         <path id="c-fluid" class="cls-fluidCharged" d="
             m 155.74, 152.14
