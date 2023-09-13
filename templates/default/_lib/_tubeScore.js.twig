@@ -110,10 +110,6 @@ let delay = 50;
 
 document.addEventListener('DOMContentLoaded', function() {
     {% set minScore = 4 %}
-    {% if run.group == 'charged'%}
-        {% set minScore = 17 %}
-    {% endif %}
-
     {% if scoreBefore > minScore %}
         fill({{ scoreBefore }}, 1);
     {% endif %}
