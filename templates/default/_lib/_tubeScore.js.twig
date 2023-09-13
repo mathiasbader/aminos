@@ -90,7 +90,15 @@ function getPath(group, score) {
         g += 'Z';
         return g;
     } else if (group === 'charged') {
-        return '';
+        let x = (1 - (score / 100)) * 45.5;
+        return 'm 155.74, 152.14' +
+               'h 14.36' +
+               'c 6.32, 0, 11.46 -5.37, 11.46 -11.97' +
+               'v -' + (45.5 - x) +
+               'h -37.28' +
+               'v ' + (45.5 - x) +
+               'c 0, 6.6, 5.14, 11.97, 11.46, 11.97' +
+               'Z';
     }
     return '';
 }
@@ -99,10 +107,15 @@ let gScore = {{ run.scoreBefore }};
 let delay = 50;
 
 document.addEventListener('DOMContentLoaded', function() {
-    {% if run.scoreBefore > 4 %}
+    {% set minScore = 4 %}
+    {% if run.group == 'charged'%}
+        {% set minScore = 17 %}
+    {% endif %}
+
+    {% if run.scoreBefore > minScore %}
         fill({{ run.scoreBefore }}, 1);
     {% endif %}
-    {% if run.score > 4 %}
+    {% if run.score > minScore %}
         {% if run.score <= run.scoreBefore %}
             fill({{ run.score }}, 2);
         {% else %}
