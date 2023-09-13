@@ -43,10 +43,7 @@ class TestRun
     function getTests      (): ?Collection { return $this->tests      ; }
     function getAminos     (): ?Collection { return $this->aminos     ; }
     function getScore      (): ?int        { return $this->score      ; }
-    function getScoreBefore(): ?int        {
-        if ($this->scoreBefore === null) return 0;
-        return $this->scoreBefore;
-    }
+    function getScoreBefore(): ?int        { return $this->scoreBefore; }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
         foreach($this->tests as $test) {

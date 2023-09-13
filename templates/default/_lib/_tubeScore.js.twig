@@ -103,7 +103,9 @@ function getPath(group, score) {
     return '';
 }
 
-let gScore = {{ run.scoreBefore }};
+{% if run.scoreBefore is null %} {% set scoreBefore = 0 %}
+{% else %}                       {% set scoreBefore = run.scoreBefore %} {% endif %}
+let gScore = {{ scoreBefore }};
 let delay = 50;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -112,14 +114,14 @@ document.addEventListener('DOMContentLoaded', function() {
         {% set minScore = 17 %}
     {% endif %}
 
-    {% if run.scoreBefore > minScore %}
-        fill({{ run.scoreBefore }}, 1);
+    {% if scoreBefore > minScore %}
+        fill({{ scoreBefore }}, 1);
     {% endif %}
     {% if run.score > minScore %}
-        {% if run.score <= run.scoreBefore %}
+        {% if run.score <= scoreBefore %}
             fill({{ run.score }}, 2);
         {% else %}
-            fill({{ run.scoreBefore }}, 2);
+            fill({{ scoreBefore }}, 2);
             to({{ run.score }});
         {% endif %}
     {% endif %}

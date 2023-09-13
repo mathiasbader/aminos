@@ -47,7 +47,7 @@ class TestRunRepository extends ServiceEntityRepository
         return $scores;
     }
 
-    function findHighestScore(string $group, User $user): int {
+    function findHighestScore(string $group, User $user): ?int {
         $qb = $this->createQueryBuilder('t');
         $qb->select('t.score');
         $qb->addSelect('MAX(t.score) as score');
@@ -57,11 +57,9 @@ class TestRunRepository extends ServiceEntityRepository
         $qb->setParameter('userId', $user->getId());
         $qb->groupBy('t.group');
         $results = $qb->getQuery()->getResult();
-        if (!empty($results)) {
-            $result = $results[0]['score'];
-            if ($result === null) $result = 0;
-        }
-        else $result = 0;
+
+        $result = null;
+        if (!empty($results)) $result = $results[0]['score'];
         return $result;
     }
 }
