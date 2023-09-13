@@ -7,9 +7,9 @@ function to(score) {
         delay--;
         if (delay === 0) {
             document.getElementById('newScoreStyle').style.color = '#888';
-            document.getElementById('u1-glas-grey-2').style.visibility = 'hidden';
-            document.getElementById('u1-glas-black-2').style.visibility = 'visible';
-            document.getElementById('u1-fluid-2').style.visibility = 'visible';
+            document.getElementById('glas-grey-2').style.visibility = 'hidden';
+            document.getElementById('glas-black-2').style.visibility = 'visible';
+            document.getElementById('fluid-2').style.visibility = 'visible';
         }
     } else {
         let newScore = gScore;
@@ -25,38 +25,89 @@ function fill(score, id) {
 
     if (id === 2) document.getElementById('newScore').innerText = score;
     gScore = score;
-    let x = (100 - score) / 100 * 74.56;
-    console.log(id);
-    document.getElementById('u1-fluid-' + id).setAttribute('d',
-        'm 56.77, ' + (x + 67.84) +
-        'h -19.98' +
-        'v ' + (74.56 - x) +
-        'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
-        's 9.99-4.48, 9.99-9.99' +
-        'v -' + (74.56 - x)
+
+    {% set group = 'nonPolar' %}
+    {% if run.group == 'polar' or
+        run.group == 'polarCharged' %}
+        {% set group = 'polar' %}
+    {% elseif run.group == 'charged' or
+        run.group == 'all' %}
+        {% set group = 'charged' %}
+    {% endif %}
+
+    document.getElementById('fluid-' + id).setAttribute('d',
+        getPath('{{ group }}', score)
     );
     {% if run.score == 100 %}
-    if (score === 100) {
-        setTimeout(function() {
-            document.getElementById('u1-reflex-' + id).style.visibility = 'visible';
-            document.getElementById('u1-reflex-' + id).style.opacity = '1';
-        }, 400);
-    }
+        if (score === 100) {
+            setTimeout(function () {
+                document.getElementById('reflex-' + id).style.visibility = 'visible';
+                document.getElementById('reflex-' + id).style.opacity = '1';
+            }, 400);
+        }
     {% endif %}
 }
+
+function getPath(group, score) {
+    if (group === 'nonPolar') {
+        let x = (100 - score) / 100 * 74.56;
+        return 'm 56.77, ' + (x + 67.84) +
+               'h -19.98' +
+               'v ' + (74.56 - x) +
+               'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
+               's 9.99-4.48, 9.99-9.99' +
+               'v -' + (74.56 - x) +
+               'Z';
+    } else if (group === 'polar') {
+        let g = '';
+        if (score >= 85) {
+            g = 'm 126.13, 95.95';
+            g += 'c -.06 -.19 -.1 -.48 -.1 -.78';
+            if (score > 85) g += 'v -' + (10.11 * ((score - 85) / 15));
+            g += 'h -19.47';
+            if (score > 85) g += 'v ' + (10.11 * ((score - 85) / 15));
+            g += 'c 0, .3 -.04 .59 -.12 .88';
+            g += 'l -10, 52.8';
+            g += 'c -.16 .84 .06, 1.7 .61, 2.35';
+            g += 's 1.35, 1.03, 2.2, 1.03';
+            g += 'h 34.12';
+            g += 'c .85, 0, 1.66 -.38, 2.2 -1.03';
+            g += 's .77 -1.52 .61 -2.35';
+            g += 'l -10 -52.8';
+        } else {
+            let x = score / 85;
+            g ='m 96.4, 149.3';
+            g += 'c -.16 .84 .06, 1.7 .61, 2.35';
+            g += 's 1.35, 1.03, 2.2, 1.03';
+            g += 'h 34.12';
+            g += 'c .85, 0, 1.66 -.38, 2.2 -1.03';
+            g += 's .77 -1.52 .61 -2.35';
+            g += 'l -' + (10 * x) + ' -' + (52.8 * x);
+            g += 'c -.06 -.19 -.1 -.48 -.1 -.78';
+            g += 'h -' + (19.47 + 20 * (1 - x));
+            g += 'c 0, .3 -.04 .59 -.12 .88';
+        }
+        g += 'Z';
+        return g;
+    } else if (group === 'charged') {
+        return '';
+    }
+    return '';
+}
+
 let gScore = {{ run.scoreBefore }};
 let delay = 50;
 
 document.addEventListener('DOMContentLoaded', function() {
     {% if run.scoreBefore > 4 %}
-    fill({{ run.scoreBefore }}, 1);
+        fill({{ run.scoreBefore }}, 1);
     {% endif %}
     {% if run.score > 4 %}
-    {% if run.score <= run.scoreBefore %}
-    fill({{ run.score }}, 2);
-    {% else %}
-    fill({{ run.scoreBefore }}, 2);
-    to({{ run.score }});
-    {% endif %}
+        {% if run.score <= run.scoreBefore %}
+            fill({{ run.score }}, 2);
+        {% else %}
+            fill({{ run.scoreBefore }}, 2);
+            to({{ run.score }});
+        {% endif %}
     {% endif %}
 }, false);
