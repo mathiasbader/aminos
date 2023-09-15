@@ -7,15 +7,16 @@ use App\Repository\AminoacidRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Yaml\Yaml;
 
-/** @ORM\Entity(repositoryClass=AminoacidRepository::class) @ORM\Table(name="aminoacids") */
+#[ORM\Entity(repositoryClass: AminoacidRepository::class)] #[ORM\Table(name: 'aminoacids')]
 class Aminoacid
 {
-    /** @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue */ private int    $id       ;
-    /** @ORM\Column(type="string", length=255)                  */ private string $name     ;
-    /** @ORM\Column(type="string", length=255)                  */ private string $formula  ;
-    /** @ORM\Column(type="smallint"          )                  */ private int    $essential;
-    /** @ORM\Column(type="string", length=  1)                  */ private string $code1    ;
-    /** @ORM\Column(type="string", length=  3)                  */ private string $code3    ;
+    #[ORM\Id] #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer'            )] private int    $id       ;
+    #[ORM\Column(type: 'string', length: 255)] private string $name     ;
+    #[ORM\Column(type: 'string', length: 255)] private string $formula  ;
+    #[ORM\Column(type: 'smallint'           )] private int    $essential;
+    #[ORM\Column(type: 'string', length:   1)] private string $code1    ;
+    #[ORM\Column(type: 'string', length:   3)] private string $code3    ;
 
     function getId       (): ?int    { return $this->id       ; }
     function getName     (): ?string { return $this->name     ; }

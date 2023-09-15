@@ -9,30 +9,32 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity(repositoryClass=TestRunRepository::class) @ORM\HasLifecycleCallbacks() @ORM\Table(name="test_runs") */
+#[ORM\Entity(repositoryClass: TestRunRepository::class)] #[ORM\Table(name: 'test_runs')]
 class TestRun
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"    ) */ private  int        $id;
-    /** @ORM\ManyToOne(targetEntity=User::class, inversedBy="runs") @ORM\JoinColumn(nullable=false) */
-    private User $user;
-    /** @ORM\Column(type="string"  , length=255, name="testGroup" ) */ private  string     $group;
-    /** @ORM\Column(type="datetime"                               ) */ private  DateTime   $started;
-    /** @ORM\Column(type="datetime", nullable=true                ) */ private ?DateTime   $completed;
-    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $level;
-    /** @ORM\OneToMany(targetEntity=Test::class, mappedBy="run", orphanRemoval=true, cascade={"persist"}) */
-    private ?Collection $tests;
-    /** @ORM\ManyToMany(targetEntity=Aminoacid::class             ) */ private ?Collection $aminos;
-    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $score;
-    /** @ORM\Column(type="integer" , nullable=true                ) */ private ?int        $scoreBefore;
+    #[ORM\Id] #[ORM\GeneratedValue] #[ORM\Column(type: 'integer')] private int $id;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'runs')] #[ORM\JoinColumn(nullable: false)]
+                                                                  private  User       $user       ;
+    #[ORM\Column(name: 'testGroup', type: 'string', length: 255)] private  string     $group      ;
+    #[ORM\Column(type: 'datetime')]                               private  DateTime   $started    ;
+    #[ORM\Column(type: 'datetime', nullable: true)]               private ?DateTime   $completed  ;
+    #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $level      ;
+    #[ORM\OneToMany(mappedBy: 'run', targetEntity: Test::class, cascade: ['persist'], orphanRemoval: true)]
+                                                                  private ?Collection $tests      ;
+    #[ORM\ManyToMany(targetEntity: Aminoacid::class)]             private ?Collection $aminos     ;
+    #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $score      ;
+    #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $scoreBefore;
+    #[ORM\OneToOne(targetEntity: BaseScores::class, mappedBy: 'testRun')] private ?Collection $baseScores ;
 
     private ?int   $correctCount = null;
     private ?int $incorrectCount = null;
 
-    public function __construct() {
+    function __construct() {
         $this->tests  = new ArrayCollection();
         $this->aminos = new ArrayCollection();
+        $this->baseScores = new ArrayCollection();
+        $this->started = new DateTime();
     }
-    /** @ORM\PrePersist() */ function prePersist()  { $this->started = new DateTime(); }
 
     function getId         ():  int        { return $this->id         ; }
     function getUser       ():  User       { return $this->user       ; }
@@ -44,6 +46,7 @@ class TestRun
     function getAminos     (): ?Collection { return $this->aminos     ; }
     function getScore      (): ?int        { return $this->score      ; }
     function getScoreBefore(): ?int        { return $this->scoreBefore; }
+    function getBaseScores (): ?Collection { return $this->baseScores ; }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
         foreach($this->tests as $test) {
@@ -124,7 +127,7 @@ class TestRun
     function setAminos     ( Collection $aminos     ): self { $this->aminos      = $aminos     ; return $this; }
     function setScore      (?int        $score      ): self { $this->score       = $score      ; return $this; }
     function setScoreBefore(?int        $scoreBefore): self { $this->scoreBefore = $scoreBefore; return $this; }
-
+    function setBaseScores ( Collection $baseScores ): self { $this->baseScores  = $baseScores ; return $this; }
     public function addTest(Test $test): self
     {
         if (!$this->tests->contains($test)) {

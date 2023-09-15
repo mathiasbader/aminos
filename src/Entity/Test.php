@@ -9,20 +9,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity(repositoryClass=TestRepository::class) @ORM\Table(name="tests") */
+#[ORM\Entity(repositoryClass: TestRepository::class)] #[ORM\Table(name: 'tests')]
 class Test
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer"                                      ) */ private  int        $id;
-    /** @ORM\ManyToOne(targetEntity=TestRun::class, inversedBy="run") @ORM\JoinColumn(nullable=false) */ private  TestRun    $run;
-    /** @ORM\ManyToOne(targetEntity=Aminoacid::class) @ORM\JoinColumn(nullable=false                ) */ private  Aminoacid  $amino;
-    /** @ORM\Column(type="integer" ,             nullable=true                                      ) */ private ?int        $level;
-    /** @ORM\Column(type="boolean" ,             nullable=true                                      ) */ private ?bool       $correct;
-    /** @ORM\Column(type="string"  , length=255, nullable=true                                      ) */ private ?string     $answer;
-    /** @ORM\ManyToOne(targetEntity=Aminoacid::class) @ORM\JoinColumn(nullable=true                 ) */ private ?Aminoacid  $answerAmino;
-    /** @ORM\Column(type="datetime",             nullable=true                                      ) */ private ?DateTime   $answered;
-    /** @ORM\ManyToMany(targetEntity=Aminoacid::class                                               ) */ private ?Collection $choices;
+    #[ORM\Id] #[ORM\GeneratedValue] #[ORM\Column(type: 'integer')] private int $id;
+    #[ORM\ManyToOne(targetEntity: TestRun::class, inversedBy: 'run')]
+    #[ORM\JoinColumn(nullable: false)]                             private TestRun $run;
+    #[ORM\ManyToOne(targetEntity: Aminoacid::class, inversedBy: 'run')]
+    #[ORM\JoinColumn(nullable: false)] private Aminoacid $amino;
+    #[ORM\Column(type: 'integer', nullable: true)] private ?int $level;
+    #[ORM\Column(type: 'boolean', nullable: true)] private ?bool $correct;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)] private ?string $answer;
+    #[ORM\ManyToOne(targetEntity: Aminoacid::class, inversedBy: 'run')] #[ORM\JoinColumn(nullable: true)]
+    private ?Aminoacid $answerAmino;
+    #[ORM\Column(type: 'datetime', nullable: true)] private ?DateTime $answered;
+     #[ORM\ManyToMany(targetEntity: Aminoacid::class)] private ?Collection $choices;
 
-    public function __construct() { $this->choices = new ArrayCollection(); }
+     public function __construct() { $this->choices = new ArrayCollection(); }
 
     function getId         ():  int        { return $this->id         ; }
     function getRun        ():  TestRun    { return $this->run        ; }
@@ -70,7 +73,4 @@ class Test
         $this->choices = $choices;
         return $this;
     }
-
-    function addChoice   (Aminoacid  $amino  ): self { if (!$this->choices->contains($amino)) $this->choices[] = $amino; return $this; }
-    function removeChoice(Aminoacid  $amino  ): self { $this->choices->removeElement($amino)                           ; return $this; }
 }
