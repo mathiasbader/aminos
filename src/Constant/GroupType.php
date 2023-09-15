@@ -19,11 +19,11 @@ class GroupType
         self::GROUP_ALL,
     ];
 
-    static function getBaseGroup($group): array {
+    static function getBaseGroups($group): array {
         $baseGroups = [];
         if     ($group === self::GROUP_NOT_POLAR    ) $baseGroups = [self::GROUP_NOT_POLAR_1, self::GROUP_NOT_POLAR_2];
         elseif ($group === self::GROUP_POLAR_CHARGED) $baseGroups = [self::GROUP_POLAR      , self::GROUP_CHARGED    ];
-        elseif ($group === self::GROUP_ALL) return [
+        elseif ($group === self::GROUP_ALL          ) $baseGroups = [
             self::GROUP_NOT_POLAR_1, self::GROUP_NOT_POLAR_2, self::GROUP_POLAR, self::GROUP_CHARGED];
         return $baseGroups;
     }

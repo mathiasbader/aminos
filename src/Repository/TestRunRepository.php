@@ -33,8 +33,9 @@ class TestRunRepository extends ServiceEntityRepository
         $scores = [];
         $baseGroups = [];
         foreach ($results as $result) {
-            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroup($result['group']);
-            if (empty($baseGroups)) {
+            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($result['group']);
+            if (empty($baseGroups) &&
+                (!isset($scores[$result['group']]) || $scores[$result['group']] < $result['score'])) {
                 $scores[$result['group']] = $result['score'];
             } else {
                 foreach($baseGroups as $group) {
