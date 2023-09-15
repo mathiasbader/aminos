@@ -9,7 +9,7 @@ This project is hosted at [aminos.org](https://www.aminos.org).
 The project is licensed under the [MIT License](LICENSE).
 
 ## Development
-Please refer to [development](docs/Development.md).
+Please refer to [Development](docs/Development.md).
 
 ## Contact
 For questions concerning the project, please contact [Mathias Bader](mailto:mail@mathiasbader.de).
