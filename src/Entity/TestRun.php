@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Constant\Aminos;
+use App\Constant\GroupType;
 use App\Constant\TestLevel;
 use App\Repository\TestRunRepository;
 use DateTime;
@@ -24,7 +26,8 @@ class TestRun
     #[ORM\ManyToMany(targetEntity: Aminoacid::class)]             private ?Collection $aminos     ;
     #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $score      ;
     #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $scoreBefore;
-    #[ORM\OneToOne(targetEntity: BaseScores::class, mappedBy: 'testRun')] private ?Collection $baseScores ;
+    #[ORM\OneToOne(targetEntity: BaseScores::class, mappedBy: 'testRun', cascade: ['persist'])]
+                                                                  private ?BaseScores $baseScores ;
 
     private ?int   $correctCount = null;
     private ?int $incorrectCount = null;
@@ -32,7 +35,6 @@ class TestRun
     function __construct() {
         $this->tests  = new ArrayCollection();
         $this->aminos = new ArrayCollection();
-        $this->baseScores = new ArrayCollection();
         $this->started = new DateTime();
     }
 
@@ -46,7 +48,7 @@ class TestRun
     function getAminos     (): ?Collection { return $this->aminos     ; }
     function getScore      (): ?int        { return $this->score      ; }
     function getScoreBefore(): ?int        { return $this->scoreBefore; }
-    function getBaseScores (): ?Collection { return $this->baseScores ; }
+    function getBaseScores (): ?BaseScores { return $this->baseScores ; }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
         foreach($this->tests as $test) {
@@ -104,13 +106,58 @@ class TestRun
     }
 
     /** Calculates the percentage of correct answers and sets it to the score variable */
-    function calculateScore(): void {
+    function calculateScores(): void {
         $this->calculateCorrectCount();
         if ($this->hasAnswers()) {
-            $this->score = intdiv($this->correctCount * 100, $this->incorrectCount + $this->correctCount);
+            $this->score = $this->calculateScore($this->incorrectCount, $this->correctCount);
+
+            // calculate base scores if necessary
+            if ($this->group === GroupType::GROUP_NOT_POLAR ||
+                $this->group === GroupType::GROUP_POLAR_CHARGED ||
+                $this->group === GroupType::GROUP_ALL) {
+
+                $baseNonPolar1_R = 0;
+                $baseNonPolar1_W = 0;
+                $baseNonPolar2_R = 0;
+                $baseNonPolar2_W = 0;
+                $basePolar_R     = 0;
+                $basePolar_W     = 0;
+                $baseCharged_R   = 0;
+                $baseCharged_W   = 0;
+
+                foreach ($this->tests as $test) {
+                    /* @var $test Test */
+                    $baseGroup = Aminos::getBaseGroup($test->getAmino()->getCode1());
+                    if ($baseGroup === GroupType::GROUP_NOT_POLAR_1) {
+                        if     ($test->getCorrect() === true ) $baseNonPolar1_R++;
+                        elseif ($test->getCorrect() === false) $baseNonPolar1_W++;
+                    } elseif ($baseGroup === GroupType::GROUP_NOT_POLAR_2) {
+                        if     ($test->getCorrect() === true ) $baseNonPolar2_R++;
+                        elseif ($test->getCorrect() === false) $baseNonPolar2_W++;
+                    } elseif ($baseGroup === GroupType::GROUP_POLAR) {
+                        if     ($test->getCorrect() === true ) $basePolar_R++;
+                        elseif ($test->getCorrect() === false) $basePolar_W++;
+                    } elseif ($baseGroup === GroupType::GROUP_CHARGED) {
+                        if     ($test->getCorrect() === true ) $baseCharged_R++;
+                        elseif ($test->getCorrect() === false) $baseCharged_W++;
+                    }
+                }
+                $baseScores = new BaseScores(
+                    $this,
+                    $this->calculateScore($baseNonPolar1_W, $baseNonPolar1_R),
+                    $this->calculateScore($baseNonPolar2_W, $baseNonPolar2_R),
+                    $this->calculateScore($basePolar_W    , $basePolar_R    ),
+                    $this->calculateScore($baseCharged_W  , $baseCharged_R  ),
+                );
+                $this->setBaseScores($baseScores);
+            }
         }
     }
-     function getPercentageCorrect(): float {
+    private function calculateScore(int $incorrectCount, int $correctCount): ?int {
+        if (($incorrectCount + $correctCount) === 0) return null;
+        return intdiv($correctCount * 100, $incorrectCount + $correctCount);
+    }
+    function getPercentageCorrect(): float {
         $this->calculateCorrectCount();
         return round($this->correctCount / ($this->tests->count()) * 100, 2);
     }
@@ -127,7 +174,7 @@ class TestRun
     function setAminos     ( Collection $aminos     ): self { $this->aminos      = $aminos     ; return $this; }
     function setScore      (?int        $score      ): self { $this->score       = $score      ; return $this; }
     function setScoreBefore(?int        $scoreBefore): self { $this->scoreBefore = $scoreBefore; return $this; }
-    function setBaseScores ( Collection $baseScores ): self { $this->baseScores  = $baseScores ; return $this; }
+    function setBaseScores ( BaseScores $baseScores ): self { $this->baseScores  = $baseScores ; return $this; }
     public function addTest(Test $test): self
     {
         if (!$this->tests->contains($test)) {

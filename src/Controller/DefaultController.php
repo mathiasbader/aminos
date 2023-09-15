@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Constant\Aminos;
 use App\Constant\Common;
 use App\Constant\GroupType;
 use App\Constant\Representation;
@@ -29,8 +30,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
-    /** @Route("", name="index")
-     *  @Template */
+    #[Route(name: 'index')] #[Template]
     function indexAction(TranslatorInterface $translator, Request $request)
     {
         $user = $this->initUser();
@@ -48,7 +48,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("profile", name="profile") @Template */
+    #[Route('/profile', name: 'profile')] #[Template]
     function profileAction(TranslatorInterface $translator, Request $request,
                            UserPasswordHasherInterface $passwordHasher): array
     {
@@ -103,7 +103,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/lang", name="lang") */
+    #[Route('/lang', name: 'lang')]
     function langAction(Request $request, AminoService $aminoService): RedirectResponse
     {
         $lang = $request->request->get('lang');
@@ -122,7 +122,7 @@ class DefaultController extends AbstractController
     }
 
 
-    /** @Route("/test/overview", name="testOverview") @Template */
+    #[Route('/test/overview', name: 'testOverview')] #[Template]
     function testOverviewAction(TranslatorInterface $translator, TestsService $testService): array {
         $user = $this->initUser();
         $activeRuns = $this->getDoctrine()->getRepository(TestRun::class)->findBy(
@@ -150,7 +150,7 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('test', [ 'runId' => $run->getId()]);
     }
 
-    /** @Route("/test/{runId}", name="test") @Template */
+    #[Route('//test/{runId}', name: 'test')] #[Template]
     function testAction(int $runId, Request $request, TranslatorInterface $translator): array | RedirectResponse {
         $user = $this->initUser();
 
@@ -205,7 +205,7 @@ class DefaultController extends AbstractController
                 if ($run->isFinished()) {
                     $run->setCompleted(new DateTime());
                     $run->calculateLevel();
-                    $run->calculateScore();
+                    $run->calculateScores();
                     $run->setScoreBefore(
                         $this->getDoctrine()->getRepository(TestRun::class)->findHighestScore($run->getGroup(), $user));
                     $em->persist($run);
@@ -219,7 +219,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/versions", name="versions") @Template */
+    #[Route('versions', name: 'versions')] #[Template]
     public function versionsAction(TranslatorInterface $translator, VersionsService $versionsService): array
     {
         return [
@@ -228,7 +228,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /** @Route("/about", name="about") @Template */
+    #[Route('about', name: 'about')] #[Template]
     function aboutAction(TranslatorInterface $translator): array
     {
         return ['pageTitle' => $translator->trans('about.link')];
@@ -243,7 +243,7 @@ class DefaultController extends AbstractController
 
     private function getLoggedInUser(): ?User {
         $token = $this->get('security.token_storage')->getToken();
-        return $token === null ? null : $token->getUser();
+        return $token?->getUser();
     }
 
     private function generateNewUser(): User {
@@ -314,15 +314,7 @@ class DefaultController extends AbstractController
         $run->setUser($user);
         $run->setGroup($group);
 
-        $aminos = [];
-        if ($group == GroupType::GROUP_NOT_POLAR_1  ) $aminos = ['g', 'a', 'v', 'l', 'i'];
-        if ($group == GroupType::GROUP_NOT_POLAR_2  ) $aminos = ['m', 'f', 'w', 'p'];
-        if ($group == GroupType::GROUP_NOT_POLAR    ) $aminos = ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p'];
-        if ($group == GroupType::GROUP_POLAR        ) $aminos = ['n', 'q', 's', 't', 'c', 'y'];
-        if ($group == GroupType::GROUP_CHARGED      ) $aminos = ['d', 'e', 'k', 'r', 'h'];
-        if ($group == GroupType::GROUP_POLAR_CHARGED) $aminos = ['n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
-        if ($group == GroupType::GROUP_ALL          ) $aminos =
-            ['g', 'a', 'v', 'l', 'i', 'm', 'f', 'w', 'p', 'n', 'q', 's', 't', 'c', 'y', 'd', 'e', 'k', 'r', 'h'];
+        $aminos = Aminos::getAminosOfGroup($group);
 
         $aminos1 = $aminos;
         $aminos2 = $aminos;

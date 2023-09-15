@@ -39,7 +39,7 @@ class Test
         $choicesArray = $this->choices->toArray();
         shuffle($choicesArray);
         return new ArrayCollection($choicesArray);
-    }
+     }
 
     function setRun        (TestRun    $run        ): self { $this->run         = $run        ; return $this; }
     function setAmino      (Aminoacid  $amino      ): self { $this->amino       = $amino      ; return $this; }
