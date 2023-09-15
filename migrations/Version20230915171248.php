@@ -16,8 +16,22 @@ final class Version20230915171248 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE TABLE base_scores (id INT AUTO_INCREMENT NOT NULL, test_run_id INT DEFAULT NULL, un_polar1 INT NOT NULL, un_polar2 INT NOT NULL, polar INT NOT NULL, charged INT NOT NULL, UNIQUE INDEX UNIQ_6F30AF37133AF9EA (test_run_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE base_scores ADD CONSTRAINT FK_6F30AF37133AF9EA FOREIGN KEY (test_run_id) REFERENCES test_runs (id)');
+        $this->addSql(
+            'CREATE TABLE base_scores (' .
+            '    id          INT AUTO_INCREMENT NOT NULL, ' .
+            '    test_run_id INT DEFAULT NULL           , ' .
+            '    un_polar1   INT                NOT NULL, ' .
+            '    un_polar2   INT                NOT NULL, ' .
+            '    polar       INT                NOT NULL, ' .
+            '    charged     INT                NOT NULL, ' .
+            '    UNIQUE INDEX UNIQ_6F30AF37133AF9EA (test_run_id), ' .
+            '    PRIMARY KEY(id)' .
+            ') DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB'
+        );
+        $this->addSql(
+            'ALTER TABLE base_scores ' .
+            '    ADD CONSTRAINT FK_6F30AF37133AF9EA FOREIGN KEY (test_run_id) REFERENCES test_runs (id)'
+        );
     }
 
     public function down(Schema $schema): void
