@@ -111,46 +111,40 @@ class TestRun
         if ($this->hasAnswers()) {
             $this->score = $this->calculateScore($this->incorrectCount, $this->correctCount);
 
-            // calculate base scores if necessary
-            if ($this->group === GroupType::GROUP_NOT_POLAR ||
-                $this->group === GroupType::GROUP_POLAR_CHARGED ||
-                $this->group === GroupType::GROUP_ALL) {
+            $baseNonPolar1_R = 0;
+            $baseNonPolar1_W = 0;
+            $baseNonPolar2_R = 0;
+            $baseNonPolar2_W = 0;
+            $basePolar_R     = 0;
+            $basePolar_W     = 0;
+            $baseCharged_R   = 0;
+            $baseCharged_W   = 0;
 
-                $baseNonPolar1_R = 0;
-                $baseNonPolar1_W = 0;
-                $baseNonPolar2_R = 0;
-                $baseNonPolar2_W = 0;
-                $basePolar_R     = 0;
-                $basePolar_W     = 0;
-                $baseCharged_R   = 0;
-                $baseCharged_W   = 0;
-
-                foreach ($this->tests as $test) {
-                    /* @var $test Test */
-                    $baseGroup = Aminos::getBaseGroup($test->getAmino()->getCode1());
-                    if ($baseGroup === GroupType::GROUP_NOT_POLAR_1) {
-                        if     ($test->getCorrect() === true ) $baseNonPolar1_R++;
-                        elseif ($test->getCorrect() === false) $baseNonPolar1_W++;
-                    } elseif ($baseGroup === GroupType::GROUP_NOT_POLAR_2) {
-                        if     ($test->getCorrect() === true ) $baseNonPolar2_R++;
-                        elseif ($test->getCorrect() === false) $baseNonPolar2_W++;
-                    } elseif ($baseGroup === GroupType::GROUP_POLAR) {
-                        if     ($test->getCorrect() === true ) $basePolar_R++;
-                        elseif ($test->getCorrect() === false) $basePolar_W++;
-                    } elseif ($baseGroup === GroupType::GROUP_CHARGED) {
-                        if     ($test->getCorrect() === true ) $baseCharged_R++;
-                        elseif ($test->getCorrect() === false) $baseCharged_W++;
-                    }
+            foreach ($this->tests as $test) {
+                /* @var $test Test */
+                $baseGroup = Aminos::getBaseGroup($test->getAmino()->getCode1());
+                if ($baseGroup === GroupType::GROUP_NOT_POLAR_1) {
+                    if     ($test->getCorrect() === true ) $baseNonPolar1_R++;
+                    elseif ($test->getCorrect() === false) $baseNonPolar1_W++;
+                } elseif ($baseGroup === GroupType::GROUP_NOT_POLAR_2) {
+                    if     ($test->getCorrect() === true ) $baseNonPolar2_R++;
+                    elseif ($test->getCorrect() === false) $baseNonPolar2_W++;
+                } elseif ($baseGroup === GroupType::GROUP_POLAR) {
+                    if     ($test->getCorrect() === true ) $basePolar_R++;
+                    elseif ($test->getCorrect() === false) $basePolar_W++;
+                } elseif ($baseGroup === GroupType::GROUP_CHARGED) {
+                    if     ($test->getCorrect() === true ) $baseCharged_R++;
+                    elseif ($test->getCorrect() === false) $baseCharged_W++;
                 }
-                $baseScores = new BaseScores(
-                    $this,
-                    $this->calculateScore($baseNonPolar1_W, $baseNonPolar1_R),
-                    $this->calculateScore($baseNonPolar2_W, $baseNonPolar2_R),
-                    $this->calculateScore($basePolar_W    , $basePolar_R    ),
-                    $this->calculateScore($baseCharged_W  , $baseCharged_R  ),
-                );
-                $this->setBaseScores($baseScores);
             }
+            $baseScores = new BaseScores(
+                $this,
+                $this->calculateScore($baseNonPolar1_W, $baseNonPolar1_R),
+                $this->calculateScore($baseNonPolar2_W, $baseNonPolar2_R),
+                $this->calculateScore($basePolar_W    , $basePolar_R    ),
+                $this->calculateScore($baseCharged_W  , $baseCharged_R  ),
+            );
+            $this->setBaseScores($baseScores);
         }
     }
     private function calculateScore(int $incorrectCount, int $correctCount): ?int {
