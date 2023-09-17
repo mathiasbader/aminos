@@ -1,13 +1,25 @@
 {% set minScore = 4 %}
-{% if run.group == 'notPolar' %}
+
+{% if run.group == 'notPolar' or run.group == 'polarCharged' %}
     {% if run.scoreBefore is null or
           run.scoreBefore.baseScores is null %} {% set scoreBefore1 = 0 %}
-    {% else %}                                  {% set scoreBefore1 = run.scoreBefore.baseScores.nonPolar1 %} {% endif %}
+    {% else %}
+        {% if run.group == 'notPolar' %} {% set scoreBefore1 = run.scoreBefore.baseScores.nonPolar1 %}
+        {% else %}                       {% set scoreBefore1 = run.scoreBefore.baseScores.polar %} {% endif %}
+    {% endif %}
     {% if run.scoreBefore is null or
           run.scoreBefore.baseScores is null %} {% set scoreBefore2 = 0 %}
-    {% else %}                                  {% set scoreBefore2 = run.scoreBefore.baseScores.nonPolar2 %} {% endif %}
+    {% else %}
+        {% if run.group == 'notPolar' %} {% set scoreBefore2 = run.scoreBefore.baseScores.nonPolar2 %}
+        {% else %}                       {% set scoreBefore2 = run.scoreBefore.baseScores.charged %} {% endif %}
+
+    {% endif %}
     let scoresFrom = [{{ scoreBefore1 }}, {{ scoreBefore2 }}];
-    let scoresTo   = [{{ run.baseScores.nonPolar1 }}, {{ run.baseScores.nonPolar2 }}]
+    {% if run.group == 'notPolar' %}
+        let scoresTo = [{{ run.baseScores.nonPolar1 }}, {{ run.baseScores.nonPolar2 }}]
+    {% else %}
+        let scoresTo = [{{ run.baseScores.polar }}, {{ run.baseScores.charged }}]
+    {% endif %}
 {% endif %}
 {% if run.scoreBefore is null or
     run.scoreBefore.score is null %} {% set scoreBefore = 0 %}
@@ -27,6 +39,11 @@ function startAnimation() {
               run.baseScores.nonPolar1 > scoreBefore1 %} showElementsOfTube('-1'); {% endif %}
         {% if run.baseScores.nonPolar2 > minScore and
               run.baseScores.nonPolar2 > scoreBefore2 %} showElementsOfTube('-2'); {% endif %}
+    {% elseif run.group == 'polarCharged' %}
+        {% if run.baseScores.polar > minScore and
+              run.baseScores.polar > scoreBefore1 %} showElementsOfTube('-1'); {% endif %}
+        {% if run.baseScores.charged > minScore and
+              run.baseScores.charged > scoreBefore2 %} showElementsOfTube('-2'); {% endif %}
     {% else %}
         {% if run.score > minScore and
              run.score > scoreBefore %} showElementsOfTube(''); {% endif %}
@@ -47,7 +64,7 @@ function animateNextStep() {
         return;
     }
 
-    {% if run.group == 'notPolar' %}
+    {% if run.group == 'notPolar' or run.group == 'polarCharged' %}
         fill(2, 1);
         fill(2, 2);
     {% else %}
@@ -60,7 +77,7 @@ function animateNextStep() {
 
 function fill(id, id2) {
     if (id === 1) {
-        {% if run.group == 'notPolar' %}
+        {% if run.group == 'notPolar' or run.group == 'polarCharged' %}
             if (scoresFrom[id2 - 1] <= minScore) return;
         {% else %}
             if (scoreFrom <= minScore) return;
@@ -80,7 +97,7 @@ function fill(id, id2) {
     if (id === 2) document.getElementById('newScore').innerText = score;
 
     let from, to, newScore;
-    {% if run.group == 'notPolar' %}
+    {% if run.group == 'notPolar' or run.group == 'polarCharged' %}
         from = scoresFrom[id2 - 1];
         to   = scoresTo  [id2 - 1];
     {% else %}
@@ -89,22 +106,33 @@ function fill(id, id2) {
     {% endif %}
     if (id === 2 && scoreTo < scoreFrom) {
         newScore = to;
+    } else if (id === 1) {
+        newScore = from;
     } else {
         newScore = calculateScore(from, to, animationStep, animationLength);
     }
 
-    {% set group = 'nonPolar' %}
-    {% if run.group == 'polar' or
-        run.group == 'polarCharged' %}
-        {% set group = 'polar' %}
-    {% elseif run.group == 'charged' or
-        run.group == 'all' %}
-        {% set group = 'charged' %}
+    {% if run.group == 'polarCharged' %}
+        if (id === 1) {
+            document.getElementById('fluid-' + id + '-1').setAttribute('d', getPath('polar', newScore));
+            document.getElementById('fluid-' + id + '-2').setAttribute('d', getPath('charged', newScore));
+        } else {
+            if      (id2 === 1) document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('polar', newScore));
+            else if (id2 === 2) document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('charged', newScore));
+        }
+
+    {% else %}
+        {% set group = 'nonPolar' %}
+        {% if run.group == 'polar' %}
+            {% set group = 'polar' %}
+        {% elseif run.group == 'charged' or
+            run.group == 'all' %}
+            {% set group = 'charged' %}
+        {% endif %}
+
+        document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('{{ group }}', newScore
+                {% if run.group == 'notPolar' %}, id2 === 2{% endif %}));
     {% endif %}
-
-
-    document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('{{ group }}', newScore
-            {% if run.group == 'notPolar' %}, id2 === 2{% endif %}));
     if (newScore === 100) showReflexDelayed(id, id2);
 }
 
@@ -182,7 +210,7 @@ function getPath(group, score, nonPolar2 = false) {
 
 document.addEventListener('DOMContentLoaded', function() {
     {% if run.group == 'notPolar' %}
-        {% if scoreBefore1 > minScore %} fill(1);{% endif %}
+        {% if scoreBefore1 > minScore %} fill(1, 1);{% endif %}
         {% if run.baseScores.nonPolar1 > minScore %}
             fill(2, 1);
             {% if run.baseScores.nonPolar1 > scoreBefore1 %}
@@ -190,11 +218,28 @@ document.addEventListener('DOMContentLoaded', function() {
             {% endif %}
         {% endif %}
 
-        {% if scoreBefore2 > minScore %} fill(1);{% endif %}
+        {% if scoreBefore2 > minScore %} fill(1, 2);{% endif %}
         {% if run.baseScores.nonPolar2 > minScore %}
             fill(2, 2);
             {% if run.baseScores.nonPolar2 > scoreBefore2 %}
                 animationLength = Math.max({{ run.baseScores.nonPolar2 - scoreBefore2 }}, animationLength);
+            {% endif %}
+        {% endif %}
+
+    {% elseif run.group == 'polarCharged' %}
+        {% if scoreBefore1 > minScore %} fill(1, 1);{% endif %}
+        {% if run.baseScores.polar > minScore %}
+            fill(2, 1);
+            {% if run.baseScores.polar > scoreBefore1 %}
+                animationLength = Math.max({{ run.baseScores.polar - scoreBefore1 }}, animationLength);
+            {% endif %}
+        {% endif %}
+
+        {% if scoreBefore2 > minScore %} fill(1, 2);{% endif %}
+        {% if run.baseScores.charged > minScore %}
+            fill(2, 2);
+            {% if run.baseScores.charged > scoreBefore2 %}
+                animationLength = Math.max({{ run.baseScores.charged - scoreBefore2 }}, animationLength);
             {% endif %}
         {% endif %}
 
