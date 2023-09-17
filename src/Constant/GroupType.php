@@ -5,6 +5,7 @@ namespace App\Constant;
 
 class GroupType
 {
+    // Todo: Change from 'notPolar' to 'nonPolar'
     const GROUP_NOT_POLAR_1   = 'notPolar1';
     const GROUP_NOT_POLAR_2   = 'notPolar2';
     const GROUP_NOT_POLAR     = 'notPolar';
