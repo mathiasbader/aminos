@@ -7,8 +7,9 @@
             {% set group = 'nonPolar' %}
             {% if run.group == 'notPolar' %}
                 {% set group = 'nonPolarTwo' %}
-            {% elseif run.group == 'polar' or
-                run.group == 'polarCharged' %}
+            {% elseif run.group == 'polar' %}
+                {% set group = 'polar' %}
+            {% elseif run.group == 'polarCharged' %}
                 {% set group = 'polarCharged' %}
             {% elseif run.group == 'charged' or
                 run.group == 'all' %}

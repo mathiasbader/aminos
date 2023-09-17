@@ -38,7 +38,8 @@ class TestRunRepository extends ServiceEntityRepository
             if ($testRun === null) continue;
 
             $baseGroups = [];
-            if (!isset($scores[$testRun->getGroup()]) || $scores[$testRun->getGroup()][0] < $testRun->getScore()) {
+            if ($testRun->getBaseScores() !== null &&
+                (!isset($scores[$testRun->getGroup()]) || $scores[$testRun->getGroup()][0] < $testRun->getScore())) {
                 $scores[$testRun->getGroup()] = [
                     $testRun->getScore(),
                     [
@@ -51,7 +52,8 @@ class TestRunRepository extends ServiceEntityRepository
             }
             if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($testRun->getGroup());
             foreach ($baseGroups as $group) {
-                if (!isset($scores[$group]) || $scores[$group][0] < $testRun->getScore()) {
+                if ($testRun->getBaseScores() !== null &&
+                    (!isset($scores[$group]) || $scores[$group][0] < $testRun->getScore())) {
                     $scores[$group] = [
                         $testRun->getScore(),
                         [
