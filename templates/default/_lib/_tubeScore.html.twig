@@ -9,6 +9,8 @@
                 {% set group = 'nonPolarTwo' %}
             {% elseif run.group == 'polar' %}
                 {% set group = 'polar' %}
+            {% elseif run.group == 'charged' %}
+                {% set group = 'charged' %}
             {% elseif run.group == 'polarCharged' %}
                 {% set group = 'polarCharged' %}
             {% elseif run.group == 'charged' or
