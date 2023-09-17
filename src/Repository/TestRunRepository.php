@@ -31,13 +31,28 @@ class TestRunRepository extends ServiceEntityRepository
             $qb->setParameter('userId', $user->getId());
             $qb->setParameter('groupType', $groupType);
             $qb->orderBy('t.score', 'DESC');
-            $results   = $qb->getQuery()->getResult();
+            $qb->setMaxResults(1);
+
+            /* @var $testRun TestRun */
+            $testRun = $qb->getQuery()->getOneOrNullResult();
+            if ($testRun === null) continue;
 
             $baseGroups = [];
-            foreach ($results as $testRun) {
-                /* @var $testRun TestRun */
-                if (!isset($scores[$testRun->getGroup()]) || $scores[$testRun->getGroup()][0] < $testRun->getScore()) {
-                    $scores[$testRun->getGroup()] = [
+            if (!isset($scores[$testRun->getGroup()]) || $scores[$testRun->getGroup()][0] < $testRun->getScore()) {
+                $scores[$testRun->getGroup()] = [
+                    $testRun->getScore(),
+                    [
+                        $testRun->getBaseScores()->getNonPolar1(),
+                        $testRun->getBaseScores()->getNonPolar2(),
+                        $testRun->getBaseScores()->getPolar(),
+                        $testRun->getBaseScores()->getCharged(),
+                    ]
+                ];
+            }
+            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($testRun->getGroup());
+            foreach ($baseGroups as $group) {
+                if (!isset($scores[$group]) || $scores[$group][0] < $testRun->getScore()) {
+                    $scores[$group] = [
                         $testRun->getScore(),
                         [
                             $testRun->getBaseScores()->getNonPolar1(),
@@ -46,20 +61,6 @@ class TestRunRepository extends ServiceEntityRepository
                             $testRun->getBaseScores()->getCharged(),
                         ]
                     ];
-                }
-                if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($testRun->getGroup());
-                foreach ($baseGroups as $group) {
-                    if (!isset($scores[$group]) || $scores[$group][0] < $testRun->getScore()) {
-                        $scores[$group] = [
-                            $testRun->getScore(),
-                            [
-                                $testRun->getBaseScores()->getNonPolar1(),
-                                $testRun->getBaseScores()->getNonPolar2(),
-                                $testRun->getBaseScores()->getPolar(),
-                                $testRun->getBaseScores()->getCharged(),
-                            ]
-                        ];
-                    }
                 }
             }
         }
