@@ -23,8 +23,8 @@ class TestRunRepository extends ServiceEntityRepository
 
     function getScoresForUser(User $user, $onlyBasicScoresCombined = false): array {
         $qb = $this->createQueryBuilder('t');
-        $qb->select('t.group');
-        $qb->addSelect('MAX(t.score) as score');
+        $qb->select('t');
+        $qb->addSelect('MAX(t.score) AS HIDDEN score');
         $qb->where('t.user = :userId');
         $qb->setParameter('userId', $user->getId());
         $qb->groupBy('t.group');
@@ -32,15 +32,32 @@ class TestRunRepository extends ServiceEntityRepository
 
         $scores = [];
         $baseGroups = [];
-        foreach ($results as $result) {
-            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($result['group']);
+        foreach ($results as $testRun) {
+            /* @var $testRun TestRun */
+            if ($onlyBasicScoresCombined) $baseGroups = GroupType::getBaseGroups($testRun->getGroup());
             if (empty($baseGroups) &&
-                (!isset($scores[$result['group']]) || $scores[$result['group']] < $result['score'])) {
-                $scores[$result['group']] = $result['score'];
+                (!isset($scores[$testRun->getGroup()]) || $scores[$testRun->getGroup()][0] < $testRun->getScore())) {
+                $scores[$testRun->getGroup()] = [
+                    $testRun->getScore(),
+                    [
+                        $testRun->getBaseScores()->getNonPolar1(),
+                        $testRun->getBaseScores()->getNonPolar2(),
+                        $testRun->getBaseScores()->getPolar(),
+                        $testRun->getBaseScores()->getCharged(),
+                    ]
+                ];
             } else {
                 foreach($baseGroups as $group) {
-                    if (!isset($scores[$group]) || $scores[$group] < $result['score']) {
-                        $scores[$group] = $result['score'];
+                    if (!isset($scores[$group]) || $scores[$group][0] < $testRun->getScore()) {
+                        $scores[$group] = [
+                            $testRun->getScore(),
+                            [
+                                $testRun->getBaseScores()->getNonPolar1(),
+                                $testRun->getBaseScores()->getNonPolar2(),
+                                $testRun->getBaseScores()->getPolar(),
+                                $testRun->getBaseScores()->getCharged(),
+                            ]
+                        ];
                     }
                 }
             }
