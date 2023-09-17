@@ -12,7 +12,7 @@
                 {% set group = 'polarCharged' %}
             {% elseif run.group == 'charged' or
                 run.group == 'all' %}
-                {% set group = 'charged' %}
+                {% set group = 'all' %}
             {% endif %}
 
             {% include 'default/_lib/svg/_tube_' ~ group ~ '.html.twig' %}
