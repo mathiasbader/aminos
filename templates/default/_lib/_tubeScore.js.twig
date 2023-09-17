@@ -36,7 +36,6 @@ function startAnimation() {
 }
 
 function showElementsOfTube(id2String) {
-    console.log('showElementsOfTube(' + id2String + ')');
     document.getElementById('glas-grey-2' + id2String).style.visibility = 'hidden';
     document.getElementById('glas-black-2' + id2String).style.visibility = 'visible';
     document.getElementById('fluid-2' + id2String).style.visibility = 'visible';
@@ -72,10 +71,15 @@ function fill(id, id2) {
     if (typeof id2 !== 'undefined' && id2 >= 1 && id2 <= 4) id2String = '-' + id2;
 
     // Todo: This is currently executed two times in stead of one time as it should
-    let score = calculateScore(scoreFrom, scoreTo, animationStep, animationLength);
+    let score;
+    if (id === 2 && scoreTo < scoreFrom) {
+        score = scoreTo;
+    } else {
+        score = calculateScore(scoreFrom, scoreTo, animationStep, animationLength);
+    }
     if (id === 2) document.getElementById('newScore').innerText = score;
 
-    let from, to;
+    let from, to, newScore;
     {% if run.group == 'notPolar' %}
         from = scoresFrom[id2 - 1];
         to   = scoresTo  [id2 - 1];
@@ -83,7 +87,11 @@ function fill(id, id2) {
         from = scoreFrom;
         to   = scoreTo;
     {% endif %}
-    let newScore = calculateScore(from, to, animationStep, animationLength);
+    if (id === 2 && scoreTo < scoreFrom) {
+        newScore = to;
+    } else {
+        newScore = calculateScore(from, to, animationStep, animationLength);
+    }
 
     {% set group = 'nonPolar' %}
     {% if run.group == 'polar' or
@@ -95,7 +103,6 @@ function fill(id, id2) {
     {% endif %}
 
 
-    console.log(id2String + ': ' + newScore);
     document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('{{ group }}', newScore
             {% if run.group == 'notPolar' %}, id2 === 2{% endif %}));
     if (newScore === 100) showReflexDelayed(id, id2);
@@ -113,8 +120,6 @@ function showReflexDelayed(id, id2) {
 
 function calculateScore(scoreFrom, scoreTo, animationStep, animationTotal) {
     if (!animationStep > 0) return scoreFrom;
-    // from: 30
-    // to  : 40
     let newScore = Math.floor(scoreFrom + ((scoreTo - scoreFrom) * (animationStep / animationTotal)));
     return Math.min(newScore, scoreTo)
 }
@@ -204,5 +209,10 @@ document.addEventListener('DOMContentLoaded', function() {
     {% endif %}
 
     // wait before starting the animation
-    if (animationLength > 0) setTimeout(function() { startAnimation(); }, animationDelayInMs);
+    if (animationLength > 0) {
+        animationStep = 1;
+        setTimeout(function () {
+            startAnimation();
+        }, animationDelayInMs);
+    }
 }, false);

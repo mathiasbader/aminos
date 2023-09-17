@@ -51,16 +51,14 @@ class TestRunRepository extends ServiceEntityRepository
     function findHighestScore(string $group, User $user): ?TestRun {
         $qb = $this->createQueryBuilder('t');
         $qb->select('t');
-        $qb->addSelect('t, MAX(t.score) AS HIDDEN score');
+        $qb->addSelect('t');
         $qb->   where('t.group = :group');
         $qb->andWhere('t.user = :userId');
+        $qb->orderBy('t.score', 'DESC');
         $qb->setParameter('group', $group);
         $qb->setParameter('userId', $user->getId());
-        $qb->groupBy('t.group');
-        $results = $qb->getQuery()->getResult();
+        $qb->setMaxResults(1);
 
-        $result = null;
-        if (!empty($results)) $result = $results[0];
-        return $result;
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

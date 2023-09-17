@@ -206,8 +206,10 @@ class DefaultController extends AbstractController
                     $run->setCompleted(new DateTime());
                     $run->calculateLevel();
                     $run->calculateScores();
-                    $run->setScoreBefore(
-                        $this->getDoctrine()->getRepository(TestRun::class)->findHighestScore($run->getGroup(), $user));
+                    $scoreBefore = $this->getDoctrine()->getRepository(TestRun::class)
+                        ->findHighestScore($run->getGroup(), $user);
+                    if ($scoreBefore->getId() === $run->getId()) $scoreBefore = null;
+                    $run->setScoreBefore($scoreBefore);
                     $em->persist($run);
                     $em->flush();
                 }
