@@ -1,8 +1,13 @@
+{% if run.scoreBefore is null %}{% set scoreBefore = 0 %}
+{% else %}                      {% set scoreBefore = run.scoreBefore.score %} {% endif %}
+
 <div style="width: 50%; text-align: center;">
     {% if id != 1 or run.scoreBefore is not null %}
         <div>
             {% set group = 'nonPolar' %}
-            {% if run.group == 'polar' or
+            {% if run.group == 'notPolar' %}
+                {% set group = 'nonPolarTwo' %}
+            {% elseif run.group == 'polar' or
                 run.group == 'polarCharged' %}
                 {% set group = 'polar' %}
             {% elseif run.group == 'charged' or
@@ -15,18 +20,18 @@
         {% if id == 1 %}
             <span style="font-size: 0.85rem;">Your last high score:</span><br>
             <span style="font-size: 2rem; margin-top: 12px; display: inline-block">
-                {{ run.scoreBefore }}
+                {{ scoreBefore }}
                 %
             </span>
         {% else %}
             <span style="font-size: 0.85rem;">
-                {% if run.scoreBefore < run.score %} Your new high score:
+                {% if scoreBefore < run.score %} Your new high score:
                 {% else %}                           Your score: {% endif %}
             </span><br>
             <span id="newScoreStyle" style="font-size: 2rem; margin-top: 12px; display: inline-block;
-            {% if run.scoreBefore < run.score %} color: #fff;{% endif %}">
+            {% if scoreBefore < run.score %} color: #fff;{% endif %}">
                 <span id="newScore">
-                    {% if run.scoreBefore is not null and run.scoreBefore < run.score %}{{ run.scoreBefore }}{% else %}
+                    {% if scoreBefore < run.score %}{{ scoreBefore }}{% else %}
                         {{ run.score }}{% endif %}
                 </span>
                 %

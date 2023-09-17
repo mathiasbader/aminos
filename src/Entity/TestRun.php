@@ -25,8 +25,9 @@ class TestRun
                                                                   private ?Collection $tests      ;
     #[ORM\ManyToMany(targetEntity: Aminoacid::class)]             private ?Collection $aminos     ;
     #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $score      ;
-    #[ORM\Column(type: 'integer', nullable: true)]                private ?int        $scoreBefore;
-    #[ORM\OneToOne(targetEntity: BaseScores::class, mappedBy: 'testRun', cascade: ['persist'])]
+    /** The test run with the highest score (with same group) that was reached before this test run */
+    #[ORM\ManyToOne]                                              private ?TestRun    $scoreBefore;
+    #[ORM\OneToOne(mappedBy: 'testRun', targetEntity: BaseScores::class, cascade: ['persist'])]
                                                                   private ?BaseScores $baseScores ;
 
     private ?int   $correctCount = null;
@@ -47,7 +48,7 @@ class TestRun
     function getTests      (): ?Collection { return $this->tests      ; }
     function getAminos     (): ?Collection { return $this->aminos     ; }
     function getScore      (): ?int        { return $this->score      ; }
-    function getScoreBefore(): ?int        { return $this->scoreBefore; }
+    function getScoreBefore(): ?TestRun    { return $this->scoreBefore; }
     function getBaseScores (): ?BaseScores { return $this->baseScores ; }
     function getLastCompletedTest(): ?Test {
         $lastTest = null;
@@ -167,7 +168,7 @@ class TestRun
     function setLevel      (?int        $level      ): self { $this->level       = $level      ; return $this; }
     function setAminos     ( Collection $aminos     ): self { $this->aminos      = $aminos     ; return $this; }
     function setScore      (?int        $score      ): self { $this->score       = $score      ; return $this; }
-    function setScoreBefore(?int        $scoreBefore): self { $this->scoreBefore = $scoreBefore; return $this; }
+    function setScoreBefore(?TestRun    $scoreBefore): self { $this->scoreBefore = $scoreBefore; return $this; }
     function setBaseScores ( BaseScores $baseScores ): self { $this->baseScores  = $baseScores ; return $this; }
     public function addTest(Test $test): self
     {

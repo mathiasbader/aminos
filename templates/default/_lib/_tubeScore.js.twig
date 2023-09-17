@@ -1,30 +1,97 @@
-function to(score) {
-    if (score === gScore) {
-        document.getElementById('newScoreStyle').style.color = '#000';
-        return;
-    }
-    if (delay > 0) {
-        delay--;
-        if (delay === 0) {
-            document.getElementById('newScoreStyle').style.color = '#888';
-            document.getElementById('glas-grey-2').style.visibility = 'hidden';
-            document.getElementById('glas-black-2').style.visibility = 'visible';
-            document.getElementById('fluid-2').style.visibility = 'visible';
+{% set minScore = 4 %}
+{% if run.group == 'notPolar' %}
+    {% if run.scoreBefore is null or
+          run.scoreBefore.baseScores is null %} {% set scoreBefore1 = 0 %}
+    {% else %}                                  {% set scoreBefore1 = run.scoreBefore.baseScores.nonPolar1 %} {% endif %}
+    let gScore1 = {{ scoreBefore1 }};
+    {% if run.scoreBefore is null or
+          run.scoreBefore.baseScores is null %} {% set scoreBefore2 = 0 %}
+    {% else %}                                  {% set scoreBefore2 = run.scoreBefore.baseScores.nonPolar2 %} {% endif %}
+    let gScore2 = {{ scoreBefore2 }};
+{% endif %}
+{% if run.scoreBefore is null or
+    run.scoreBefore.score is null %} {% set scoreBefore = 0 %}
+{% else %}                           {% set scoreBefore = run.scoreBefore.score %} {% endif %}
+let gScore = {{ scoreBefore }};
+
+function startAnimation() {
+    {% if run.group == 'notPolar' %}
+        {% if run.baseScores.nonPolar1 > minScore and run.baseScores.nonPolar1 > scoreBefore1 %}
+            showElementsOfTube('-1');
+            to({{ run.baseScores.nonPolar1 }}, 1);
+        {% endif %}
+        {% if run.baseScores.nonPolar2 > minScore and run.baseScores.nonPolar2 > scoreBefore2 %}
+            showElementsOfTube('-2');
+            to({{ run.baseScores.nonPolar2 }}, 2);
+        {% endif %}
+    {% else %}
+        {% if run.score > minScore and run.score > scoreBefore %}
+            showElementsOfTube('');
+            to({{ run.score }});
+        {% endif %}
+    {% endif %}
+}
+
+function showElementsOfTube(id) {
+    document.getElementById('newScoreStyle').style.color = '#888';
+    document.getElementById('glas-grey-2' + id).style.visibility = 'hidden';
+    document.getElementById('glas-black-2' + id).style.visibility = 'visible';
+    document.getElementById('fluid-2' + id).style.visibility = 'visible';
+}
+
+function to(score, id2) {
+    {% if run.group == 'notPolar' %}
+        if (id2 === 1 && score === gScore1 || id2 === 2 && score === gScore2) {
+            document.getElementById('newScoreStyle').style.color = '#000';
+            return;
         }
-    } else {
+    {% else %}
+        if (score === gScore) {
+            document.getElementById('newScoreStyle').style.color = '#000';
+            return;
+        }
+    {% endif %}
+
+    {% if run.group == 'notPolar' %}
+        if (id2 === 1) {
+            let newScore = gScore1;
+            if (score < gScore1) newScore--;
+            else if (score > gScore1) newScore++;
+            fill(newScore, 2, 1);
+        } else {
+            let newScore = gScore2;
+            if (score < gScore2) newScore--;
+            else if (score > gScore2) newScore++;
+            fill(newScore, 2, 2);
+        }
+    {% else %}
         let newScore = gScore;
         if (score < gScore) newScore--;
         else if (score > gScore) newScore++;
         fill(newScore, 2);
-    }
-    setTimeout(function() { to(score); }, 20);
+    {% endif %}
+
+    {% if run.group == 'notPolar' %}
+        if (id2 === 1) setTimeout(function() { to(score, 1); }, 20);
+        else           setTimeout(function() { to(score, 2); }, 20);
+    {% else %}
+        setTimeout(function() { to(score); }, 20);
+    {% endif %}
 }
 
-function fill(score, id) {
+function fill(score, id, id2) {
     if (score < 0 || score > 100) return;
 
+    let id2String ='';
+    if (typeof id2 !== 'undefined' && id2 >= 1 && id2 <= 4) id2String = '-' + id2;
+
     if (id === 2) document.getElementById('newScore').innerText = score;
-    gScore = score;
+    {% if run.group == 'notPolar' %}
+        if (id2 === 1) gScore1 = score;
+        else           gScore2 = score;
+    {% else %}
+        gScore = score;
+    {% endif %}
 
     {% set group = 'nonPolar' %}
     {% if run.group == 'polar' or
@@ -35,23 +102,26 @@ function fill(score, id) {
         {% set group = 'charged' %}
     {% endif %}
 
-    document.getElementById('fluid-' + id).setAttribute('d',
-        getPath('{{ group }}', score)
-    );
+    {% if run.group == 'notPolar' %}
+        document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('{{ group }}', score, id2 === 2));
+    {% else %}
+        document.getElementById('fluid-' + id + id2String).setAttribute('d', getPath('{{ group }}', score));
+    {% endif %}
     {% if run.score == 100 %}
         if (score === 100) {
             setTimeout(function () {
-                document.getElementById('reflex-' + id).style.visibility = 'visible';
-                document.getElementById('reflex-' + id).style.opacity = '1';
+                document.getElementById('reflex-' + id + id2String).style.visibility = 'visible';
+                document.getElementById('reflex-' + id + id2String).style.opacity = '1';
             }, 400);
         }
     {% endif %}
 }
 
-function getPath(group, score) {
+function getPath(group, score, nonPolar2 = false) {
     if (group === 'nonPolar') {
         let x = (100 - score) / 100 * 74.56;
-        return 'm 56.77, ' + (x + 67.84) +
+        let initialX = nonPolar2 ? 155.74 : 56.77;
+        return 'm ' + initialX + ', ' + (x + 67.84) +
                'h -19.98' +
                'v ' + (74.56 - x) +
                'c 0, 5.51, 4.48, 9.99, 9.99, 9.99' +
@@ -103,22 +173,32 @@ function getPath(group, score) {
     return '';
 }
 
-{% if run.scoreBefore is null %} {% set scoreBefore = 0 %}
-{% else %}                       {% set scoreBefore = run.scoreBefore %} {% endif %}
-let gScore = {{ scoreBefore }};
-let delay = 50;
-
 document.addEventListener('DOMContentLoaded', function() {
-    {% set minScore = 4 %}
-    {% if scoreBefore > minScore %}
-        fill({{ scoreBefore }}, 1);
-    {% endif %}
-    {% if run.score > minScore %}
-        {% if run.score <= scoreBefore %}
-            fill({{ run.score }}, 2);
-        {% else %}
-            fill({{ scoreBefore }}, 2);
-            to({{ run.score }});
+    {% if run.group == 'notPolar' %}
+        {% if scoreBefore1 > minScore %} fill({{ scoreBefore1 }}, 1, 1); {% endif %}
+        {% if run.baseScores.nonPolar1 > minScore %}
+            {% if run.baseScores.nonPolar1 <= scoreBefore1 %} fill({{ run.baseScores.nonPolar1 }}, 2, 1);
+            {% else %}                                        fill({{ scoreBefore1             }}, 2, 1);
+            {% endif %}
+        {% endif %}
+
+        {% if scoreBefore2 > minScore %} fill({{ scoreBefore2 }}, 1, 2); {% endif %}
+        {% if run.baseScores.nonPolar2 > minScore %}
+            {% if run.baseScores.nonPolar2 <= scoreBefore2 %} fill({{ run.baseScores.nonPolar2 }}, 2, 2);
+            {% else %}                                        fill({{ scoreBefore2             }}, 2, 2);
+            {% endif %}
+        {% endif %}
+
+    {% else %}
+        {% if scoreBefore > minScore %} fill({{ scoreBefore }}, 1); {% endif %}
+        {% if run.score > minScore %}
+            {% if run.score <= scoreBefore %} fill({{ run.score   }}, 2);
+            {% else %}                        fill({{ scoreBefore }}, 2);
+            {% endif %}
         {% endif %}
     {% endif %}
+
+    // wait one second before starting the animation
+    setTimeout(function() { startAnimation(); }, 1000);
+
 }, false);
