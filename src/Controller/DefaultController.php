@@ -242,32 +242,78 @@ class DefaultController extends AbstractController
         $user = $this->getLoggedInUser();
         if ($user->getId() !== 1) return $this->redirectToRoute('index');
 
-        if (!empty($request->get('action'))) $this->initializeBaseScores();
+        if ($request->get('action') === 'setBaseScores') {
+            $this->initializeBaseScores();
+            return $this->redirectToRoute('scripts');
+        }
+        if ($request->get('action') === 'removeEmptyTestRuns') {
+            $this->removeEmptyTestRuns();
+            return $this->redirectToRoute('scripts');
+        }
 
-        list($testsCount, $withoutBaseScoreCount) = $this->getTestRunStats();
+        list($testsCount, $finishedTestsCount, $unscoredTestsCount, $withoutBaseScoreCount) = $this->getTestRunStats();
+        $emptyTestRuns = $this->getEmptyTestRunsCount();
 
         return [
-            'pageTitle' => 'Scripts',
-            'testsCount' => $testsCount,
+            'pageTitle'             => 'Scripts',
+            'testsCount'            => $testsCount,
+            'finishedTestsCount'    => $finishedTestsCount,
+            'unscoredTestsCount'    => $unscoredTestsCount,
             'withoutBaseScoreCount' => $withoutBaseScoreCount,
+            'emptyTestRuns'         => $emptyTestRuns,
         ];
     }
 
     private function initializeBaseScores() {
-        list($testsCount, $withoutBaseScoreCount) = $this->getTestRunStats();
-        echo 'testsCount: ' . $testsCount . '<br>';
-        echo 'withoutBasScoreCount: ' . $withoutBaseScoreCount . '<br>';
+        $testRuns = $this->getDoctrine()->getRepository(TestRun::class)->findAll();
+        $em = $this->getDoctrine()->getManager();
+        foreach ($testRuns as $run) {
+            if ($run->isFinished() && ($run->getScore() === null || $run->getBaseScores() === null)) {
+                $run->calculateScores();
+                $em->persist($run);
+            }
+        }
+        $em->flush();
     }
 
     private function getTestRunStats(): array {
         $testRuns = $this->getDoctrine()->getRepository(TestRun::class)->findAll();
-        // Todo: Consider difference between started and started and also finished ones
         $testsCount = count($testRuns);
+        $finishedTestsCount = 0;
+        $unscoredTestsCount = 0;
         $withoutBaseScoreCount = 0;
         foreach ($testRuns as $run) {
-            if ($run->getBaseScores() === null) $withoutBaseScoreCount++;
+            if ($run->isFinished()) {
+                $finishedTestsCount++;
+                if ($run->getScore() === null) {
+                    $unscoredTestsCount++;
+                    if ($run->getBaseScores() === null) $withoutBaseScoreCount++;
+                }
+            }
         }
-        return [$testsCount, $withoutBaseScoreCount];
+        return [$testsCount, $finishedTestsCount, $unscoredTestsCount, $withoutBaseScoreCount];
+    }
+
+    private function getEmptyTestRunsCount() {
+        $testRuns = $this->getDoctrine()->getRepository(TestRun::class)->findAll();
+        $emptyTestRunsCount = 0;
+        foreach ($testRuns as $run) {
+            if (count($run->getTests()) === 0) {
+                $emptyTestRunsCount++;
+            }
+        }
+        return $emptyTestRunsCount;
+    }
+
+    private function removeEmptyTestRuns() {
+        $testRuns = $this->getDoctrine()->getRepository(TestRun::class)->findAll();
+        $em = $this->getDoctrine()->getManager();
+        foreach ($testRuns as $run) {
+            if (count($run->getTests()) === 0) {
+                $em->remove($run);
+            }
+        }
+        $em->flush();
     }
 
     function initUser(): User {

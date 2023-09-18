@@ -3,11 +3,19 @@
 {% block body %}
     <a href="{{ url('index') }}">{{ 'back'|trans }}</a><br><br>
     <div>
-        <h4 style="margin-bottom: 0">Initialize base scores</h4>
+        <h4 style="margin-bottom: 0">Initialize scores</h4>
         <table>
             <tr>
-                <td>Test runs count:</td>
+                <td>Test runs:</td>
                 <td>{{ testsCount }}</td>
+            </tr>
+            <tr>
+                <td>Finished test runs:</td>
+                <td>{{ finishedTestsCount }}</td>
+            </tr>
+            <tr>
+                <td>Unscored test runs:</td>
+                <td>{{ unscoredTestsCount }}</td>
             </tr>
             <tr>
                 <td>Without base scores:</td>
@@ -15,7 +23,24 @@
             </tr>
         </table>
         {% if withoutBaseScoreCount > 0 %}
-            <a href="{{ url('scripts') }}?action=setBaseScores" class="btn">Initialize missing base scores now</a>
+            <a href="{{ url('scripts') }}?action=setBaseScores" class="btn">Initialize missing scores now</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h4 style="margin-bottom: 0">Empty test runs</h4>
+        <table>
+            <tr>
+                <td>Test runs:</td>
+                <td>{{ testsCount }}</td>
+            </tr>
+            <tr>
+                <td>Test runs without tests:</td>
+                <td>{{ emptyTestRuns }}</td>
+            </tr>
+        </table>
+        {% if emptyTestRuns > 0 %}
+            <a href="{{ url('scripts') }}?action=removeEmptyTestRuns" class="btn">Delete empty test runs</a>
         {% endif %}
     </div>
 {% endblock %}
@@ -25,5 +50,6 @@
         .about div { margin-bottom: 22px; }
         table { margin: 12px 0; }
         table tr td:first-child { text-align: right; padding-right: 8px; color: #888; }
+        table tr td:nth-child(2) { text-align: right; }
     </style>
 {% endblock %}

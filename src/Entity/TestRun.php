@@ -83,7 +83,7 @@ class TestRun
     }
     function isFinished(): bool {
         $this->calculateCorrectCount();
-        return $this->correctCount + $this->incorrectCount === $this->tests->count();
+        return ($this->tests->count() && $this->correctCount + $this->incorrectCount === $this->tests->count());
     }
 
     function calculateLevel(): void {
