@@ -75,6 +75,7 @@ class TestRunRepository extends ServiceEntityRepository
         $qb->addSelect('t');
         $qb->   where('t.group = :group');
         $qb->andWhere('t.user = :userId');
+        $qb->andWhere('t.score IS NOT NULL');
         $qb->orderBy('t.score', 'DESC');
         $qb->setParameter('group', $group);
         $qb->setParameter('userId', $user->getId());

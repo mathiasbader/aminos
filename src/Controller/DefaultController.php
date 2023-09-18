@@ -208,7 +208,7 @@ class DefaultController extends AbstractController
                     $run->calculateScores();
                     $scoreBefore = $this->getDoctrine()->getRepository(TestRun::class)
                         ->findHighestScore($run->getGroup(), $user);
-                    if ($scoreBefore->getId() === $run->getId()) $scoreBefore = null;
+                    if ($scoreBefore !== null && $scoreBefore->getId() === $run->getId()) $scoreBefore = null;
                     $run->setScoreBefore($scoreBefore);
                     $em->persist($run);
                     $em->flush();
