@@ -103,6 +103,9 @@ version_0_2:
   saveLearningProgress: Der Lernfortschritt wird gespeichert und über Farbindikatoren angezeigt
 version_0_3:
   testTubeIconsForLearningProgress: Reagenzglas-Icons für Lernfortschritt in den Tests
+version_0_4:
+  resultAnimations: Animation der Ergebnisse nach Abschluss eines Testlaufs
+  scorePerTube: Icons zeigen Ergebnisse korrekt pro Reagenzglas anstatt nur einen Mittelwert über alle Gläser
 
 continueActiveTest: Aktiven Test wiederaufnehmen
 toSaveProgressClickHere: Um Ihren Fortschritt zu speichern, klicken Sie hier

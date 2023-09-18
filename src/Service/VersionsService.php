@@ -11,6 +11,10 @@ class VersionsService
 {
     function getVersions(): array {
         return [
+            new VersionInfo("0.4", new DateTime("2023-09-18"), [
+                'resultAnimations',
+                'scorePerTube',
+            ]),
             new VersionInfo("0.3", new DateTime("2023-09-08"), [
                 'testTubeIconsForLearningProgress',
             ]),
