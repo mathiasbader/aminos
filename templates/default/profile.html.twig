@@ -6,7 +6,7 @@
         <a href="{{ url('index') }}">{{ 'back'|trans }}</a>
     </div>
 
-    {% if app.user.email is not null %}
+    {% if app.user is not null and app.user.email is not null %}
         <h4>{{ 'yourAccount'|trans }}</h4>
         <div style="margin-bottom: 64px;">
             <div id="editLink" style="width: 50%;">

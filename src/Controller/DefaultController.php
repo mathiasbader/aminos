@@ -236,6 +236,40 @@ class DefaultController extends AbstractController
         return ['pageTitle' => $translator->trans('about.link')];
     }
 
+    #[Route('scripts', name: 'scripts')] #[Template]
+    function scriptsAction(Request $request): array|RedirectResponse
+    {
+        $user = $this->getLoggedInUser();
+        if ($user->getId() !== 1) return $this->redirectToRoute('index');
+
+        if (!empty($request->get('action'))) $this->initializeBaseScores();
+
+        list($testsCount, $withoutBaseScoreCount) = $this->getTestRunStats();
+
+        return [
+            'pageTitle' => 'Scripts',
+            'testsCount' => $testsCount,
+            'withoutBaseScoreCount' => $withoutBaseScoreCount,
+        ];
+    }
+
+    private function initializeBaseScores() {
+        list($testsCount, $withoutBaseScoreCount) = $this->getTestRunStats();
+        echo 'testsCount: ' . $testsCount . '<br>';
+        echo 'withoutBasScoreCount: ' . $withoutBaseScoreCount . '<br>';
+    }
+
+    private function getTestRunStats(): array {
+        $testRuns = $this->getDoctrine()->getRepository(TestRun::class)->findAll();
+        // Todo: Consider difference between started and started and also finished ones
+        $testsCount = count($testRuns);
+        $withoutBaseScoreCount = 0;
+        foreach ($testRuns as $run) {
+            if ($run->getBaseScores() === null) $withoutBaseScoreCount++;
+        }
+        return [$testsCount, $withoutBaseScoreCount];
+    }
+
     function initUser(): User {
         $user = $this->getLoggedInUser();
         if ($user instanceof User) return $user;

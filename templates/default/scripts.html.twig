@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ url('index') }}">{{ 'back'|trans }}</a><br><br>
+    <div>
+        <h4 style="margin-bottom: 0">Initialize base scores</h4>
+        <table>
+            <tr>
+                <td>Test runs count:</td>
+                <td>{{ testsCount }}</td>
+            </tr>
+            <tr>
+                <td>Without base scores:</td>
+                <td>{{ withoutBaseScoreCount }}</td>
+            </tr>
+        </table>
+        {% if withoutBaseScoreCount > 0 %}
+            <a href="{{ url('scripts') }}?action=setBaseScores" class="btn">Initialize missing base scores now</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block css %}
+    <style>
+        .about div { margin-bottom: 22px; }
+        table { margin: 12px 0; }
+        table tr td:first-child { text-align: right; padding-right: 8px; color: #888; }
+    </style>
+{% endblock %}
