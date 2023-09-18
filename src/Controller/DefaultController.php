@@ -272,6 +272,10 @@ class DefaultController extends AbstractController
                 $run->calculateScores();
                 $em->persist($run);
             }
+            if (!$run->isFinished()) {
+                $run->setCompleted(null);
+                $em->persist($run);
+            }
         }
         $em->flush();
     }
