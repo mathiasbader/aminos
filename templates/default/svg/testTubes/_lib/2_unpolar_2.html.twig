@@ -7,8 +7,8 @@
 
 <g id="unpolar_2">
     <path id="u2-bg-white" class="cls-white" d="m88.02,59.9h-19.98v82.5c0,5.51,4.48,9.99,9.99,9.99s9.99-4.48,9.99-9.99V59.9Z"/>
-    {% if score >= 12 %}
-
+    {% if score >= 4 %}
+        {# Todo: Consider minScore in calculation #}
         {% set x = (100 - score) / 100 * 74.56 %}
 
         <path id="u2-fluid" class="cls-fluidNonPolar" d="
