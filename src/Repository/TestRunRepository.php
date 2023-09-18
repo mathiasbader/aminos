@@ -26,8 +26,11 @@ class TestRunRepository extends ServiceEntityRepository
         foreach (GroupType::ALL as $groupType) {
             $qb = $this->createQueryBuilder('t');
             $qb->select('t');
+            $qb->leftJoin('t.baseScores', 'baseScores');
             $qb->   where('t.user = :userId');
             $qb->andWhere('t.group = :groupType');
+            $qb->andWhere('t.score IS NOT NULL');
+            $qb->andWhere('baseScores IS NOT NULL');
             $qb->setParameter('userId', $user->getId());
             $qb->setParameter('groupType', $groupType);
             $qb->orderBy('t.score', 'DESC');

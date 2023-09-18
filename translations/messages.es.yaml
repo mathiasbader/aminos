@@ -102,11 +102,10 @@ version_0_1:
 version_0_2:
   saveLearningProgress: El progreso del aprendizaje se guarda y se muestra mediante colores
 version_0_3:
-  testTubeIconsForLearningProgress: Iconos de probeta para conocer el progreso en las pruebas
+  testTubeIconsForLearningProgress: Añadido iconos de probeta para conocer el progreso en las pruebas
 version_0_4:
-  # Todo: Translate:
-  resultAnimations: Animation der Ergebnisse nach Abschluss eines Testlaufs
-  scorePerTube: Icons zeigen Ergebnisse korrekt pro Reagenzglas anstatt nur einen Mittelwert über alle Gläser
+  resultAnimations: Animación de los resultados tras la finalización de una prueba
+  scorePerTube: Los iconos muestran los resultados por tubo en lugar del mismo resultado para cada tubo
 
 continueActiveTest: Reanudar prueba activa
 toSaveProgressClickHere: Para guardar su progreso, haga clic aquí

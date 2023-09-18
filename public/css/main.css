@@ -87,7 +87,10 @@ input {
 .footer>a { margin-left: 24px; }
 .footer>div>a { margin-right: 24px; }
 
-.versions h4 { margin-bottom: 2px; }
+.versions h4 {
+    display: inline-block;
+    padding-right: 8px;
+    margin-bottom: 2px; }
 .versions .date {
     font-size: 0.9rem;
     color: #aaa; }
