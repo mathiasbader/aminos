@@ -150,7 +150,7 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('test', [ 'runId' => $run->getId()]);
     }
 
-    #[Route('//test/{runId}', name: 'test')] #[Template]
+    #[Route('/test/{runId}', name: 'test')] #[Template]
     function testAction(int $runId, Request $request, TranslatorInterface $translator): array | RedirectResponse {
         $user = $this->initUser();
 
